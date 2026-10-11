@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automated Report Center — SOLVANTA</title>
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" class="brand-logo">
+          <img src="assets/images/logo.png" alt="SOLVANTA Energy Intelligence" class="brand-logo-img">
+          <div class="brand-text-wrap">
+            <span class="brand-name">SOLVANTA</span>
+            <span class="brand-tagline">Energy Intelligence</span>
+          </div>
+        </a>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" aria-label="Toggle Sidebar">
+          <i data-lucide="chevrons-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav-wrap" aria-label="Sidebar Navigation">
+        <div class="nav-section-title">Operations</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="dashboard.html" class="nav-link">
+              <i data-lucide="layout-dashboard"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="plants.html" class="nav-link">
+              <i data-lucide="cpu"></i>
+              <span>Plant Management</span>
+            </a>
+          </li>
+          <li>
+            <a href="monitoring.html" class="nav-link">
+              <i data-lucide="activity"></i>
+              <span>Live Monitoring</span>
+            </a>
+          </li>
+          <li>
+            <a href="analytics.html" class="nav-link">
+              <i data-lucide="bar-chart-2"></i>
+              <span>Analytics</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title" style="margin-top:14px;">Automation &amp; Assets</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="reports.html" class="nav-link active">
+              <i data-lucide="file-text"></i>
+              <span>Report Center</span>
+            </a>
+          </li>
+          <li>
+            <a href="alerts.html" class="nav-link">
+              <i data-lucide="alert-triangle"></i>
+              <span>Alerts &amp; Faults</span>
+              <span class="badge-counter" id="sidebar-alert-badge" style="display:none;">0</span>
+            </a>
+          </li>
+          <li>
+            <a href="maintenance.html" class="nav-link">
+              <i data-lucide="wrench"></i>
+              <span>Maintenance</span>
+            </a>
+          </li>
+          <li>
+            <a href="settings.html" class="nav-link">
+              <i data-lucide="sliders"></i>
+              <span>Settings &amp; Backup</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title" style="margin-top:14px;">Public Portal</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="index.html" class="nav-link">
+              <i data-lucide="globe"></i>
+              <span>Public Landing</span>
+            </a>
+          </li>
+          <li>
+            <a href="login.html" class="nav-link">
+              <i data-lucide="log-out"></i>
+              <span>Exit to Login</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="user-avatar">AS</div>
+          <div class="user-info">
+            <span class="user-name">Aditya Sharma</span>
+            <span class="user-role">Plant Operations Lead</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open Mobile Menu">
+            <i data-lucide="menu"></i>
+          </button>
+          <div class="breadcrumb-trail">
+            <a href="dashboard.html" class="breadcrumb-item">Solvanta Fleet</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Automated Report Center</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="simulated-data-banner">
+            <span class="dot"></span>
+            <span>Automated PDF Generator</span>
+          </div>
+          <div class="topbar-search">
+            <i data-lucide="search"></i>
+            <input type="text" id="topbar-search-input" placeholder="Search report archive...">
+          </div>
+          <a href="alerts.html" class="topbar-action-icon" title="View Alerts">
+            <i data-lucide="bell"></i>
+          </a>
+        </div>
+      </header>
+
+      <main class="app-content">
+        <!-- Page Header -->
+        <div class="page-header">
+          <div class="page-title-wrap">
+            <h1>Automated Report Generation Center</h1>
+            <p class="page-subtitle">Configure, live-preview, and export executive-ready PDF &amp; Excel plant reports.</p>
+          </div>
+          <div class="page-actions">
+            <span class="enterprise-pill" style="background:rgba(2,132,199,0.15); border-color:rgba(56,189,248,0.3); color:#38bdf8;">
+              <i data-lucide="sparkles" style="width:12px;height:12px;"></i>
+              IEC 61724 Audit Engine &bull; Client-Side PDF/Excel
+            </span>
+          </div>
+        </div>
+
+        <!-- Split Grid: Configuration on Left (1.1fr), Live Document Preview on Right (1.3fr) -->
+        <div style="display:grid; grid-template-columns: 1fr 1.35fr; gap:var(--space-6); margin-bottom:var(--space-8);" class="report-split-container">
+          
+          <!-- Report Builder Form Card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i data-lucide="sliders" style="color:var(--primary-600);"></i>
+                <span>Report Parameters</span>
+              </div>
+              <span class="badge badge-success" style="font-size:10px;">6 Template Presets</span>
+            </div>
+            <div class="card-body">
+              <form id="report-config-form" onsubmit="event.preventDefault();">
+                <!-- Template Preset -->
+                <div class="form-group">
+                  <label class="form-label" for="report-template-select">Select Report Template Preset</label>
+                  <select id="report-template-select" class="form-select" style="font-weight:600;">
+                    <option value="daily">Daily Generation Report (Diurnal Curve &amp; Peak)</option>
+                    <option value="monthly" selected>Monthly Performance Report (Target vs Actual)</option>
+                    <option value="annual">Annual Energy Audit (Year-on-Year CUF)</option>
+                    <option value="health">Plant Health &amp; Inverter Fault Audit</option>
+                    <option value="portfolio">Multi-Plant Portfolio Summary (Fleetwide)</option>
+                    <option value="custom">Custom Parametric Report</option>
+                  </select>
+                </div>
+
+                <!-- Plant Scope -->
+                <div class="form-group">
+                  <label class="form-label" for="report-plant-select">Target Plant Asset Scope</label>
+                  <select id="report-plant-select" class="form-select">
+                    <option value="ALL">Entire Portfolio (All 9 Plants)</option>
+                    <!-- Injected by reports.js -->
+                  </select>
+                </div>
+
+                <!-- Reporting Period & Date -->
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                  <div class="form-group">
+                    <label class="form-label" for="report-period-input">Reporting Period</label>
+                    <input type="text" id="report-period-input" class="form-control" value="October 2026">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="report-date-picker">Cycle End Date</label>
+                    <input type="date" id="report-date-picker" class="form-control" value="2026-10-10">
+                  </div>
+                </div>
+
+                <!-- Report Title -->
+                <div class="form-group">
+                  <label class="form-label" for="report-title-input">Report Title (Header)</label>
+                  <input type="text" id="report-title-input" class="form-control" value="MONTHLY RENEWABLE PERFORMANCE AUDIT">
+                </div>
+
+                <!-- Prepared By -->
+                <div class="form-group">
+                  <label class="form-label" for="report-author-input">Prepared By (Signatory)</label>
+                  <input type="text" id="report-author-input" class="form-control" value="Aditya Sharma (Plant Operations Lead)">
+                </div>
+
+                <!-- Metrics Checkboxes -->
+                <div class="form-group">
+                  <label class="form-label">Include Analytical Sections</label>
+                  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:12px; color:var(--text-secondary); margin-top:4px;">
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                      <input type="checkbox" id="chk-gen" checked style="accent-color:var(--primary-500);">
+                      <span>Generation &amp; CUF</span>
+                    </label>
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                      <input type="checkbox" id="chk-pr" checked style="accent-color:var(--primary-500);">
+                      <span>Performance Ratio (PR)</span>
+                    </label>
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                      <input type="checkbox" id="chk-revenue" checked style="accent-color:var(--primary-500);">
+                      <span>Revenue &amp; PPA Tariff</span>
+                    </label>
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                      <input type="checkbox" id="chk-carbon" checked style="accent-color:var(--primary-500);">
+                      <span>CO₂ Avoidance Tonnes</span>
+                    </label>
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                      <input type="checkbox" id="chk-alerts" checked style="accent-color:var(--primary-500);">
+                      <span>Active Fault History</span>
+                    </label>
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                      <input type="checkbox" id="chk-maintenance" checked style="accent-color:var(--primary-500);">
+                      <span>Maintenance Logs</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="display:flex; flex-direction:column; gap:8px; margin-top:20px;">
+                  <button type="button" class="btn btn-secondary w-full" id="refresh-preview-btn">
+                    <i data-lucide="eye"></i>
+                    <span>Update Live Preview</span>
+                  </button>
+
+                  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                    <button type="button" class="btn btn-primary" id="download-pdf-btn">
+                      <i data-lucide="file-down"></i>
+                      <span>Download PDF</span>
+                    </button>
+                    <button type="button" class="btn btn-outline" id="download-excel-btn">
+                      <i data-lucide="table"></i>
+                      <span>Export Excel</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Live Document Preview Card (Paper Sheet Style) -->
+          <div class="card" style="background:#f8fafc; border:1px solid #cbd5e1;">
+            <div class="card-header" style="background:#ffffff;">
+              <div class="card-title">
+                <i data-lucide="file-check" style="color:var(--primary-600);"></i>
+                <span>Document Live Preview Sheet</span>
+              </div>
+              <div style="font-size:11px; color:#64748b; font-family:var(--font-mono);">A4 Standard Format</div>
+            </div>
+
+            <div class="card-body" style="padding:16px;">
+              <!-- Simulated Document Paper Sheet -->
+              <div id="document-sheet" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.06); padding:24px; min-height:560px;">
+                
+                <!-- Document Header -->
+                <div style="background:#072016; color:#ffffff; padding:12px 18px; border-radius:6px; display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                  <div style="display:flex; align-items:center; gap:10px;">
+                    <img src="assets/images/logo.png" alt="SOLVANTA Logo" style="height:38px; width:auto; background:#ffffff; border-radius:6px; padding:2px;">
+                    <div>
+                      <div style="font-size:15px; font-weight:800; letter-spacing:0.06em;">SOLVANTA</div>
+                      <div style="font-size:9px; color:#a7f3d0; text-transform:uppercase; letter-spacing:0.04em;">Energy Intelligence Platform</div>
+                    </div>
+                  </div>
+                  <div style="text-align:right;">
+                    <div style="font-size:11px; font-weight:700;" id="prev-doc-title">MONTHLY RENEWABLE PERFORMANCE AUDIT</div>
+                    <div style="font-size:9px; color:#94a3b8;" id="prev-doc-date">Generated: 10 Oct 2026</div>
+                  </div>
+                </div>
+
+                <!-- Executive Audit Report Banner -->
+                <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:4px; padding:6px 10px; margin-bottom:14px; font-size:10px; color:#0369a1; font-weight:700; text-align:center;">
+                  EXECUTIVE GENERATION &amp; TARIFF AUDIT REPORT &bull; IEC 61724 COMPLIANT
+                </div>
+
+                <!-- Metadata Summary -->
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:11px; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #f1f5f9;">
+                  <div>
+                    <span style="color:#64748b;">Plant Scope:</span> <strong id="prev-plant-scope">Entire Fleet Portfolio (9 Plants)</strong><br>
+                    <span style="color:#64748b;">Installed Capacity:</span> <strong id="prev-capacity">1,180 MW</strong>
+                  </div>
+                  <div style="text-align:right;">
+                    <span style="color:#64748b;">Reporting Period:</span> <strong id="prev-period">October 2026</strong><br>
+                    <span style="color:#64748b;">Prepared By:</span> <strong id="prev-author">Aditya Sharma</strong>
+                  </div>
+                </div>
+
+                <!-- 6 Mini KPI Boxes -->
+                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-bottom:16px;" id="prev-kpis-grid">
+                  <!-- Populated by reports.js -->
+                </div>
+
+                <!-- Preview Table -->
+                <div style="margin-bottom:16px;">
+                  <div style="font-size:11px; font-weight:700; color:#0f172a; margin-bottom:6px;">Performance Breakdown Matrix</div>
+                  <table style="width:100%; border-collapse:collapse; font-size:10.5px; text-align:left;" id="prev-table">
+                    <thead>
+                      <tr style="background:#072016; color:#ffffff;" id="prev-table-thead">
+                        <!-- Populated by reports.js -->
+                      </tr>
+                    </thead>
+                    <tbody id="prev-table-tbody">
+                      <!-- Populated by reports.js -->
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Observations & Signatures -->
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px; margin-bottom:16px; font-size:10.5px;">
+                  <strong style="color:#0f172a;">Observations &amp; Operational Directives:</strong>
+                  <ul style="margin:6px 0 0 16px; color:#475569; line-height:1.4;" id="prev-observations-list">
+                    <!-- Populated by reports.js -->
+                  </ul>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #e2e8f0; padding-top:10px; font-size:9.5px; color:#64748b;">
+                  <div>Signatory: <strong id="prev-sig-author">Aditya Sharma</strong></div>
+                  <div>Audit Stamp: <strong style="color:#10b981;">[ VERIFIED / SYSTEM GENERATED ]</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Report History Archive Card -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">
+                <i data-lucide="history" style="color:var(--primary-700);"></i>
+                <span>Generated Report Archive &amp; History Log</span>
+              </div>
+              <div class="card-subtitle">Stored locally in browser storage &bull; Download anytime</div>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="clear-history-btn">
+              <i data-lucide="trash-2"></i>
+              <span>Clear History</span>
+            </button>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <div class="table-responsive">
+              <table class="data-table" id="report-history-table">
+                <thead>
+                  <tr>
+                    <th>Report ID</th>
+                    <th>Report Title</th>
+                    <th>Template Type</th>
+                    <th>Plant Scope</th>
+                    <th>Period</th>
+                    <th>Generated Date</th>
+                    <th>Format</th>
+                    <th style="text-align:right;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="report-history-tbody">
+                  <!-- Populated by reports.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/utils.js"></script>
+  <script src="js/demo-data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/pdf-export.js"></script>
+  <script src="js/excel-export.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/reports.js"></script>
+</body>
+</html>

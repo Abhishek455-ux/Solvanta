@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live SCADA Monitoring — SOLVANTA</title>
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" class="brand-logo">
+          <img src="assets/images/logo.png" alt="SOLVANTA Energy Intelligence" class="brand-logo-img">
+          <div class="brand-text-wrap">
+            <span class="brand-name">SOLVANTA</span>
+            <span class="brand-tagline">Energy Intelligence</span>
+          </div>
+        </a>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" aria-label="Toggle Sidebar">
+          <i data-lucide="chevrons-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav-wrap" aria-label="Sidebar Navigation">
+        <div class="nav-section-title">Operations</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="dashboard.html" class="nav-link">
+              <i data-lucide="layout-dashboard"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="plants.html" class="nav-link">
+              <i data-lucide="cpu"></i>
+              <span>Plant Management</span>
+            </a>
+          </li>
+          <li>
+            <a href="monitoring.html" class="nav-link active">
+              <i data-lucide="activity"></i>
+              <span>Live Monitoring</span>
+            </a>
+          </li>
+          <li>
+            <a href="analytics.html" class="nav-link">
+              <i data-lucide="bar-chart-2"></i>
+              <span>Analytics</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title" style="margin-top:14px;">Automation &amp; Assets</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="reports.html" class="nav-link">
+              <i data-lucide="file-text"></i>
+              <span>Report Center</span>
+            </a>
+          </li>
+          <li>
+            <a href="alerts.html" class="nav-link">
+              <i data-lucide="alert-triangle"></i>
+              <span>Alerts &amp; Faults</span>
+              <span class="badge-counter" id="sidebar-alert-badge" style="display:none;">0</span>
+            </a>
+          </li>
+          <li>
+            <a href="maintenance.html" class="nav-link">
+              <i data-lucide="wrench"></i>
+              <span>Maintenance</span>
+            </a>
+          </li>
+          <li>
+            <a href="settings.html" class="nav-link">
+              <i data-lucide="sliders"></i>
+              <span>Settings &amp; Backup</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title" style="margin-top:14px;">Public Portal</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="index.html" class="nav-link">
+              <i data-lucide="globe"></i>
+              <span>Public Landing</span>
+            </a>
+          </li>
+          <li>
+            <a href="login.html" class="nav-link">
+              <i data-lucide="log-out"></i>
+              <span>Exit to Login</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="user-avatar">AS</div>
+          <div class="user-info">
+            <span class="user-name">Aditya Sharma</span>
+            <span class="user-role">Plant Operations Lead</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open Mobile Menu">
+            <i data-lucide="menu"></i>
+          </button>
+          <div class="breadcrumb-trail">
+            <a href="dashboard.html" class="breadcrumb-item">Solvanta Fleet</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">SCADA Control Room</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="simulated-data-banner">
+            <span class="dot"></span>
+            <span>Virtual SCADA Active</span>
+          </div>
+          <div class="topbar-search">
+            <i data-lucide="search"></i>
+            <input type="text" id="topbar-search-input" placeholder="Search telemetry...">
+          </div>
+          <a href="alerts.html" class="topbar-action-icon" title="View Alerts">
+            <i data-lucide="bell"></i>
+          </a>
+        </div>
+      </header>
+
+      <main class="app-content">
+        <!-- Page Header -->
+        <div class="page-header">
+          <div class="page-title-wrap">
+            <h1>Live SCADA Monitoring Room</h1>
+            <p class="page-subtitle">Real-time telemetry, inverter string telemetry, and environmental sensors.</p>
+          </div>
+          <div class="page-actions">
+            <!-- Simulation Controls -->
+            <div style="display:flex; align-items:center; gap:8px; background:#ffffff; border:1px solid var(--border-light); padding:4px 10px; border-radius:8px;">
+              <span style="font-size:12px; font-weight:600; color:var(--text-muted);">Simulation:</span>
+              <button class="btn btn-emerald btn-sm" id="sim-toggle-btn">
+                <i data-lucide="pause" id="sim-icon"></i>
+                <span id="sim-status-text">Active (4s)</span>
+              </button>
+              <button class="btn btn-secondary btn-sm" id="inject-event-btn" title="Simulate Grid Frequency &amp; Inverter Trip Anomaly">
+                <i data-lucide="zap-off"></i>
+                <span>Inject Anomaly</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plant Selector Bar -->
+        <div class="filter-bar">
+          <div class="filter-group">
+            <span class="filter-label">Select Monitored Asset:</span>
+            <select id="monitoring-plant-select" class="form-select" style="min-width:280px; font-weight:600;">
+              <!-- Populated by monitoring.js -->
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <div style="font-size:12px; color:var(--text-muted); display:flex; align-items:center; gap:6px;">
+              <i data-lucide="clock" style="width:14px;height:14px;"></i>
+              <span>Last Packet: <strong id="telemetry-last-packet" style="color:var(--text-main);">Just now</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Advanced SCADA Facility Digital Twin & AI Video Telemetry -->
+        <div class="card" style="margin-bottom:var(--space-6); overflow:hidden;">
+          <div class="card-header">
+            <div class="card-title">
+              <i data-lucide="video" style="color:var(--primary-500);"></i>
+              <span>Live Plant Visual Telemetry &bull; SCADA Digital Twin Stream</span>
+            </div>
+            <div class="flex gap-2 items-center flex-wrap">
+              <span class="badge badge-success">
+                <span class="badge-dot"></span> LIVE RTU FEED
+              </span>
+              <span class="badge badge-info">
+                <i data-lucide="cpu"></i> AI Telemetry Active
+              </span>
+              <span class="badge badge-solar"><i data-lucide="sun"></i> Solar PV 660 MW</span>
+            </div>
+          </div>
+
+          <!-- 3-Camera Panoramic Plant Array Visual Stream -->
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; padding:16px; background:#04130c;">
+            <!-- CAM 01 -->
+            <div style="position:relative; height:180px; border-radius:8px; overflow:hidden; border:1px solid rgba(16,185,129,0.3);">
+              <img src="assets/images/solar_park.jpg" alt="Solar Array Visual Stream" style="width:100%; height:100%; object-fit:cover;">
+              <div style="position:absolute; top:8px; left:8px; background:rgba(6,28,18,0.85); backdrop-filter:blur(6px); padding:3px 8px; border-radius:4px; font-size:10px; color:#34d399; font-family:var(--font-mono); font-weight:700; border:1px solid rgba(16,185,129,0.4);">
+                CAM 01 &bull; TRACKER BLOCK A-04
+              </div>
+              <div style="position:absolute; bottom:8px; left:8px; right:8px; background:rgba(6,28,18,0.85); padding:3px 8px; border-radius:4px; font-size:10px; color:#cbd5e1; font-family:var(--font-mono); display:flex; justify-content:space-between;">
+                <span>POA: 895 W/m²</span>
+                <span style="color:#34d399;">● 1080p 30fps</span>
+              </div>
+            </div>
+
+            <!-- CAM 02 -->
+            <div style="position:relative; height:180px; border-radius:8px; overflow:hidden; border:1px solid rgba(16,185,129,0.3);">
+              <img src="assets/images/service_om.jpg" alt="Robotic O&M Cleaning Stream" style="width:100%; height:100%; object-fit:cover;">
+              <div style="position:absolute; top:8px; left:8px; background:rgba(6,28,18,0.85); backdrop-filter:blur(6px); padding:3px 8px; border-radius:4px; font-size:10px; color:#34d399; font-family:var(--font-mono); font-weight:700; border:1px solid rgba(16,185,129,0.4);">
+                CAM 02 &bull; ROBOTIC CLEANER #12
+              </div>
+              <div style="position:absolute; bottom:8px; left:8px; right:8px; background:rgba(6,28,18,0.85); padding:3px 8px; border-radius:4px; font-size:10px; color:#cbd5e1; font-family:var(--font-mono); display:flex; justify-content:space-between;">
+                <span>STATUS: OPERATIONAL</span>
+                <span style="color:#34d399;">● 1080p 30fps</span>
+              </div>
+            </div>
+
+            <!-- CAM 03 -->
+            <div style="position:relative; height:180px; border-radius:8px; overflow:hidden; border:1px solid rgba(16,185,129,0.3);">
+              <img src="assets/images/bess_storage.jpg" alt="BESS Container Bay Stream" style="width:100%; height:100%; object-fit:cover;">
+              <div style="position:absolute; top:8px; left:8px; background:rgba(6,28,18,0.85); backdrop-filter:blur(6px); padding:3px 8px; border-radius:4px; font-size:10px; color:#fbbf24; font-family:var(--font-mono); font-weight:700; border:1px solid rgba(251,191,36,0.4);">
+                CAM 03 &bull; BESS STORAGE BAY
+              </div>
+              <div style="position:absolute; bottom:8px; left:8px; right:8px; background:rgba(6,28,18,0.85); padding:3px 8px; border-radius:4px; font-size:10px; color:#cbd5e1; font-family:var(--font-mono); display:flex; justify-content:space-between;">
+                <span>SoC: 88.4% &bull; LIQUID COOLED</span>
+                <span style="color:#34d399;">● 1080p 30fps</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Real-Time AI Telemetry Analytics Banner in SCADA -->
+          <div style="background:#f8fafc; padding:12px 20px; border-top:1px solid var(--border-light); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:12px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="badge-dot" style="background:var(--primary-500);"></span>
+              <strong style="color:#0f172a;">Solvanta AI™ Predictive Optimization:</strong>
+              <span style="color:#475569;">Inverter temperature tracking nominal &bull; Sunset ramp predicted at 18:22 IST &bull; 0 Curtailment risk</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:14px; font-family:var(--font-mono);">
+              <span style="color:#059669; font-weight:700;"><i data-lucide="check-circle-2" style="width:14px;height:14px;display:inline;"></i> SOILING INDEX: 98.6%</span>
+              <span style="color:#0284c7; font-weight:700;"><i data-lucide="activity" style="width:14px;height:14px;display:inline;"></i> GRID COMPLIANCE: 100%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8 SCADA Telemetry Cards -->
+        <div class="telemetry-grid">
+          <!-- Active Power -->
+          <div class="telemetry-card">
+            <span class="telemetry-title">Active Power Output</span>
+            <span class="telemetry-val" id="tel-power" style="color:var(--primary-600);">114.2 MW</span>
+            <span class="telemetry-sub" id="tel-power-percent">76.1% of Rated Capacity</span>
+          </div>
+
+          <!-- Daily Generation -->
+          <div class="telemetry-card">
+            <span class="telemetry-title">Daily Accumulation</span>
+            <span class="telemetry-val" id="tel-today-gen">785.4 MWh</span>
+            <span class="telemetry-sub" id="tel-revenue">₹25.5 Lakhs revenue</span>
+          </div>
+
+          <!-- Solar Irradiance / Wind Speed -->
+          <div class="telemetry-card">
+            <span class="telemetry-title" id="tel-env-title">Plane of Array (POA)</span>
+            <span class="telemetry-val" id="tel-irradiance">895 W/m²</span>
+            <span class="telemetry-sub" id="tel-env-sub">Pyranometer S-01</span>
+          </div>
+
+          <!-- Module Temp -->
+          <div class="telemetry-card">
+            <span class="telemetry-title">PV Module Temp</span>
+            <span class="telemetry-val" id="tel-module-temp">47.8 °C</span>
+            <span class="telemetry-sub" id="tel-ambient-temp">Ambient: 32.4 °C</span>
+          </div>
+
+          <!-- Inverter Status -->
+          <div class="telemetry-card">
+            <span class="telemetry-title">Inverter Online Ratio</span>
+            <span class="telemetry-val" id="tel-inverters" style="color:var(--color-success);">48 / 48</span>
+            <span class="telemetry-sub">0 Tripped &bull; 100% Online</span>
+          </div>
+
+          <!-- Performance Ratio -->
+          <div class="telemetry-card">
+            <span class="telemetry-title">Live Performance Ratio</span>
+            <span class="telemetry-val" id="tel-pr">82.6%</span>
+            <span class="telemetry-sub" style="color:var(--color-success);">Nominal Standard</span>
+          </div>
+
+          <!-- Grid Frequency -->
+          <div class="telemetry-card">
+            <span class="telemetry-title">Grid Frequency</span>
+            <span class="telemetry-val" id="tel-frequency">50.02 Hz</span>
+            <span class="telemetry-sub" id="tel-voltage">Bus Voltage: 33.2 kV</span>
+          </div>
+
+          <!-- Power Factor -->
+          <div class="telemetry-card">
+            <span class="telemetry-title">Grid Power Factor</span>
+            <span class="telemetry-val" id="tel-pf">0.99</span>
+            <span class="telemetry-sub">Lagging &bull; Active Sync</span>
+          </div>
+        </div>
+
+        <!-- Telemetry Diurnal Trend Graph -->
+        <div class="card chart-card-full">
+          <div class="card-header">
+            <div>
+              <div class="card-title">
+                <i data-lucide="activity" style="color:var(--primary-500);"></i>
+                <span id="chart-plant-name">Hourly Telemetry Curve</span>
+              </div>
+              <div class="card-subtitle">Real-time diurnal generation (MWh) &amp; solar irradiance correlation</div>
+            </div>
+            <div class="simulated-data-banner">
+              <span class="dot"></span>
+              <span>Virtual SCADA Feed</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-wrapper">
+              <canvas id="liveMonitoringChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Substation & Inverter Block Status -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <i data-lucide="cpu" style="color:#0ea5e9;"></i>
+              <span>Inverter Block Operational Matrix</span>
+            </div>
+            <div class="card-subtitle">Detailed health status of decentralized central inverter blocks</div>
+          </div>
+          <div class="card-body">
+            <div id="inverter-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:12px;">
+              <!-- Dynamically populated by monitoring.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Solvanta AI™ Predictive Telemetry & Control Suite -->
+        <div class="card" style="margin-top:var(--space-6); border:1px solid rgba(16, 185, 129, 0.25); box-shadow:var(--shadow-md);">
+          <div class="card-header" style="background:linear-gradient(135deg, rgba(16, 185, 129, 0.06), rgba(6, 182, 212, 0.04)); border-bottom:1px solid var(--border-light);">
+            <div class="card-title" style="color:var(--text-primary); font-weight:700;">
+              <i data-lucide="sparkles" style="color:var(--primary-600);"></i>
+              <span>Solvanta AI™ Inverter Health &amp; Dispatch Analytics Engine</span>
+            </div>
+            <span class="badge badge-success" style="font-weight:700; letter-spacing:0.02em;">
+              AI Model: LSTM-Neural-v2.6
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="grid grid-3 gap-4">
+              <!-- AI Box 1 -->
+              <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:12px; padding:16px; box-shadow:var(--shadow-xs);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <span style="font-size:11px; font-weight:700; color:var(--primary-700); text-transform:uppercase; letter-spacing:0.05em;">Soiling Vision ML</span>
+                  <span class="badge badge-success" style="font-size:10px;">Optimal</span>
+                </div>
+                <div style="font-size:22px; font-weight:800; color:var(--text-primary); font-family:var(--font-mono);">1.12% <span style="font-size:12px; color:var(--text-muted); font-weight:500;">Loss</span></div>
+                <p style="font-size:11px; color:var(--text-secondary); margin-top:6px; line-height:1.5;">
+                  Autonomous waterless robotic cleaning scheduled for Block B-08 at 22:00 IST to prevent clipping.
+                </p>
+                <div style="margin-top:10px; padding-top:8px; border-top:1px solid var(--border-light); font-size:11px; color:var(--primary-700); font-weight:600;">
+                  Trigger threshold: 1.80%
+                </div>
+              </div>
+
+              <!-- AI Box 2 -->
+              <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:12px; padding:16px; box-shadow:var(--shadow-xs);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <span style="font-size:11px; font-weight:700; color:#0284c7; text-transform:uppercase; letter-spacing:0.05em;">Day-Ahead Forecast</span>
+                  <span class="badge badge-info" style="font-size:10px;">98.4% Conf</span>
+                </div>
+                <div style="font-size:22px; font-weight:800; color:var(--text-primary); font-family:var(--font-mono);">3,480.5 <span style="font-size:12px; color:var(--text-muted); font-weight:500;">MWh</span></div>
+                <p style="font-size:11px; color:var(--text-secondary); margin-top:6px; line-height:1.5;">
+                  Predicted peak irradiance of 960 W/m² at 12:45 IST. SLDC schedule submitted automatically with zero DSM error.
+                </p>
+                <div style="margin-top:10px; padding-top:8px; border-top:1px solid var(--border-light); font-size:11px; color:#0284c7; font-weight:600;">
+                  DSM Deviation Risk: 0.00%
+                </div>
+              </div>
+
+              <!-- AI Box 3 -->
+              <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:12px; padding:16px; box-shadow:var(--shadow-xs);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <span style="font-size:11px; font-weight:700; color:var(--primary-700); text-transform:uppercase; letter-spacing:0.05em;">BESS Arbitrage Optimization</span>
+                  <span class="badge badge-success" style="font-size:10px;">Dispatched</span>
+                </div>
+                <div style="font-size:22px; font-weight:800; color:var(--text-primary); font-family:var(--font-mono);">₹8.45 <span style="font-size:12px; color:var(--text-muted); font-weight:500;">/ kWh Peak</span></div>
+                <p style="font-size:11px; color:var(--text-secondary); margin-top:6px; line-height:1.5;">
+                  Storing 120 MWh mid-day surplus; discharging during 18:30-22:30 IST evening grid peak for maximum merchant revenue.
+                </p>
+                <div style="margin-top:10px; padding-top:8px; border-top:1px solid var(--border-light); font-size:11px; color:var(--primary-700); font-weight:600;">
+                  Net Value Add: +₹4.2 Lakhs/Day
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/utils.js"></script>
+  <script src="js/demo-data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/monitoring.js"></script>
+</body>
+</html>

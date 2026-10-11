@@ -1,0 +1,185 @@
+/* ==========================================================================
+   SOLVANTA RESPONSIVE STYLES
+   Breakpoints: 1200px, 1024px, 768px, 480px
+   ========================================================================== */
+
+/* Large Tablets & Small Laptops */
+@media (max-width: 1200px) {
+  .charts-grid-main {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-split-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .showcase-preview-body {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Tablets (portrait & landscape) */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 240px;
+  }
+
+  .app-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .app-main {
+    margin-left: 0 !important;
+  }
+
+  .sidebar-open .app-sidebar {
+    transform: translateX(0);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: calc(var(--z-sidebar) - 1);
+  }
+
+  .sidebar-open .sidebar-backdrop {
+    display: block;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .workflow-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .spotlight-box {
+    grid-template-columns: 1fr;
+    padding: var(--space-6);
+  }
+
+  .credentials-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Mobile Devices */
+@media (max-width: 768px) {
+  .app-content {
+    padding: var(--space-4);
+  }
+
+  .app-topbar {
+    padding: 0 var(--space-4);
+  }
+
+  .topbar-search {
+    display: none;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .page-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-group {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-group .form-select,
+  .filter-group .form-control {
+    width: 100%;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .telemetry-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .landing-links {
+    display: none;
+  }
+
+  .mobile-nav-toggle {
+    display: flex;
+  }
+
+  .nav-login-btn {
+    display: none;
+  }
+
+  .hero-section {
+    padding: 105px 0 60px;
+  }
+
+  .hero-title {
+    font-size: 2.1rem;
+  }
+
+  .showcase-preview-body {
+    grid-template-columns: 1fr;
+  }
+
+  .credentials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-dialog {
+    max-width: 95%;
+    margin: 10px;
+  }
+
+  .toast-container {
+    left: var(--space-4);
+    right: var(--space-4);
+    max-width: none;
+  }
+}
+
+/* Small Phones */
+@media (max-width: 480px) {
+  .telemetry-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .kpi-value {
+    font-size: var(--text-xl);
+  }
+}

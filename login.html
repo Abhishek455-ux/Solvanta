@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operator Login — SOLVANTA</title>
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="auth-page">
+
+  <div class="auth-card">
+    <div class="auth-header">
+      <a href="index.html" class="auth-brand-logo">
+        <img src="assets/images/logo.png" alt="SOLVANTA Energy Intelligence" style="height:60px; width:auto; background:#ffffff; border-radius:10px; padding:3px 8px; box-shadow:0 0 20px rgba(16,185,129,0.35);">
+      </a>
+      <h2 class="auth-title">Operator Access</h2>
+      <p class="auth-subtitle">Renewable Plant Telemetry &amp; Reporting Portal</p>
+    </div>
+
+    <!-- Enterprise Quick-Access Banner -->
+    <div class="auth-demo-banner">
+      <h4><i data-lucide="sparkles"></i> SCADA Enterprise Demo Mode</h4>
+      <p>Instant evaluator bypass with pre-loaded enterprise plant dataset &amp; real-time telemetry.</p>
+      <a href="dashboard.html" class="btn btn-emerald w-full" id="demo-quick-btn">
+        <i data-lucide="play-circle"></i>
+        <span>Enter Enterprise Dashboard (Instant Access)</span>
+      </a>
+    </div>
+
+    <div class="auth-divider">
+      <span>Or Sign In with Operator Credentials</span>
+    </div>
+
+    <!-- Standard Login Form -->
+    <form id="login-form" class="auth-form" onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label class="form-label" for="login-email">Operator Email Address</label>
+        <div class="input-icon-group">
+          <i data-lucide="mail"></i>
+          <input type="email" id="login-email" class="form-control" placeholder="operator@solvanta.energy" value="aditya.lead@solvanta.energy" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="login-password">System Password</label>
+        <div class="input-icon-group">
+          <i data-lucide="lock"></i>
+          <input type="password" id="login-password" class="form-control" placeholder="Enter password" value="solvanta2026" required>
+          <button type="button" class="password-toggle-btn" id="toggle-pw-btn" aria-label="Toggle password visibility">
+            <i data-lucide="eye" id="eye-icon"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between" style="margin-bottom: var(--space-5);">
+        <label style="display:flex; align-items:center; gap:8px; font-size:12px; color:#cbd5e1; cursor:pointer;">
+          <input type="checkbox" checked style="accent-color:var(--primary-500);">
+          <span>Remember session</span>
+        </label>
+        <a href="#" onclick="handleForgot(event)" style="font-size:12px; color:var(--accent-400);">Forgot access key?</a>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-full btn-lg">
+        <i data-lucide="log-in"></i>
+        <span>Authenticate &amp; Open Portal</span>
+      </button>
+    </form>
+
+    <div class="auth-footer-note">
+      <p>
+        <strong>Enterprise Notice:</strong> Solvanta operates high-frequency SCADA intelligence streams with secure token authorization and multi-tier role-based access control.
+      </p>
+      <div style="margin-top:8px;">
+        <a href="index.html" style="color:var(--primary-600); font-weight:600;">&larr; Return to Public Landing Page</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/demo-data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      SolvantaStorage.initStore();
+      SolvantaUI.initIcons();
+
+      // Password Toggle
+      const pwInput = document.getElementById('login-password');
+      const toggleBtn = document.getElementById('toggle-pw-btn');
+      const eyeIcon = document.getElementById('eye-icon');
+
+      if (toggleBtn && pwInput) {
+        toggleBtn.addEventListener('click', () => {
+          const isPassword = pwInput.type === 'password';
+          pwInput.type = isPassword ? 'text' : 'password';
+          eyeIcon.setAttribute('data-lucide', isPassword ? 'eye-off' : 'eye');
+          SolvantaUI.initIcons();
+        });
+      }
+    });
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      if (!email) {
+        SolvantaUI.toast('Please enter a valid operator email', 'warning');
+        return;
+      }
+      SolvantaUI.toast('Authentication verified. Loading plant dashboard...', 'success');
+      setTimeout(() => {
+        window.location.href = 'dashboard.html';
+      }, 700);
+    }
+
+    function handleForgot(e) {
+      e.preventDefault();
+      SolvantaUI.modal({
+        title: 'Operator Credential Recovery',
+        bodyHtml: `
+          <p style="font-size:13px; color:#334155; line-height:1.5;">
+            In demonstration mode, default credentials are pre-configured:
+          </p>
+          <div style="background:#f1f5f9; padding:12px; border-radius:8px; margin:12px 0; font-family:var(--font-mono); font-size:12px;">
+            <strong>Email:</strong> aditya.lead@solvanta.energy<br>
+            <strong>Password:</strong> solvanta2026
+          </div>
+          <p style="font-size:12px; color:#64748b;">
+            Click "Enter Demo Dashboard" on the login screen for single-click bypass.
+          </p>
+        `,
+        footerButtons: [
+          { text: 'Close', className: 'btn btn-primary', onClick: (close) => close() }
+        ]
+      });
+    }
+  </script>
+</body>
+</html>

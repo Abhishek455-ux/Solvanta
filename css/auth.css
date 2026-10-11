@@ -1,0 +1,156 @@
+/* ==========================================================================
+   SOLVANTA AUTHENTICATION & DEMO LOGIN STYLES (LIGHT THEME + SOLAR BACKDROP)
+   ========================================================================== */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.72) 0%, rgba(30, 58, 138, 0.65) 100%),
+              url('../assets/images/solar_park.jpg') center/cover no-repeat fixed;
+  color: #0f172a;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  font-family: var(--font-sans);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 480px;
+  background: #ffffff;
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.35), 0 0 30px rgba(37, 99, 235, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #2563eb, #00d2ff, #10b981);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.auth-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  text-decoration: none;
+}
+
+.auth-title {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.auth-subtitle {
+  font-size: var(--text-sm);
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.auth-demo-banner {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-bottom: var(--space-6);
+  text-align: center;
+}
+
+.auth-demo-banner h4 {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: #1e40af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.auth-demo-banner p {
+  font-size: var(--text-xs);
+  color: #475569;
+  margin-bottom: var(--space-3);
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: var(--space-6) 0;
+  color: #64748b;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.auth-divider span {
+  padding: 0 var(--space-3);
+}
+
+.auth-form .form-label {
+  color: #334155;
+  font-weight: 600;
+}
+
+.auth-form .form-control {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+}
+
+.auth-form .form-control:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-toggle-btn:hover {
+  color: #0f172a;
+}
+
+.auth-footer-note {
+  margin-top: var(--space-6);
+  text-align: center;
+  font-size: var(--text-xs);
+  color: #64748b;
+  border-top: 1px solid #e2e8f0;
+  padding-top: var(--space-4);
+}
