@@ -1,5 +1,7 @@
 # SOLVANTA — Renewable Energy Plant Monitoring & Automated Reporting Platform
 
+Clean energy intelligent SaaS platform.
+
 **Brand:** **SOLVANTA ENERGY INTELLIGENCE**  
 **Tagline:** *"Smarter Data. Cleaner Energy. A Brighter Future."*  
 **Academic Submission:** B.Tech Computer Science & Engineering — Final Year Capstone Project  
