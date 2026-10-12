@@ -302,12 +302,109 @@ const SolvantaCharts = (() => {
     return chart;
   }
 
+  // 6. BESS Real-Time Dispatch & SoC Profile Dual Chart
+  function renderBessDispatchChart(canvasId, diurnalData) {
+    destroyChart(canvasId);
+    const canvas = document.getElementById(canvasId);
+    if (!canvas || !window.Chart) return null;
+
+    const ctx = canvas.getContext('2d');
+    const labels = diurnalData.map(d => d.time);
+    const powerData = diurnalData.map(d => d.powerMW);
+    const socData = diurnalData.map(d => d.socPercent);
+
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            type: 'bar',
+            label: 'Net Power Dispatch (MW)',
+            data: powerData,
+            backgroundColor: powerData.map(v => v >= 0 ? 'rgba(16, 185, 129, 0.75)' : 'rgba(2, 132, 199, 0.75)'),
+            borderColor: powerData.map(v => v >= 0 ? '#10b981' : '#0284c7'),
+            borderWidth: 1.5,
+            yAxisID: 'yPower',
+            order: 2
+          },
+          {
+            type: 'line',
+            label: 'State of Charge (SoC %)',
+            data: socData,
+            borderColor: '#f59e0b',
+            backgroundColor: 'rgba(245, 158, 11, 0.1)',
+            fill: false,
+            tension: 0.35,
+            borderWidth: 2.5,
+            pointRadius: 2,
+            pointHoverRadius: 5,
+            yAxisID: 'ySoc',
+            order: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: { font: { family: 'Plus Jakarta Sans', size: 12 }, boxWidth: 12 }
+          },
+          tooltip: {
+            padding: 10,
+            cornerRadius: 8,
+            callbacks: {
+              label: (ctx) => {
+                if (ctx.dataset.yAxisID === 'yPower') {
+                  const val = ctx.raw;
+                  return val >= 0
+                    ? ` Discharging: +${val} MW (Peak Export)`
+                    : ` Charging: ${val} MW (Solar Soak)`;
+                }
+                return ` State of Charge: ${ctx.raw}%`;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { font: { size: 10 }, maxRotation: 45 }
+          },
+          yPower: {
+            type: 'linear',
+            position: 'left',
+            grid: { color: 'rgba(226, 232, 240, 0.6)' },
+            title: { display: true, text: 'MW (Discharge + / Charge -)', font: { size: 10, weight: 600 } },
+            ticks: { callback: (v) => `${v} MW` }
+          },
+          ySoc: {
+            type: 'linear',
+            position: 'right',
+            min: 0,
+            max: 100,
+            grid: { display: false },
+            title: { display: true, text: 'SoC %', font: { size: 10, weight: 600 } },
+            ticks: { callback: (v) => `${v}%` }
+          }
+        }
+      }
+    });
+
+    chartInstances[canvasId] = chart;
+    return chart;
+  }
+
   return {
     destroyChart,
     renderGenerationTrendChart,
     renderMonthlyComparisonChart,
     renderPlantComparisonChart,
     renderTechnologyMixChart,
-    renderStatusDistributionChart
+    renderStatusDistributionChart,
+    renderBessDispatchChart
   };
 })();

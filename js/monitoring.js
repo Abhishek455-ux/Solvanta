@@ -125,6 +125,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Chart Render
     renderMonitoringChart(plant);
 
+    // BESS Console Render
+    renderBessConsole(plant);
+
     // Inverter Matrix
     renderInverterMatrix(plant);
   }
@@ -132,6 +135,76 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderMonitoringChart(plant) {
     const hourlyData = SolvantaDemoData.generateHourlyCurve(plant);
     SolvantaCharts.renderGenerationTrendChart('liveMonitoringChart', hourlyData, true);
+  }
+
+  function renderBessConsole(plant) {
+    const bessFleet = SolvantaStorage.getBessFleet ? SolvantaStorage.getBessFleet() : (SolvantaDemoData.bessFleet || []);
+    // Find co-located BESS or pick primary
+    const bess = bessFleet.find(b => b.plantId === plant.id) || bessFleet[0];
+    if (!bess) return;
+
+    const elTitle = document.getElementById('bess-console-title');
+    const elSub = document.getElementById('bess-console-subtitle');
+    const elStatusBadge = document.getElementById('bess-status-badge');
+    const elModeBadge = document.getElementById('bess-mode-badge');
+    const elSoc = document.getElementById('bess-soc-val');
+    const elSocBar = document.getElementById('bess-soc-bar');
+    const elCapAvail = document.getElementById('bess-capacity-avail');
+    const elPower = document.getElementById('bess-power-val');
+    const elPowerSub = document.getElementById('bess-power-sub');
+    const elRte = document.getElementById('bess-rte-val');
+    const elSoh = document.getElementById('bess-soh-val');
+    const elCycles = document.getElementById('bess-cycles-val');
+    const elArbitrage = document.getElementById('bess-arbitrage-val');
+    const elRacks = document.getElementById('bess-racks-val');
+    const elTemp = document.getElementById('bess-temp-val');
+    const elHvac = document.getElementById('bess-hvac-val');
+    const elBus = document.getElementById('bess-bus-val');
+
+    if (elTitle) elTitle.textContent = `${bess.name} — SCADA Dispatch Console`;
+    if (elSub) elSub.textContent = `${bess.chemistry} &bull; Rated ${bess.ratedPowerMW} MW / ${bess.ratedCapacityMWh} MWh (${bess.durationHours}h) &bull; Bus: ${bess.busVoltageKV} kV`;
+
+    if (elStatusBadge) {
+      const isDischarge = bess.status === 'Discharging';
+      elStatusBadge.className = isDischarge ? 'badge badge-success' : 'badge badge-info';
+      elStatusBadge.innerHTML = `<span class="badge-dot"></span> ${bess.status}`;
+    }
+    if (elModeBadge) {
+      elModeBadge.innerHTML = `<i data-lucide="zap"></i> ${bess.dispatchMode}`;
+    }
+
+    if (elSoc) elSoc.textContent = `${bess.socPercent}%`;
+    if (elSocBar) elSocBar.style.width = `${bess.socPercent}%`;
+    if (elCapAvail) {
+      const avail = ((bess.socPercent / 100) * bess.ratedCapacityMWh).toFixed(1);
+      elCapAvail.textContent = `${avail} MWh usable of ${bess.ratedCapacityMWh} MWh`;
+    }
+
+    if (elPower) {
+      const isPositive = bess.currentPowerMW >= 0;
+      elPower.textContent = `${isPositive ? '+' : ''}${bess.currentPowerMW} MW`;
+      elPower.style.color = isPositive ? 'var(--primary-600)' : '#0284c7';
+      if (elPowerSub) {
+        elPowerSub.textContent = isPositive ? 'Peak Discharging (Export to Grid)' : 'Solar Soak Charging (Absorbing Surplus)';
+        elPowerSub.style.color = isPositive ? '#059669' : '#0284c7';
+      }
+    }
+
+    if (elRte) elRte.textContent = `${bess.roundTripEfficiency}%`;
+    if (elSoh) elSoh.textContent = `State of Health (SoH): ${bess.sohPercent}%`;
+    if (elCycles) elCycles.textContent = `${bess.cycleCount} Cumulative Cycles`;
+    if (elArbitrage) elArbitrage.textContent = SolvantaUtils.formatINR(bess.todayArbitrageRevenueINR);
+
+    if (elRacks) elRacks.textContent = `${bess.racksOnline} / ${bess.rackCount} Online (100%)`;
+    if (elTemp) elTemp.textContent = `${bess.cellTempC} °C (${bess.coolingSystem})`;
+    if (elHvac) elHvac.textContent = `${bess.hvacPowerKW} kW (0.24% of Gross)`;
+    if (elBus) elBus.textContent = `1,250 V DC &bull; ${bess.busVoltageKV} kV POI`;
+
+    // Render BESS 24h diurnal curve
+    if (window.SolvantaCharts && SolvantaCharts.renderBessDispatchChart) {
+      const bessCurve = SolvantaDemoData.generateBessDiurnalCurve(bess);
+      SolvantaCharts.renderBessDispatchChart('bessDispatchChart', bessCurve);
+    }
   }
 
   function renderInverterMatrix(plant) {
@@ -206,6 +279,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const elPacket = document.getElementById('telemetry-last-packet');
       if (elPacket) elPacket.textContent = new Date().toLocaleTimeString();
+
+      // BESS Telemetry slight jitter update
+      const elBessPower = document.getElementById('bess-power-val');
+      const elBessSoc = document.getElementById('bess-soc-val');
+      if (elBessPower && elBessSoc) {
+        const pJitter = +((Math.random() - 0.45) * 0.4).toFixed(1);
+        const curText = elBessPower.textContent.replace('+', '').replace(' MW', '');
+        const curP = parseFloat(curText) || 42.5;
+        const newP = +(curP + pJitter).toFixed(1);
+        elBessPower.textContent = `${newP >= 0 ? '+' : ''}${newP} MW`;
+      }
     }, simIntervalMs);
   }
 

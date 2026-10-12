@@ -512,6 +512,232 @@ const SolvantaDemoData = (() => {
     }
   ];
 
+  // 6 Dedicated Utility-Scale BESS (Battery Energy Storage System) Assets
+  const bessFleet = [
+    {
+      id: 'BESS-RAJ-01',
+      name: 'Bhadla 60 MW / 240 MWh LFP BESS Bank',
+      plantId: 'PLANT-SOL-02',
+      plantName: 'Bhadla Solar Complex Phase II',
+      chemistry: 'LFP (Lithium Iron Phosphate)',
+      ratedPowerMW: 60,
+      ratedCapacityMWh: 240,
+      durationHours: 4,
+      status: 'Discharging',
+      socPercent: 78.4,
+      sohPercent: 98.6,
+      currentPowerMW: 42.5, // positive = discharge, negative = charge
+      cellTempC: 28.4,
+      coolingSystem: 'Active Liquid Cooled R134a',
+      cycleCount: 642,
+      roundTripEfficiency: 89.2, // %
+      busVoltageKV: 33.0,
+      rackCount: 32,
+      racksOnline: 32,
+      dailyChargeMWh: 188.4,
+      dailyDischargeMWh: 168.1,
+      todayArbitrageRevenueINR: 425000,
+      dispatchMode: 'Arbitrage Peak Discharge',
+      cFactor: '0.25C',
+      hvacPowerKW: 145,
+      fireSuppression: 'Aerosol Novec 1230 Normal'
+    },
+    {
+      id: 'BESS-KAR-02',
+      name: 'Pavagada 40 MW / 160 MWh Hybrid BESS',
+      plantId: 'PLANT-SOL-01',
+      plantName: 'Pavagada Solar Park Unit 4',
+      chemistry: 'LFP (Lithium Iron Phosphate)',
+      ratedPowerMW: 40,
+      ratedCapacityMWh: 160,
+      durationHours: 4,
+      status: 'Standby / Float',
+      socPercent: 94.2,
+      sohPercent: 99.1,
+      currentPowerMW: 0.0,
+      cellTempC: 25.8,
+      coolingSystem: 'Active Liquid Cooled',
+      cycleCount: 488,
+      roundTripEfficiency: 90.1,
+      busVoltageKV: 33.0,
+      rackCount: 20,
+      racksOnline: 20,
+      dailyChargeMWh: 142.0,
+      dailyDischargeMWh: 128.0,
+      todayArbitrageRevenueINR: 310000,
+      dispatchMode: 'Frequency Response (FCR Standby)',
+      cFactor: '0.25C',
+      hvacPowerKW: 98,
+      fireSuppression: 'Aerosol Novec 1230 Normal'
+    },
+    {
+      id: 'BESS-JAI-03',
+      name: 'Jaisalmer 50 MW / 200 MWh Wind-Solar Firming BESS',
+      plantId: 'PLANT-HYB-05',
+      plantName: 'Jaisalmer Hybrid Eco-Energy',
+      chemistry: 'LFP Grid-Scale Containerized',
+      ratedPowerMW: 50,
+      ratedCapacityMWh: 200,
+      durationHours: 4,
+      status: 'Discharging',
+      socPercent: 62.1,
+      sohPercent: 97.9,
+      currentPowerMW: 35.0,
+      cellTempC: 29.1,
+      coolingSystem: 'Dual Loop Liquid Chilled',
+      cycleCount: 814,
+      roundTripEfficiency: 88.7,
+      busVoltageKV: 33.0,
+      rackCount: 26,
+      racksOnline: 26,
+      dailyChargeMWh: 165.5,
+      dailyDischargeMWh: 146.8,
+      todayArbitrageRevenueINR: 382000,
+      dispatchMode: 'Wind Ramp Smoothing & Arbitrage',
+      cFactor: '0.25C',
+      hvacPowerKW: 120,
+      fireSuppression: 'Aerosol Novec 1230 Normal'
+    },
+    {
+      id: 'BESS-KUT-04',
+      name: 'Kutch Coastal 30 MW / 60 MWh High-C BESS',
+      plantId: 'PLANT-WND-06',
+      plantName: 'Kutch Coastal Wind Project',
+      chemistry: 'LFP Fast-Dispatch',
+      ratedPowerMW: 30,
+      ratedCapacityMWh: 60,
+      durationHours: 2,
+      status: 'Charging',
+      socPercent: 44.5,
+      sohPercent: 99.4,
+      currentPowerMW: -24.0,
+      cellTempC: 27.2,
+      coolingSystem: 'Active HVAC Liquid Cooling',
+      cycleCount: 390,
+      roundTripEfficiency: 91.0,
+      busVoltageKV: 33.0,
+      rackCount: 16,
+      racksOnline: 16,
+      dailyChargeMWh: 54.2,
+      dailyDischargeMWh: 49.3,
+      todayArbitrageRevenueINR: 195000,
+      dispatchMode: 'Sub-second Synthetic Inertia',
+      cFactor: '0.5C',
+      hvacPowerKW: 85,
+      fireSuppression: 'Aerosol Novec 1230 Normal'
+    },
+    {
+      id: 'BESS-ANA-05',
+      name: 'Ananthapur 35 MW / 140 MWh Co-located Storage',
+      plantId: 'PLANT-HYB-08',
+      plantName: 'Ananthapur Hybrid Power Station',
+      chemistry: 'LFP Container Bank',
+      ratedPowerMW: 35,
+      ratedCapacityMWh: 140,
+      durationHours: 4,
+      status: 'Discharging',
+      socPercent: 71.0,
+      sohPercent: 98.2,
+      currentPowerMW: 28.5,
+      cellTempC: 28.0,
+      coolingSystem: 'Active Liquid Cooled',
+      cycleCount: 520,
+      roundTripEfficiency: 89.5,
+      busVoltageKV: 33.0,
+      rackCount: 18,
+      racksOnline: 18,
+      dailyChargeMWh: 110.0,
+      dailyDischargeMWh: 98.5,
+      todayArbitrageRevenueINR: 260000,
+      dispatchMode: 'Peak Shaving Evening Discharging',
+      cFactor: '0.25C',
+      hvacPowerKW: 92,
+      fireSuppression: 'Aerosol Novec 1230 Normal'
+    },
+    {
+      id: 'BESS-SAK-06',
+      name: 'Sakri 25 MW / 100 MWh Grid Support BESS',
+      plantId: 'PLANT-SOL-04',
+      plantName: 'Sakri Solar Energy Park',
+      chemistry: 'LFP Container System',
+      ratedPowerMW: 25,
+      ratedCapacityMWh: 100,
+      durationHours: 4,
+      status: 'Standby / Float',
+      socPercent: 88.0,
+      sohPercent: 96.8,
+      currentPowerMW: 0.0,
+      cellTempC: 26.5,
+      coolingSystem: 'Active Liquid Cooled',
+      cycleCount: 670,
+      roundTripEfficiency: 88.2,
+      busVoltageKV: 33.0,
+      rackCount: 14,
+      racksOnline: 13,
+      dailyChargeMWh: 82.0,
+      dailyDischargeMWh: 72.3,
+      todayArbitrageRevenueINR: 185000,
+      dispatchMode: 'Grid Voltage Stability & Derating Cushion',
+      cFactor: '0.25C',
+      hvacPowerKW: 75,
+      fireSuppression: 'Aerosol Novec 1230 Normal'
+    }
+  ];
+
+  // Generate 24-hour Diurnal BESS Charge/Discharge Profile (Indian Market Day-Ahead)
+  function generateBessDiurnalCurve(bess) {
+    const hours = [];
+    const pMax = bess.ratedPowerMW;
+    // Typical India TOD Tariff: Solar surplus mid-day (charge negative MW), Evening peak 18:30-22:30 (discharge positive MW)
+    for (let h = 0; h < 24; h++) {
+      const timeLabel = `${String(h).padStart(2, '0')}:00`;
+      let powerMW = 0;
+      let soc = 50;
+      let tariffINR = 3.2;
+
+      if (h >= 0 && h < 6) {
+        // Night float
+        powerMW = 0;
+        soc = 35 + h * 0.5;
+        tariffINR = 3.0;
+      } else if (h >= 6 && h < 10) {
+        // Morning mild dispatch / baseline
+        powerMW = +(pMax * 0.15).toFixed(1);
+        soc = 38 - (h - 6) * 2;
+        tariffINR = 4.2;
+      } else if (h >= 10 && h < 16) {
+        // Solar soak / Heavy mid-day charging (negative MW)
+        powerMW = -+(pMax * 0.75 * Math.sin(((h - 10) / 6) * Math.PI)).toFixed(1);
+        soc = 32 + (h - 10) * 11;
+        tariffINR = 2.4; // Cheap solar surplus
+      } else if (h >= 16 && h < 18) {
+        // Pre-peak transition standby
+        powerMW = 0;
+        soc = 96;
+        tariffINR = 4.5;
+      } else if (h >= 18 && h < 23) {
+        // Evening Grid Peak Discharging (positive MW)
+        powerMW = +(pMax * 0.85).toFixed(1);
+        soc = 96 - (h - 18) * 16;
+        tariffINR = 8.5; // High merchant peak tariff
+      } else {
+        // Night baseline
+        powerMW = +(pMax * 0.1).toFixed(1);
+        soc = 34;
+        tariffINR = 3.1;
+      }
+
+      hours.push({
+        hour: h,
+        time: timeLabel,
+        powerMW: powerMW,
+        socPercent: Math.min(100, Math.max(10, Math.round(soc))),
+        tariffINR: tariffINR
+      });
+    }
+    return hours;
+  }
+
   // Default User & App Settings
   const defaultSettings = {
     organizationName: 'Solvanta Clean Energy Corp',
@@ -528,7 +754,9 @@ const SolvantaDemoData = (() => {
 
   return {
     plants,
+    bessFleet,
     generateHourlyCurve,
+    generateBessDiurnalCurve,
     generate30DaysHistory,
     monthlyHistory,
     initialAlerts,

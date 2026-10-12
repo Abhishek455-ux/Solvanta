@@ -57,7 +57,47 @@ document.addEventListener('DOMContentLoaded', () => {
     let observations = [];
 
     // Template specific generation logic
-    if (template === 'daily') {
+    if (template === 'bess') {
+      const bessFleet = SolvantaStorage.getBessFleet ? SolvantaStorage.getBessFleet() : (SolvantaDemoData.bessFleet || []);
+      const matchedBess = targetPlant
+        ? (bessFleet.find(b => b.plantId === targetPlant.id) || bessFleet[0])
+        : null;
+
+      const totalPowerMW = matchedBess ? matchedBess.ratedPowerMW : bessFleet.reduce((s, b) => s + b.ratedPowerMW, 0);
+      const totalCapMWh = matchedBess ? matchedBess.ratedCapacityMWh : bessFleet.reduce((s, b) => s + b.ratedCapacityMWh, 0);
+      const avgRte = matchedBess ? matchedBess.roundTripEfficiency : (bessFleet.reduce((s, b) => s + b.roundTripEfficiency, 0) / bessFleet.length).toFixed(1);
+      const avgSoH = matchedBess ? matchedBess.sohPercent : (bessFleet.reduce((s, b) => s + b.sohPercent, 0) / bessFleet.length).toFixed(1);
+      const totalRevINR = matchedBess ? matchedBess.todayArbitrageRevenueINR : bessFleet.reduce((s, b) => s + b.todayArbitrageRevenueINR, 0);
+      const totalDischargeMWh = matchedBess ? matchedBess.dailyDischargeMWh : bessFleet.reduce((s, b) => s + b.dailyDischargeMWh, 0);
+
+      kpis = [
+        { label: 'BESS Rated Power', value: `${totalPowerMW} MW` },
+        { label: 'Storage Capacity', value: `${totalCapMWh} MWh (4h LFP)` },
+        { label: 'Round-Trip Efficiency', value: `${avgRte}%` },
+        { label: 'State of Health (SoH)', value: `${avgSoH}%` },
+        { label: 'Discharge Energy Today', value: `${SolvantaUtils.formatNumber(totalDischargeMWh, 1)} MWh` },
+        { label: 'Today Arbitrage Gain', value: SolvantaUtils.formatINR(totalRevINR) }
+      ];
+
+      tableHeaders = ['BESS Asset ID & Name', 'Chemistry', 'Power / Cap', 'SoC %', 'RTE %', 'Dispatch Mode', 'Daily Arbitrage'];
+      const rowsSource = matchedBess ? [matchedBess] : bessFleet;
+      tableRows = rowsSource.map(b => [
+        `${b.id} - ${b.name}`,
+        b.chemistry,
+        `${b.ratedPowerMW} MW / ${b.ratedCapacityMWh} MWh`,
+        `${b.socPercent}%`,
+        `${b.roundTripEfficiency}%`,
+        b.dispatchMode,
+        SolvantaUtils.formatINR(b.todayArbitrageRevenueINR)
+      ]);
+
+      observations = [
+        `Fleetwide 240 MW / 900 MWh utility storage achieved ${avgRte}% Round-Trip Efficiency (RTE) under active liquid chilling.`,
+        `Mid-day solar soak absorbed ${(totalDischargeMWh * 1.12).toFixed(1)} MWh surplus generation during off-peak tariff periods.`,
+        `Evening peak discharge between 18:30-22:30 IST captured top merchant tariffs, generating ${SolvantaUtils.formatINR(totalRevINR)} incremental daily margin.`,
+        `All rack BMS thermal metrics compliant (< 30°C cell temp); automated aerosol fire suppression status: Normal.`
+      ];
+    } else if (template === 'daily') {
       const genToday = targetPlant ? targetPlant.todayGenMWh : allPlants.reduce((s, p) => s + p.todayGenMWh, 0);
       const cuf = SolvantaUtils.calculateCUF(genToday, totalCap, 24);
       const pr = targetPlant ? targetPlant.performanceRatio : 81.8;
@@ -325,7 +365,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (templateSelect) {
       templateSelect.addEventListener('change', (e) => {
         const val = e.target.value;
-        if (val === 'daily') {
+        if (val === 'bess') {
+          titleInput.value = 'BESS BATTERY STORAGE & ARBITRAGE DISPATCH AUDIT';
+          periodInput.value = 'October 2026 (Daily Dispatch)';
+        } else if (val === 'daily') {
           titleInput.value = 'DAILY DIURNAL GENERATION & PEAK LOG';
           periodInput.value = SolvantaUtils.getTodayISO();
         } else if (val === 'monthly') {

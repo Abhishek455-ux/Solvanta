@@ -175,7 +175,7 @@
                 <i data-lucide="sliders" style="color:var(--primary-600);"></i>
                 <span>Report Parameters</span>
               </div>
-              <span class="badge badge-success" style="font-size:10px;">6 Template Presets</span>
+              <span class="badge badge-success" style="font-size:10px;">7 Template Presets</span>
             </div>
             <div class="card-body">
               <form id="report-config-form" onsubmit="event.preventDefault();">
@@ -183,8 +183,9 @@
                 <div class="form-group">
                   <label class="form-label" for="report-template-select">Select Report Template Preset</label>
                   <select id="report-template-select" class="form-select" style="font-weight:600;">
+                    <option value="bess" selected>BESS Battery Energy Storage &amp; Arbitrage Report (New)</option>
                     <option value="daily">Daily Generation Report (Diurnal Curve &amp; Peak)</option>
-                    <option value="monthly" selected>Monthly Performance Report (Target vs Actual)</option>
+                    <option value="monthly">Monthly Performance Report (Target vs Actual)</option>
                     <option value="annual">Annual Energy Audit (Year-on-Year CUF)</option>
                     <option value="health">Plant Health &amp; Inverter Fault Audit</option>
                     <option value="portfolio">Multi-Plant Portfolio Summary (Fleetwide)</option>

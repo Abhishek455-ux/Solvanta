@@ -19,6 +19,10 @@ const SolvantaStorage = (() => {
       if (!parsed.plants || !Array.isArray(parsed.plants) || parsed.plants.length === 0) {
         return resetToDefault();
       }
+      if (!parsed.bessFleet || !Array.isArray(parsed.bessFleet)) {
+        parsed.bessFleet = JSON.parse(JSON.stringify(SolvantaDemoData.bessFleet || []));
+        saveStore(parsed);
+      }
       return parsed;
     } catch (e) {
       console.warn('SolvantaStorage: LocalStorage parse failure, resetting to defaults.', e);
@@ -48,6 +52,7 @@ const SolvantaStorage = (() => {
       version: '1.0',
       timestamp: new Date().toISOString(),
       plants: JSON.parse(JSON.stringify(SolvantaDemoData.plants)),
+      bessFleet: JSON.parse(JSON.stringify(SolvantaDemoData.bessFleet || [])),
       alerts: JSON.parse(JSON.stringify(SolvantaDemoData.initialAlerts)),
       maintenance: JSON.parse(JSON.stringify(SolvantaDemoData.initialMaintenance)),
       reports: JSON.parse(JSON.stringify(SolvantaDemoData.initialReports)),
@@ -122,6 +127,33 @@ const SolvantaStorage = (() => {
     }
     saveStore(store);
     return true;
+  }
+
+  // ==================== BESS (BATTERY ENERGY STORAGE) CRUD ====================
+  function getBessFleet() {
+    const store = getStore();
+    if (!store.bessFleet || !Array.isArray(store.bessFleet) || store.bessFleet.length === 0) {
+      store.bessFleet = JSON.parse(JSON.stringify(SolvantaDemoData.bessFleet || []));
+      saveStore(store);
+    }
+    return store.bessFleet;
+  }
+
+  function getBess(id) {
+    const fleet = getBessFleet();
+    return fleet.find(b => b.id === id) || null;
+  }
+
+  function updateBess(id, updatedFields) {
+    const store = getStore();
+    if (!store.bessFleet) store.bessFleet = getBessFleet();
+    const idx = store.bessFleet.findIndex(b => b.id === id);
+    if (idx === -1) {
+      throw new Error(`BESS Asset with ID '${id}' not found.`);
+    }
+    store.bessFleet[idx] = { ...store.bessFleet[idx], ...updatedFields };
+    saveStore(store);
+    return store.bessFleet[idx];
   }
 
   // ==================== ALERTS CRUD ====================
@@ -288,6 +320,9 @@ const SolvantaStorage = (() => {
     addPlant,
     updatePlant,
     deletePlant,
+    getBessFleet,
+    getBess,
+    updateBess,
     getAlerts,
     addAlert,
     acknowledgeAlert,
