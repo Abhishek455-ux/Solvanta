@@ -468,6 +468,238 @@
           </div>
         </div>
 
+        <!-- Advanced BMS 32-Rack Deep Telemetry & Cell Delta-V Matrix -->
+        <div class="card" style="margin-bottom:var(--space-6); border:1px solid rgba(16, 185, 129, 0.25);">
+          <div class="card-header" style="background:#ffffff; border-bottom:1px solid var(--border-light);">
+            <div>
+              <div class="card-title" style="display:flex; align-items:center; gap:8px;">
+                <i data-lucide="layers" style="color:#059669;"></i>
+                <span>BESS Cell-Tier Telemetry &bull; 32-Rack Delta-V ($\Delta V$) Heatmap</span>
+              </div>
+              <div class="card-subtitle">Cell voltage variance ($\Delta V < 18\text{ mV}$), thermal gradient, and active balancing status</div>
+            </div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="badge badge-success" style="font-size:10px;">
+                <i data-lucide="check-circle-2"></i> All 32 Racks Balanced
+              </span>
+              <span class="badge badge-info" style="font-size:10px;">
+                Mean Cell: 3.284 V &bull; $\Delta V$: 12 mV
+              </span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; font-size:12px; color:var(--text-muted); flex-wrap:wrap; gap:8px;">
+              <span>Real-time battery pack container banks: click any rack block to inspect individual thermal probe and BMS node.</span>
+              <div style="display:flex; align-items:center; gap:12px; font-size:11px;">
+                <span style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; background:#10b981; border-radius:2px;"></span> Nominal (&lt;3.32V)</span>
+                <span style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; background:#06b6d4; border-radius:2px;"></span> Balancing Active</span>
+                <span style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; background:#f59e0b; border-radius:2px;"></span> Float Standby</span>
+              </div>
+            </div>
+
+            <!-- 32-Rack BMS Matrix Grid -->
+            <div id="bms-rack-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(118px, 1fr)); gap:10px;">
+              <!-- Dynamically populated by monitoring.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive SLDC Dispatch & Substation Single-Line Diagram (SLD) Control Room -->
+        <div class="card" style="margin-bottom:var(--space-6); border:1px solid rgba(16, 185, 129, 0.25);">
+          <div class="card-header" style="background:linear-gradient(135deg, rgba(16,185,129,0.06), rgba(6,182,212,0.04)); border-bottom:1px solid var(--border-light);">
+            <div>
+              <div class="card-title" style="display:flex; align-items:center; gap:8px;">
+                <i data-lucide="git-commit" style="color:var(--primary-600);"></i>
+                <span>SLDC Grid Dispatch &bull; Substation Single-Line Diagram (SLD)</span>
+              </div>
+              <div class="card-subtitle">Real-time Deviation Settlement Mechanism (DSM), breaker control, and 33kV/220kV busbar telemetry</div>
+            </div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="badge badge-success" id="dsm-compliance-badge">
+                <i data-lucide="check"></i> DSM Compliant (&plusmn;1.4%)
+              </span>
+              <span class="badge badge-info" id="sldc-sync-badge">
+                CEA Grid Code 50.02 Hz
+              </span>
+            </div>
+          </div>
+          <div class="card-body">
+            <!-- Top DSM Merit Order & Compliance Strip -->
+            <div class="grid grid-4 gap-4" style="margin-bottom:var(--space-5);">
+              <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:10px; padding:12px;">
+                <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">SLDC Schedule MW</div>
+                <div style="font-size:22px; font-weight:800; color:#0f172a; font-family:var(--font-mono); margin-top:4px;" id="sld-schedule-mw">112.5 MW</div>
+                <div style="font-size:11px; color:#0284c7; font-weight:600; margin-top:4px;">Declared Day-Ahead Schedule</div>
+              </div>
+
+              <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:10px; padding:12px;">
+                <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Actual Grid Injection</div>
+                <div style="font-size:22px; font-weight:800; color:var(--primary-600); font-family:var(--font-mono); margin-top:4px;" id="sld-actual-mw">114.2 MW</div>
+                <div style="font-size:11px; color:#059669; font-weight:600; margin-top:4px;" id="sld-deviation-text">Deviation: +1.7 MW (+1.51%)</div>
+              </div>
+
+              <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:10px; padding:12px;">
+                <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">DSM Tolerance Band</div>
+                <div style="font-size:22px; font-weight:800; color:#0f172a; font-family:var(--font-mono); margin-top:4px;">&plusmn;10.0%</div>
+                <div style="font-size:11px; color:#059669; font-weight:600; margin-top:4px;">CERC Band Compliant (Zero Penalty)</div>
+              </div>
+
+              <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:10px; padding:12px;">
+                <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">DSM Penalty Risk</div>
+                <div style="font-size:22px; font-weight:800; color:#059669; font-family:var(--font-mono); margin-top:4px;">₹0.00 / Block</div>
+                <div style="font-size:11px; color:var(--text-muted); margin-top:4px;">96 Time-Blocks Cleared Nominal</div>
+              </div>
+            </div>
+
+            <!-- Single Line Diagram SVG & Interactive Remote Plant Control Panel -->
+            <div style="display:grid; grid-template-columns:1.6fr 1fr; gap:16px;" class="sld-container-grid">
+              
+              <!-- SLD Interactive Electrical Schematic View -->
+              <div style="background:#04130c; border:1px solid rgba(16,185,129,0.3); border-radius:12px; padding:16px; position:relative; overflow:hidden;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+                  <span style="font-size:12px; font-weight:700; color:#34d399; font-family:var(--font-mono); display:flex; align-items:center; gap:6px;">
+                    <span class="badge-dot" style="background:#10b981;"></span> 220 kV / 33 kV POI SUBSTATION SLD
+                  </span>
+                  <span style="font-size:11px; color:#94a3b8; font-family:var(--font-mono);">SYNC: MODBUS TCP RTU #01</span>
+                </div>
+
+                <!-- Animated Electrical Flow Single-Line Diagram (SVG) -->
+                <svg viewBox="0 0 620 280" style="width:100%; height:auto; display:block;" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Definitions for Gradients & Markers -->
+                  <defs>
+                    <linearGradient id="busbarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#10b981"/>
+                      <stop offset="100%" stop-color="#06b6d4"/>
+                    </linearGradient>
+                    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399"/>
+                    </marker>
+                  </defs>
+
+                  <!-- 220 kV Grid Busbar (Top) -->
+                  <line x1="60" y1="35" x2="560" y2="35" stroke="url(#busbarGrad)" stroke-width="4" stroke-linecap="round"/>
+                  <text x="70" y="25" fill="#38bdf8" font-size="11" font-family="monospace" font-weight="bold">220 kV STU / CTU GRID BUSBAR</text>
+                  <text x="440" y="25" fill="#34d399" font-size="11" font-family="monospace">50.02 Hz • 221.4 kV</text>
+
+                  <!-- Grid Feeder Line -->
+                  <line x1="310" y1="35" x2="310" y2="70" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+                  <!-- Main Step-Up Power Transformer (PTR 160 MVA 33/220 kV) -->
+                  <circle cx="310" cy="85" r="14" fill="none" stroke="#38bdf8" stroke-width="2"/>
+                  <circle cx="310" cy="99" r="14" fill="none" stroke="#38bdf8" stroke-width="2"/>
+                  <text x="335" y="96" fill="#cbd5e1" font-size="10" font-family="monospace">PTR 160 MVA (33/220 kV)</text>
+
+                  <!-- Step-up Line to 33 kV Bus -->
+                  <line x1="310" y1="113" x2="310" y2="145" stroke="#34d399" stroke-width="2.5"/>
+
+                  <!-- 33 kV Intermediate Incomer Busbar -->
+                  <line x1="90" y1="145" x2="530" y2="145" stroke="#10b981" stroke-width="3.5" stroke-linecap="round"/>
+                  <text x="100" y="137" fill="#a7f3d0" font-size="10" font-family="monospace">33 kV POOLING SWITCHYARD BUSBAR (MAIN)</text>
+
+                  <!-- 3 Outgoing Feeders with Breakers -->
+                  <!-- Feeder 1: Solar Array Feeder -->
+                  <line x1="160" y1="145" x2="160" y2="175" stroke="#34d399" stroke-width="2"/>
+                  <!-- Breaker CB-01 -->
+                  <rect id="sld-cb-solar" x="150" y="175" width="20" height="20" rx="3" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+                  <text x="154" y="189" fill="#ffffff" font-size="9" font-family="monospace" font-weight="bold">ON</text>
+                  <line x1="160" y1="195" x2="160" y2="235" stroke="#34d399" stroke-width="2" stroke-dasharray="4,3"/>
+                  <!-- Solar Symbol -->
+                  <rect x="130" y="235" width="60" height="28" rx="4" fill="#062817" stroke="#10b981" stroke-width="1.5"/>
+                  <text x="138" y="252" fill="#34d399" font-size="10" font-family="monospace" font-weight="bold">SOLAR PV</text>
+                  <text x="138" y="261" fill="#94a3b8" font-size="8" font-family="monospace" id="sld-solar-p">114.2 MW</text>
+
+                  <!-- Feeder 2: BESS Container Bay Feeder -->
+                  <line x1="310" y1="145" x2="310" y2="175" stroke="#34d399" stroke-width="2"/>
+                  <!-- Breaker CB-02 -->
+                  <rect id="sld-cb-bess" x="300" y="175" width="20" height="20" rx="3" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+                  <text x="304" y="189" fill="#ffffff" font-size="9" font-family="monospace" font-weight="bold">ON</text>
+                  <line x1="310" y1="195" x2="310" y2="235" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4,3"/>
+                  <!-- BESS Symbol -->
+                  <rect x="275" y="235" width="70" height="28" rx="4" fill="#04202c" stroke="#0284c7" stroke-width="1.5"/>
+                  <text x="283" y="252" fill="#38bdf8" font-size="10" font-family="monospace" font-weight="bold">BESS BANK</text>
+                  <text x="283" y="261" fill="#94a3b8" font-size="8" font-family="monospace" id="sld-bess-p">+42.5 MW</text>
+
+                  <!-- Feeder 3: Auxiliary Transformer / Reactive STATCOM -->
+                  <line x1="460" y1="145" x2="460" y2="175" stroke="#34d399" stroke-width="2"/>
+                  <!-- Breaker CB-03 -->
+                  <rect id="sld-cb-statcom" x="450" y="175" width="20" height="20" rx="3" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+                  <text x="454" y="189" fill="#ffffff" font-size="9" font-family="monospace" font-weight="bold">ON</text>
+                  <line x1="460" y1="195" x2="460" y2="235" stroke="#34d399" stroke-width="2"/>
+                  <!-- STATCOM / AUX Symbol -->
+                  <rect x="425" y="235" width="70" height="28" rx="4" fill="#172554" stroke="#38bdf8" stroke-width="1.5"/>
+                  <text x="432" y="252" fill="#38bdf8" font-size="10" font-family="monospace" font-weight="bold">STATCOM</text>
+                  <text x="432" y="261" fill="#94a3b8" font-size="8" font-family="monospace">0.99 PF (Sync)</text>
+                </svg>
+
+                <div style="font-size:10px; color:#64748b; font-family:var(--font-mono); margin-top:8px; display:flex; justify-content:space-between;">
+                  <span>ISOLATOR STATUS: ALL CLOSED</span>
+                  <span style="color:#34d399;">● TELEMETRY HEARTBEAT: 100ms</span>
+                </div>
+              </div>
+
+              <!-- Remote Plant SCADA Command & Breaker Control Panel -->
+              <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:12px; padding:16px; display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                    <strong style="font-size:13px; color:#0f172a;">Remote Plant Control Console</strong>
+                    <span class="badge badge-success" style="font-size:9px;">Command Interlock: Armed</span>
+                  </div>
+
+                  <!-- Breaker Toggle 1: Solar Feeder CB-01 -->
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:#f8fafc; border-radius:8px; margin-bottom:8px; border:1px solid var(--border-light);">
+                    <div>
+                      <div style="font-size:12px; font-weight:700; color:#0f172a;">Feeder CB-01 &bull; Solar PV</div>
+                      <div style="font-size:10px; color:var(--text-muted);" id="cb-solar-desc">Status: Closed (33 kV Connected)</div>
+                    </div>
+                    <button class="btn btn-sm btn-emerald" id="toggle-cb-solar-btn" style="min-width:75px;">
+                      Trip / Open
+                    </button>
+                  </div>
+
+                  <!-- Breaker Toggle 2: BESS Feeder CB-02 -->
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:#f8fafc; border-radius:8px; margin-bottom:8px; border:1px solid var(--border-light);">
+                    <div>
+                      <div style="font-size:12px; font-weight:700; color:#0f172a;">Feeder CB-02 &bull; BESS Container Bay</div>
+                      <div style="font-size:10px; color:var(--text-muted);" id="cb-bess-desc">Status: Closed (Grid Injected)</div>
+                    </div>
+                    <button class="btn btn-sm btn-emerald" id="toggle-cb-bess-btn" style="min-width:75px;">
+                      Trip / Open
+                    </button>
+                  </div>
+
+                  <!-- Active Curtailment Slider -->
+                  <div style="padding:10px 12px; background:#f8fafc; border-radius:8px; margin-bottom:8px; border:1px solid var(--border-light);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                      <span style="font-size:11px; font-weight:700; color:#0f172a;">SLDC Active Curtailment Setpoint:</span>
+                      <strong style="font-size:12px; color:var(--primary-600); font-family:var(--font-mono);" id="curtailment-val">100% (No Curtailment)</strong>
+                    </div>
+                    <input type="range" id="curtailment-slider" min="50" max="100" value="100" step="5" style="width:100%; accent-color:var(--primary-500); cursor:pointer;">
+                    <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text-muted); margin-top:2px;">
+                      <span>50% (Grid Congestion)</span>
+                      <span>100% (Full Dispatch)</span>
+                    </div>
+                  </div>
+
+                  <!-- Dust Storm Tracker Stow Emergency Trigger -->
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:rgba(239,68,68,0.05); border-radius:8px; border:1px solid rgba(239,68,68,0.2);">
+                    <div>
+                      <div style="font-size:12px; font-weight:700; color:#ef4444;">High Wind &bull; Emergency Stow Mode</div>
+                      <div style="font-size:10px; color:var(--text-muted);">Drive single-axis trackers to 0° horizontal safety flat</div>
+                    </div>
+                    <button class="btn btn-sm btn-secondary" id="tracker-stow-btn" style="border-color:#ef4444; color:#ef4444;">
+                      <i data-lucide="shield-alert"></i> Stow All
+                    </button>
+                  </div>
+                </div>
+
+                <div style="font-size:10px; color:var(--text-muted); padding-top:10px; border-top:1px solid var(--border-light); margin-top:10px;">
+                  All control commands cryptographically logged to Solvanta SCADA Audit Trail with operator verification.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Substation & Inverter Block Status -->
         <div class="card">
           <div class="card-header">

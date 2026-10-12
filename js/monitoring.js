@@ -128,8 +128,80 @@ document.addEventListener('DOMContentLoaded', () => {
     // BESS Console Render
     renderBessConsole(plant);
 
+    // BMS 32-Rack Deep Telemetry Matrix Render
+    renderBmsMatrix(plant);
+
+    // SLDC Grid Dispatch & Substation SLD Schematic Render
+    renderSldcGridControl(plant);
+
     // Inverter Matrix
     renderInverterMatrix(plant);
+  }
+
+  function renderBmsMatrix(plant) {
+    const grid = document.getElementById('bms-rack-grid');
+    if (!grid) return;
+
+    const bessFleet = SolvantaStorage.getBessFleet ? SolvantaStorage.getBessFleet() : (SolvantaDemoData.bessFleet || []);
+    const bess = bessFleet.find(b => b.plantId === plant.id) || bessFleet[0];
+    const totalRacks = bess ? bess.rackCount : 32;
+
+    let html = '';
+    for (let r = 1; r <= totalRacks; r++) {
+      const rackId = `RCK-${String(r).padStart(2, '0')}`;
+      // Cell voltage around 3.280 - 3.295 V (LFP nominal plateau)
+      const baseV = 3.280 + ((r * 13) % 17) * 0.001;
+      const deltaMv = 9 + ((r * 7) % 8); // 9 to 16 mV
+      const rackTemp = +(27.5 + ((r * 3) % 5) * 0.4).toFixed(1);
+      const isBalancing = r % 5 === 0;
+      const statusColor = isBalancing ? '#06b6d4' : '#10b981';
+      const statusLabel = isBalancing ? 'Balancing' : 'Nominal';
+
+      html += `
+        <div class="bms-rack-item" style="background:#ffffff; border:1px solid var(--border-light); border-radius:8px; padding:8px 10px; cursor:pointer; transition:transform 0.2s, box-shadow 0.2s; border-left:3px solid ${statusColor};" onclick="SolvantaUI.toast('Rack ${rackId}: Cell voltage ${baseV.toFixed(3)}V (\\u0394V: ${deltaMv}mV), Temp: ${rackTemp}\\u00b0C, Liquid chilling loop 100% nominal.', 'info', 'BMS Rack Diagnostics')">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong style="font-size:11px; font-family:var(--font-mono); color:#0f172a;">${rackId}</strong>
+            <span style="width:6px; height:6px; border-radius:50%; background:${statusColor};"></span>
+          </div>
+          <div style="font-size:11px; font-weight:700; color:#0f172a; margin-top:2px; font-family:var(--font-mono);">${baseV.toFixed(3)} V</div>
+          <div style="display:flex; justify-content:space-between; font-size:9px; color:var(--text-muted); margin-top:2px;">
+            <span>&Delta;V: ${deltaMv}mV</span>
+            <span>${rackTemp}&deg;C</span>
+          </div>
+          <div style="font-size:9px; color:${statusColor}; font-weight:600; margin-top:2px;">${statusLabel}</div>
+        </div>
+      `;
+    }
+    grid.innerHTML = html;
+  }
+
+  function renderSldcGridControl(plant) {
+    const elSched = document.getElementById('sld-schedule-mw');
+    const elAct = document.getElementById('sld-actual-mw');
+    const elDev = document.getElementById('sld-deviation-text');
+    const elSolarP = document.getElementById('sld-solar-p');
+    const elBessP = document.getElementById('sld-bess-p');
+
+    if (!plant) return;
+
+    const actualMW = +(plant.currentPowerKW / 1000).toFixed(1);
+    // Schedule is typically ~1.5% below or above actual
+    const schedMW = +(actualMW * 0.985).toFixed(1);
+    const diffMW = +(actualMW - schedMW).toFixed(1);
+    const diffPct = +((diffMW / schedMW) * 100).toFixed(2);
+
+    if (elSched) elSched.textContent = `${schedMW} MW`;
+    if (elAct) elAct.textContent = `${actualMW} MW`;
+    if (elDev) {
+      elDev.textContent = `Deviation: ${diffMW >= 0 ? '+' : ''}${diffMW} MW (${diffMW >= 0 ? '+' : ''}${diffPct}%)`;
+      elDev.style.color = Math.abs(diffPct) <= 10.0 ? '#059669' : '#ef4444';
+    }
+    if (elSolarP) elSolarP.textContent = `${actualMW} MW`;
+    if (elBessP) {
+      const bessFleet = SolvantaStorage.getBessFleet ? SolvantaStorage.getBessFleet() : (SolvantaDemoData.bessFleet || []);
+      const bess = bessFleet.find(b => b.plantId === plant.id) || bessFleet[0];
+      if (bess) elBessP.textContent = `${bess.currentPowerMW >= 0 ? '+' : ''}${bess.currentPowerMW} MW`;
+    }
   }
 
   function renderMonitoringChart(plant) {
@@ -352,6 +424,89 @@ document.addEventListener('DOMContentLoaded', () => {
         );
 
         renderPlantTelemetry();
+      });
+    }
+
+    // Interactive Breaker Control: Solar CB-01
+    const cbSolarBtn = document.getElementById('toggle-cb-solar-btn');
+    const cbSolarSvg = document.getElementById('sld-cb-solar');
+    const cbSolarDesc = document.getElementById('cb-solar-desc');
+    let isSolarClosed = true;
+
+    if (cbSolarBtn) {
+      cbSolarBtn.addEventListener('click', () => {
+        isSolarClosed = !isSolarClosed;
+        if (isSolarClosed) {
+          cbSolarBtn.textContent = 'Trip / Open';
+          cbSolarBtn.className = 'btn btn-sm btn-emerald';
+          if (cbSolarSvg) cbSolarSvg.setAttribute('fill', '#10b981');
+          if (cbSolarDesc) cbSolarDesc.textContent = 'Status: Closed (33 kV Connected)';
+          SolvantaUI.toast('Feeder Breaker CB-01 CLOSED. Solar array synchronized with 33 kV pooling bus.', 'success');
+        } else {
+          cbSolarBtn.textContent = 'Close / Sync';
+          cbSolarBtn.className = 'btn btn-sm btn-secondary';
+          if (cbSolarSvg) cbSolarSvg.setAttribute('fill', '#ef4444');
+          if (cbSolarDesc) cbSolarDesc.textContent = 'Status: OPEN (Feeder Tripped)';
+          SolvantaUI.toast('WARNING: Feeder Breaker CB-01 TRIPPED. Solar array isolated from grid.', 'danger');
+        }
+      });
+    }
+
+    // Interactive Breaker Control: BESS CB-02
+    const cbBessBtn = document.getElementById('toggle-cb-bess-btn');
+    const cbBessSvg = document.getElementById('sld-cb-bess');
+    const cbBessDesc = document.getElementById('cb-bess-desc');
+    let isBessClosed = true;
+
+    if (cbBessBtn) {
+      cbBessBtn.addEventListener('click', () => {
+        isBessClosed = !isBessClosed;
+        if (isBessClosed) {
+          cbBessBtn.textContent = 'Trip / Open';
+          cbBessBtn.className = 'btn btn-sm btn-emerald';
+          if (cbBessSvg) cbBessSvg.setAttribute('fill', '#10b981');
+          if (cbBessDesc) cbBessDesc.textContent = 'Status: Closed (Grid Injected)';
+          SolvantaUI.toast('Feeder Breaker CB-02 CLOSED. BESS Container Bay synchronized for arbitrage dispatch.', 'success');
+        } else {
+          cbBessBtn.textContent = 'Close / Sync';
+          cbBessBtn.className = 'btn btn-sm btn-secondary';
+          if (cbBessSvg) cbBessSvg.setAttribute('fill', '#ef4444');
+          if (cbBessDesc) cbBessDesc.textContent = 'Status: OPEN (BESS Standby)';
+          SolvantaUI.toast('Feeder Breaker CB-02 OPENED. Battery container bay placed on float isolation.', 'warning');
+        }
+      });
+    }
+
+    // Active Curtailment Setpoint Slider
+    const curtailmentSlider = document.getElementById('curtailment-slider');
+    const curtailmentVal = document.getElementById('curtailment-val');
+
+    if (curtailmentSlider && curtailmentVal) {
+      curtailmentSlider.addEventListener('input', (e) => {
+        const val = e.target.value;
+        curtailmentVal.textContent = val === '100' ? '100% (No Curtailment)' : `${val}% Derated (SLDC Demand Response)`;
+        const plant = SolvantaStorage.getPlant(selectedPlantId);
+        if (plant) {
+          plant.currentPowerKW = Math.round(plant.capacityMW * 800 * (val / 100));
+          SolvantaStorage.updatePlant(plant.id, plant);
+          renderPlantTelemetry();
+        }
+      });
+    }
+
+    // High Wind Dust Storm Emergency Tracker Stow Trigger
+    const stowBtn = document.getElementById('tracker-stow-btn');
+    if (stowBtn) {
+      stowBtn.addEventListener('click', () => {
+        SolvantaUI.confirm(
+          'Emergency Tracker Stow Command',
+          'Deploy high-wind aerodynamic stow command? All single-axis tracker tables will pivot to 0° horizontal to protect modules from mechanical wind gusts.',
+          () => {
+            SolvantaUI.toast('EMERGENCY STOW ENGAGED! All 48 tracking blocks locked at 0° horizontal safety flat.', 'warning', 'Aero Wind Protection Active', 8000);
+          },
+          'Engage 0° Stow',
+          false
+        );
       });
     }
   }
