@@ -21,7 +21,7 @@
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(56, 189, 248, 0.22);
-  padding: 12px 0;
+  padding: 8px 0;
   transition: all var(--transition-normal);
 }
 
@@ -29,21 +29,22 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 
 .brand-logo-img-nav {
-  height: 46px;
+  height: 42px;
   width: auto;
-  max-width: 220px;
+  max-width: 195px;
   object-fit: contain;
   background: #ffffff;
-  padding: 3px 10px;
+  padding: 3px 8px;
   border-radius: 9px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28), 0 0 14px rgba(16, 185, 129, 0.35);
   border: 1px solid rgba(16, 185, 129, 0.45);
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
   display: inline-block;
+  flex-shrink: 0;
 }
 
 .brand-logo-img-nav:hover {
@@ -54,23 +55,25 @@
 .landing-links {
   display: flex;
   align-items: center;
-  gap: clamp(8px, 1.4vw, 20px);
+  gap: clamp(4px, 0.75vw, 12px);
   list-style: none;
   margin: 0;
   padding: 0;
+  flex-wrap: nowrap;
 }
 
 .landing-links a {
   color: #cbd5e1;
-  font-size: var(--text-sm);
+  font-size: 13px;
   font-weight: 600;
-  padding: 6px 12px;
+  padding: 5px 8px;
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
   display: inline-flex;
   align-items: center;
   gap: 5px;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .landing-links a:hover {
@@ -90,7 +93,7 @@
   border: 1px solid rgba(0, 210, 255, 0.4);
   background: rgba(0, 210, 255, 0.08);
   border-radius: var(--radius-full) !important;
-  padding: 5px 12px !important;
+  padding: 4px 10px !important;
   font-weight: 700 !important;
 }
 
@@ -103,7 +106,8 @@
 .landing-nav-actions {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .mobile-nav-toggle {
@@ -183,7 +187,7 @@
 /* Hero Section with Bright High-Definition Solar Park Background */
 .hero-section {
   position: relative;
-  padding: 140px 0 90px;
+  padding: 95px 0 40px;
   background: linear-gradient(180deg, rgba(10, 25, 47, 0.75) 0%, rgba(7, 18, 36, 0.88) 100%),
               url('../assets/images/solar_park.jpg') center center / cover no-repeat;
   overflow: hidden;
@@ -203,24 +207,24 @@
   gap: var(--space-2);
   background: rgba(2, 132, 199, 0.3);
   border: 1px solid #38bdf8;
-  padding: 6px 16px;
+  padding: 5px 14px;
   border-radius: var(--radius-full);
   color: #e0f2fe;
   font-size: var(--text-xs);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-3);
   backdrop-filter: blur(8px);
 }
 
 .hero-title {
-  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
   font-weight: 900;
   line-height: 1.15;
   letter-spacing: -0.03em;
   color: #ffffff;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -231,11 +235,11 @@
 }
 
 .hero-desc {
-  font-size: var(--text-lg);
+  font-size: 1rem;
   color: #f8fafc;
-  line-height: 1.7;
+  line-height: 1.6;
   max-width: 720px;
-  margin: 0 auto var(--space-8);
+  margin: 0 auto var(--space-5);
   font-weight: 500;
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
 }
@@ -246,12 +250,12 @@
   justify-content: center;
   gap: var(--space-4);
   flex-wrap: wrap;
-  margin-bottom: var(--space-10);
+  margin-bottom: var(--space-6);
 }
 
 /* Hero Showcase Frame */
 .showcase-frame {
-  margin-top: var(--space-8);
+  margin-top: var(--space-4);
   background: rgba(10, 25, 47, 0.75);
   border: 1px solid rgba(56, 189, 248, 0.25);
   border-radius: var(--radius-xl);

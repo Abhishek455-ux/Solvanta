@@ -18,6 +18,21 @@
   }
 }
 
+/* Small Laptops & Tablets (<= 1080px) */
+@media (max-width: 1080px) {
+  .landing-links {
+    display: none !important;
+  }
+
+  .mobile-nav-toggle {
+    display: flex !important;
+  }
+
+  .nav-login-btn {
+    display: none !important;
+  }
+}
+
 /* Tablets (portrait & landscape) */
 @media (max-width: 1024px) {
   :root {
@@ -113,7 +128,8 @@
   }
 
   .kpi-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
 
   .telemetry-grid {

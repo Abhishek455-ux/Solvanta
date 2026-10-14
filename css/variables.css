@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    ABHIVANTA DESIGN SYSTEM - VARIABLES & THEME TOKENS
    Brand: ABHIVANTA | "Powering Decisions. Accelerating Clean Energy."
    Neat, Professional, High-End Renewable Energy SaaS Design System
@@ -142,7 +142,7 @@
   /* Layout Constants */
   --sidebar-width: 260px;
   --sidebar-collapsed-width: 72px;
-  --topbar-height: 68px;
+  --topbar-height: 56px;
   --max-content-width: 1440px;
 
   /* Z-Index Hierarchy */
