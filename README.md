@@ -1,8 +1,10 @@
-# SOLVANTA — Renewable Energy Plant Monitoring & Automated Reporting Platform
+# ABHIVANTA — Renewable Energy Plant Monitoring & Automated Reporting Platform
 
 Clean energy intelligent SaaS platform.
 
-**Brand:** **SOLVANTA ENERGY INTELLIGENCE**  
+**Live website:** [https://abhishek455-ux.github.io/Solvanta/](https://abhishek455-ux.github.io/Solvanta/)
+
+**Brand:** **ABHIVANTA ENERGY INTELLIGENCE**
 **Tagline:** *"Smarter Data. Cleaner Energy. A Brighter Future."*  
 **Academic Submission:** B.Tech Computer Science & Engineering — Final Year Capstone Project  
 **Technology Stack:** Pure HTML5, Modern Responsive CSS3, Vanilla JavaScript (ES6+), Chart.js, jsPDF, SheetJS, LocalStorage  
@@ -10,7 +12,7 @@ Clean energy intelligent SaaS platform.
 ---
 
 ## 1. Project Abstract
-**SOLVANTA** is a centralized, client-side renewable energy intelligence and plant operations platform designed for utility-scale **Solar PV, Wind, and Battery Energy Storage Systems (BESS)**. The system empowers renewable plant operators, asset managers, and grid dispatchers to monitor real-time generation telemetry, analyze performance indices according to IEC 61724 standards (Capacity Utilization Factor - CUF, Performance Ratio - PR), triage equipment anomalies, schedule preventive maintenance work orders, and automatically generate executive-ready PDF and Excel audit reports with zero backend server dependencies.
+**ABHIVANTA** is a centralized, client-side renewable energy intelligence and plant operations platform designed for utility-scale **Solar PV, Wind, and Battery Energy Storage Systems (BESS)**. The system empowers renewable plant operators, asset managers, and grid dispatchers to monitor real-time generation telemetry, analyze performance indices according to IEC 61724 standards (Capacity Utilization Factor - CUF, Performance Ratio - PR), triage equipment anomalies, schedule preventive maintenance work orders, and automatically generate executive-ready PDF and Excel audit reports with zero backend server dependencies.
 
 ---
 
@@ -24,7 +26,7 @@ Utility-scale renewable energy portfolios face operational inefficiencies:
 ---
 
 ## 3. Proposed System & Key Objectives
-SOLVANTA provides an elegant, 100% portable, browser-executable platform that:
+ABHIVANTA provides an elegant, 100% portable, browser-executable platform that:
 - Emulates industrial SCADA telemetry (irradiance $W/m^2$, cell temperatures, inverter string arrays, grid frequency, power factor).
 - Dynamically computes industry-standard technical metrics (CUF %, PR %, commercial revenue in ₹ INR, and grid $CO_2$ abatement).
 - Provides an **Automated Report Generation Center** capable of generating, live-previewing, and downloading formatted client-side PDF documents and Excel files with structured tables and observations.
@@ -107,7 +109,7 @@ $$\text{CO}_2\text{ Avoided (Tonnes)} = \text{Energy Generated (MWh)} \times 0.8
 ---
 
 ## 7. Simulated Asset Fleet Portfolio
-SOLVANTA comes pre-populated with 9 realistic fictional plants across major renewable regions in India:
+ABHIVANTA comes pre-populated with 9 realistic fictional plants across major renewable regions in India:
 
 | Plant ID | Plant Asset Name | Technology | State / District | Capacity | Base PR | Status |
 |---|---|---|---|---|---|---|
@@ -188,7 +190,7 @@ SOLVANTA comes pre-populated with 9 realistic fictional plants across major rene
 
 ## 9. Installation & Execution Guide
 
-SOLVANTA requires no build step, no Node.js installation, and no database configuration.
+ABHIVANTA requires no build step, no Node.js installation, and no database configuration.
 
 ### Option A: VS Code Live Server (Recommended)
 1. Open Visual Studio Code.
@@ -212,7 +214,7 @@ Double-click `index.html` to open directly in Chrome, Edge, Firefox, or Safari.
 ## 10. Viva Examination Defense & FAQs
 
 ### Q1: Why is this implemented as a frontend-only application?
-> **Answer:** Solvanta is developed as a high-fidelity architectural prototype. By isolating the frontend with modular ES6 JavaScript and localStorage, the project guarantees 100% offline portability and zero-latency execution during college demonstrations. In an industrial deployment, the data layer would connect to an MQTT/Modbus SCADA broker and backend REST API.
+> **Answer:** Abhivanta is developed as a high-fidelity architectural prototype. By isolating the frontend with modular ES6 JavaScript and localStorage, the project guarantees 100% offline portability and zero-latency execution during college demonstrations. In an industrial deployment, the data layer would connect to an MQTT/Modbus SCADA broker and backend REST API.
 
 ### Q2: How does the PDF generation work without a backend server?
 > **Answer:** PDF generation is handled entirely on the client side using the **jsPDF** and **jsPDF-AutoTable** libraries. The JavaScript engine creates an in-memory PDF binary document, calculates coordinates and typography for headers and tables, attaches operational observations, and triggers a browser blob download.
@@ -246,4 +248,4 @@ Double-click `index.html` to open directly in Chrome, Edge, Firefox, or Safari.
 ---
 
 ## 12. Conclusion
-SOLVANTA successfully demonstrates a modern, enterprise-grade renewable energy management platform. It combines domain-accurate energy modeling, SCADA simulation, and automated reporting in a lightweight, self-contained architecture suitable for college project evaluation and practical demonstration.
+ABHIVANTA successfully demonstrates a modern, enterprise-grade renewable energy management platform. It combines domain-accurate energy modeling, SCADA simulation, and automated reporting in a lightweight, self-contained architecture suitable for college project evaluation and practical demonstration.
