@@ -1,5 +1,5 @@
 /**
- * SOLVANTA - Report Center Controller
+ * ABHIVANTA - Report Center Controller
  * Powers 6 automated report templates, live A4 document preview sheet,
  * client-side PDF export (jsPDF), Excel export (SheetJS), and report history archive.
  */
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function initReportCenter() {
     populatePlantSelect();
-    if (paramPlantId && SolvantaStorage.getPlant(paramPlantId)) {
+    if (paramPlantId && AbhivantaStorage.getPlant(paramPlantId)) {
       if (plantSelect) plantSelect.value = paramPlantId;
     }
     updatePreviewSheet();
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function populatePlantSelect() {
     if (!plantSelect) return;
-    const plants = SolvantaStorage.getPlants();
+    const plants = AbhivantaStorage.getPlants();
     plants.forEach(p => {
       const opt = document.createElement('option');
       opt.value = p.id;
@@ -44,9 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const title = titleInput ? titleInput.value : 'RENEWABLE PERFORMANCE REPORT';
     const author = authorInput ? authorInput.value : 'Aditya Sharma';
 
-    const store = SolvantaStorage.getStore();
-    const allPlants = SolvantaStorage.getPlants();
-    const targetPlant = plantId === 'ALL' ? null : SolvantaStorage.getPlant(plantId);
+    const store = AbhivantaStorage.getStore();
+    const allPlants = AbhivantaStorage.getPlants();
+    const targetPlant = plantId === 'ALL' ? null : AbhivantaStorage.getPlant(plantId);
 
     const scopeName = targetPlant ? targetPlant.name : `Entire Fleet Portfolio (${allPlants.length} Plants)`;
     const totalCap = targetPlant ? targetPlant.capacityMW : allPlants.reduce((s, p) => s + p.capacityMW, 0);
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Template specific generation logic
     if (template === 'bess') {
-      const bessFleet = SolvantaStorage.getBessFleet ? SolvantaStorage.getBessFleet() : (SolvantaDemoData.bessFleet || []);
+      const bessFleet = AbhivantaStorage.getBessFleet ? AbhivantaStorage.getBessFleet() : (AbhivantaDemoData.bessFleet || []);
       const matchedBess = targetPlant
         ? (bessFleet.find(b => b.plantId === targetPlant.id) || bessFleet[0])
         : null;
@@ -75,8 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { label: 'Storage Capacity', value: `${totalCapMWh} MWh (4h LFP)` },
         { label: 'Round-Trip Efficiency', value: `${avgRte}%` },
         { label: 'State of Health (SoH)', value: `${avgSoH}%` },
-        { label: 'Discharge Energy Today', value: `${SolvantaUtils.formatNumber(totalDischargeMWh, 1)} MWh` },
-        { label: 'Today Arbitrage Gain', value: SolvantaUtils.formatINR(totalRevINR) }
+        { label: 'Discharge Energy Today', value: `${AbhivantaUtils.formatNumber(totalDischargeMWh, 1)} MWh` },
+        { label: 'Today Arbitrage Gain', value: AbhivantaUtils.formatINR(totalRevINR) }
       ];
 
       tableHeaders = ['BESS Asset ID & Name', 'Chemistry', 'Power / Cap', 'SoC %', 'RTE %', 'Dispatch Mode', 'Daily Arbitrage'];
@@ -88,33 +88,33 @@ document.addEventListener('DOMContentLoaded', () => {
         `${b.socPercent}%`,
         `${b.roundTripEfficiency}%`,
         b.dispatchMode,
-        SolvantaUtils.formatINR(b.todayArbitrageRevenueINR)
+        AbhivantaUtils.formatINR(b.todayArbitrageRevenueINR)
       ]);
 
       observations = [
         `Fleetwide 240 MW / 900 MWh utility storage achieved ${avgRte}% Round-Trip Efficiency (RTE) under active liquid chilling.`,
         `Mid-day solar soak absorbed ${(totalDischargeMWh * 1.12).toFixed(1)} MWh surplus generation during off-peak tariff periods.`,
-        `Evening peak discharge between 18:30-22:30 IST captured top merchant tariffs, generating ${SolvantaUtils.formatINR(totalRevINR)} incremental daily margin.`,
+        `Evening peak discharge between 18:30-22:30 IST captured top merchant tariffs, generating ${AbhivantaUtils.formatINR(totalRevINR)} incremental daily margin.`,
         `All rack BMS thermal metrics compliant (< 30°C cell temp); automated aerosol fire suppression status: Normal.`
       ];
     } else if (template === 'daily') {
       const genToday = targetPlant ? targetPlant.todayGenMWh : allPlants.reduce((s, p) => s + p.todayGenMWh, 0);
-      const cuf = SolvantaUtils.calculateCUF(genToday, totalCap, 24);
+      const cuf = AbhivantaUtils.calculateCUF(genToday, totalCap, 24);
       const pr = targetPlant ? targetPlant.performanceRatio : 81.8;
       const rev = genToday * 1000 * (targetPlant ? targetPlant.tariffINR : 3.3);
       const co2 = genToday * 0.82;
 
       kpis = [
-        { label: "Today's Generation", value: `${SolvantaUtils.formatNumber(genToday, 1)} MWh` },
+        { label: "Today's Generation", value: `${AbhivantaUtils.formatNumber(genToday, 1)} MWh` },
         { label: 'Plant Capacity', value: `${totalCap} MW` },
         { label: 'Daily CUF Factor', value: `${cuf.toFixed(1)}%` },
         { label: 'Performance Ratio', value: `${pr}%` },
-        { label: 'Tariff Revenue', value: SolvantaUtils.formatINR(rev) },
-        { label: 'CO2 Offset Today', value: `${SolvantaUtils.formatNumber(co2, 0)} T` }
+        { label: 'Tariff Revenue', value: AbhivantaUtils.formatINR(rev) },
+        { label: 'CO2 Offset Today', value: `${AbhivantaUtils.formatNumber(co2, 0)} T` }
       ];
 
       tableHeaders = ['Time Slot', 'Irradiance (W/m²)', 'Active Power (MW)', 'Hourly Gen (MWh)', 'Grid Freq (Hz)'];
-      const hourlyData = SolvantaDemoData.generateHourlyCurve(targetPlant || allPlants[0]);
+      const hourlyData = AbhivantaDemoData.generateHourlyCurve(targetPlant || allPlants[0]);
       tableRows = hourlyData.filter((_, idx) => idx >= 6 && idx <= 18).map(h => [
         h.time,
         `${h.irradiance} W/m²`,
@@ -129,8 +129,8 @@ document.addEventListener('DOMContentLoaded', () => {
         `No string inverter derating was observed during peak solar generation window.`
       ];
     } else if (template === 'health') {
-      const openAlerts = SolvantaStorage.getAlerts().filter(a => plantId === 'ALL' || a.plantId === plantId);
-      const mntRecords = SolvantaStorage.getMaintenance().filter(m => plantId === 'ALL' || m.plantId === plantId);
+      const openAlerts = AbhivantaStorage.getAlerts().filter(a => plantId === 'ALL' || a.plantId === plantId);
+      const mntRecords = AbhivantaStorage.getMaintenance().filter(m => plantId === 'ALL' || m.plantId === plantId);
 
       kpis = [
         { label: 'Asset Scope', value: targetPlant ? targetPlant.type : 'Fleet' },
@@ -171,14 +171,14 @@ document.addEventListener('DOMContentLoaded', () => {
       ];
 
       tableHeaders = ['Billing Month', 'Actual Gen (MWh)', 'P50 Target (MWh)', 'CUF %', 'PR %', 'Revenue (INR)'];
-      const months = store.monthlyHistory || SolvantaDemoData.monthlyHistory;
+      const months = store.monthlyHistory || AbhivantaDemoData.monthlyHistory;
       tableRows = months.map(m => [
         m.month,
-        `${SolvantaUtils.formatNumber(m.actualMWh, 0)}`,
-        `${SolvantaUtils.formatNumber(m.targetMWh, 0)}`,
+        `${AbhivantaUtils.formatNumber(m.actualMWh, 0)}`,
+        `${AbhivantaUtils.formatNumber(m.targetMWh, 0)}`,
         '23.2%',
         `${m.pr}%`,
-        SolvantaUtils.formatINR(m.revenueINR)
+        AbhivantaUtils.formatINR(m.revenueINR)
       ]);
 
       observations = [
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { label: 'Performance Ratio (PR)', value: `${pr}%` },
         { label: 'Operational Availability', value: `${targetPlant ? targetPlant.availability : 98.2}%` },
         { label: 'Estimated Revenue', value: `₹${(rev / 10000000).toFixed(2)} Cr` },
-        { label: 'CO2 Offset Tonnes', value: `${SolvantaUtils.formatNumber(co2, 0)} T` }
+        { label: 'CO2 Offset Tonnes', value: `${AbhivantaUtils.formatNumber(co2, 0)} T` }
       ];
 
       tableHeaders = ['Plant ID & Name', 'Technology', 'Capacity', 'Month Output', 'CUF %', 'PR %', 'Status'];
@@ -207,8 +207,8 @@ document.addEventListener('DOMContentLoaded', () => {
         `${p.id} - ${p.name}`,
         p.type,
         `${p.capacityMW} MW`,
-        `${SolvantaUtils.formatNumber(p.monthGenMWh, 0)} MWh`,
-        `${SolvantaUtils.calculateCUF(p.todayGenMWh, p.capacityMW).toFixed(1)}%`,
+        `${AbhivantaUtils.formatNumber(p.monthGenMWh, 0)} MWh`,
+        `${AbhivantaUtils.calculateCUF(p.todayGenMWh, p.capacityMW).toFixed(1)}%`,
         `${p.performanceRatio}%`,
         p.status
       ]);
@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const elSigAuthor = document.getElementById('prev-sig-author');
 
     if (elTitle) elTitle.textContent = p.title;
-    if (elDate) elDate.textContent = `Generated: ${SolvantaUtils.formatDate(new Date())}`;
+    if (elDate) elDate.textContent = `Generated: ${AbhivantaUtils.formatDate(new Date())}`;
     if (elScope) elScope.textContent = p.plantName;
     if (elCap) elCap.textContent = `${p.capacityMW} MW`;
     if (elPeriod) elPeriod.textContent = p.period;
@@ -261,8 +261,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (kpiGrid) {
       kpiGrid.innerHTML = p.kpis.map(k => `
         <div style="background:#f1f5f9; border:1px solid #e2e8f0; border-radius:4px; padding:6px 8px;">
-          <div style="font-size:9px; color:#64748b; text-transform:uppercase;">${SolvantaUtils.escapeHtml(k.label)}</div>
-          <div style="font-size:12px; font-weight:800; color:#0f172a; margin-top:2px;">${SolvantaUtils.escapeHtml(k.value)}</div>
+          <div style="font-size:9px; color:#64748b; text-transform:uppercase;">${AbhivantaUtils.escapeHtml(k.label)}</div>
+          <div style="font-size:12px; font-weight:800; color:#0f172a; margin-top:2px;">${AbhivantaUtils.escapeHtml(k.value)}</div>
         </div>
       `).join('');
     }
@@ -271,10 +271,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const thead = document.getElementById('prev-table-thead');
     const tbody = document.getElementById('prev-table-tbody');
     if (thead && tbody) {
-      thead.innerHTML = p.tableHeaders.map(h => `<th style="padding:5px 6px;">${SolvantaUtils.escapeHtml(h)}</th>`).join('');
+      thead.innerHTML = p.tableHeaders.map(h => `<th style="padding:5px 6px;">${AbhivantaUtils.escapeHtml(h)}</th>`).join('');
       tbody.innerHTML = p.tableRows.slice(0, 7).map((row, idx) => `
         <tr style="background:${idx % 2 === 0 ? '#ffffff' : '#f8fafc'}; border-bottom:1px solid #e2e8f0;">
-          ${row.map(cell => `<td style="padding:4px 6px; color:#334155;">${SolvantaUtils.escapeHtml(cell)}</td>`).join('')}
+          ${row.map(cell => `<td style="padding:4px 6px; color:#334155;">${AbhivantaUtils.escapeHtml(cell)}</td>`).join('')}
         </tr>
       `).join('');
     }
@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Render Observations
     const obsList = document.getElementById('prev-observations-list');
     if (obsList) {
-      obsList.innerHTML = p.observations.map(o => `<li>${SolvantaUtils.escapeHtml(o)}</li>`).join('');
+      obsList.innerHTML = p.observations.map(o => `<li>${AbhivantaUtils.escapeHtml(o)}</li>`).join('');
     }
   }
 
@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tbody = document.getElementById('report-history-tbody');
     if (!tbody) return;
 
-    const reports = SolvantaStorage.getReports();
+    const reports = AbhivantaStorage.getReports();
     if (reports.length === 0) {
       tbody.innerHTML = `
         <tr>
@@ -306,12 +306,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tbody.innerHTML = reports.map(r => `
       <tr>
-        <td style="font-family:var(--font-mono); font-size:11px; font-weight:700; color:#0f172a;">${SolvantaUtils.escapeHtml(r.id)}</td>
-        <td style="font-weight:600;">${SolvantaUtils.escapeHtml(r.title)}</td>
-        <td><span class="badge badge-neutral">${SolvantaUtils.escapeHtml(r.reportType)}</span></td>
-        <td>${SolvantaUtils.escapeHtml(r.plantName)}</td>
-        <td>${SolvantaUtils.escapeHtml(r.period)}</td>
-        <td style="font-size:11px; color:#64748b;">${SolvantaUtils.formatDateTime(r.generatedDate)}</td>
+        <td style="font-family:var(--font-mono); font-size:11px; font-weight:700; color:#0f172a;">${AbhivantaUtils.escapeHtml(r.id)}</td>
+        <td style="font-weight:600;">${AbhivantaUtils.escapeHtml(r.title)}</td>
+        <td><span class="badge badge-neutral">${AbhivantaUtils.escapeHtml(r.reportType)}</span></td>
+        <td>${AbhivantaUtils.escapeHtml(r.plantName)}</td>
+        <td>${AbhivantaUtils.escapeHtml(r.period)}</td>
+        <td style="font-size:11px; color:#64748b;">${AbhivantaUtils.formatDateTime(r.generatedDate)}</td>
         <td><span class="badge badge-success" style="font-size:10px;">${r.fileFormat}</span></td>
         <td style="text-align:right; white-space:nowrap;">
           <button class="btn btn-secondary btn-sm" onclick="downloadArchivedReport('${r.id}')" title="Re-download PDF">
@@ -324,22 +324,22 @@ document.addEventListener('DOMContentLoaded', () => {
       </tr>
     `).join('');
 
-    SolvantaUI.initIcons();
+    AbhivantaUI.initIcons();
   }
 
   // Re-download archived report
   window.downloadArchivedReport = function(reportId) {
-    const report = SolvantaStorage.getReports().find(r => r.id === reportId);
+    const report = AbhivantaStorage.getReports().find(r => r.id === reportId);
     if (!report) return;
 
-    SolvantaUI.toast(`Compiling and downloading PDF for ${report.title}...`, 'info');
+    AbhivantaUI.toast(`Compiling and downloading PDF for ${report.title}...`, 'info');
     // Set parameters and generate
     if (titleInput) titleInput.value = report.title;
     if (periodInput) periodInput.value = report.period;
     if (plantSelect) plantSelect.value = report.plantId || 'ALL';
 
     const p = buildReportPayload();
-    SolvantaPDF.generateReportPDF({
+    AbhivantaPDF.generateReportPDF({
       ...p,
       reportId: report.id
     });
@@ -347,12 +347,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Delete archive entry
   window.deleteArchivedReport = function(reportId) {
-    SolvantaUI.confirm(
+    AbhivantaUI.confirm(
       'Remove Report Entry',
       'Are you sure you want to delete this report from the historical archive?',
       () => {
-        SolvantaStorage.deleteReport(reportId);
-        SolvantaUI.toast('Report removed from archive.', 'info');
+        AbhivantaStorage.deleteReport(reportId);
+        AbhivantaUI.toast('Report removed from archive.', 'info');
         renderReportHistory();
       },
       'Delete Entry',
@@ -370,7 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
           periodInput.value = 'October 2026 (Daily Dispatch)';
         } else if (val === 'daily') {
           titleInput.value = 'DAILY DIURNAL GENERATION & PEAK LOG';
-          periodInput.value = SolvantaUtils.getTodayISO();
+          periodInput.value = AbhivantaUtils.getTodayISO();
         } else if (val === 'monthly') {
           titleInput.value = 'MONTHLY RENEWABLE PERFORMANCE AUDIT';
           periodInput.value = 'October 2026';
@@ -407,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (refreshBtn) {
       refreshBtn.addEventListener('click', () => {
         updatePreviewSheet();
-        SolvantaUI.toast('Preview document re-calculated.', 'info');
+        AbhivantaUI.toast('Preview document re-calculated.', 'info');
       });
     }
 
@@ -416,10 +416,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (downloadPdfBtn) {
       downloadPdfBtn.addEventListener('click', () => {
         const payload = buildReportPayload();
-        const success = SolvantaPDF.generateReportPDF(payload);
+        const success = AbhivantaPDF.generateReportPDF(payload);
         if (success) {
           // Record in localStorage report history
-          SolvantaStorage.saveReport({
+          AbhivantaStorage.saveReport({
             title: payload.title,
             reportType: templateSelect.options[templateSelect.selectedIndex].text.split('(')[0].trim(),
             plantId: payload.plantId,
@@ -437,11 +437,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (downloadExcelBtn) {
       downloadExcelBtn.addEventListener('click', () => {
         const payload = buildReportPayload();
-        SolvantaExport.exportToExcel(
+        AbhivantaExport.exportToExcel(
           'Plant Report',
           payload.tableHeaders,
           payload.tableRows,
-          `Solvanta_${payload.template}_Report.xlsx`
+          `Abhivanta_${payload.template}_Report.xlsx`
         );
       });
     }
@@ -450,14 +450,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearBtn = document.getElementById('clear-history-btn');
     if (clearBtn) {
       clearBtn.addEventListener('click', () => {
-        SolvantaUI.confirm(
+        AbhivantaUI.confirm(
           'Clear Report Archive',
           'Are you sure you want to clear all report metadata history?',
           () => {
-            const store = SolvantaStorage.getStore();
+            const store = AbhivantaStorage.getStore();
             store.reports = [];
-            SolvantaStorage.saveStore(store);
-            SolvantaUI.toast('Report archive cleared.', 'info');
+            AbhivantaStorage.saveStore(store);
+            AbhivantaUI.toast('Report archive cleared.', 'info');
             renderReportHistory();
           },
           'Clear Archive',

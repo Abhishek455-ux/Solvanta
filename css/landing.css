@@ -1,5 +1,5 @@
-/* ==========================================================================
-   SOLVANTA LANDING PAGE STYLES
+﻿/* ==========================================================================
+   ABHIVANTA LANDING PAGE STYLES
    "Powering Decisions. Accelerating Clean Energy."
    ========================================================================== */
 
@@ -33,15 +33,15 @@
 }
 
 .brand-logo-img-nav {
-  height: 42px;
+  height: 44px;
   width: auto;
-  max-width: 175px;
+  max-width: 190px;
   object-fit: contain;
-  background: #ffffff;
-  padding: 4px 8px;
+  background: #000000;
+  padding: 3px 8px;
   border-radius: 8px;
-  box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
-  border: 1px solid rgba(56, 189, 248, 0.4);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+  border: 1px solid rgba(16, 185, 129, 0.4);
 }
 
 .landing-links {

@@ -1,10 +1,10 @@
-/**
- * SOLVANTA - Chart.js Engine & Visualizations
+﻿/**
+ * ABHIVANTA - Chart.js Engine & Visualizations
  * Provides clean energy theme color palettes, smooth curves,
  * tooltip formatting, and instance cleanup.
  */
 
-const SolvantaCharts = (() => {
+const AbhivantaCharts = (() => {
   // Store active chart instances by canvas ID to prevent memory leaks & glitches
   const chartInstances = {};
 
@@ -86,7 +86,7 @@ const SolvantaCharts = (() => {
             padding: 10,
             cornerRadius: 8,
             callbacks: {
-              label: (ctx) => ` ${ctx.dataset.label}: ${SolvantaUtils.formatNumber(ctx.raw, 1)} MWh`
+              label: (ctx) => ` ${ctx.dataset.label}: ${AbhivantaUtils.formatNumber(ctx.raw, 1)} MWh`
             }
           }
         },
@@ -147,7 +147,7 @@ const SolvantaCharts = (() => {
           legend: { position: 'top', labels: { boxWidth: 12, font: { size: 12 } } },
           tooltip: {
             callbacks: {
-              label: (ctx) => ` ${ctx.dataset.label}: ${SolvantaUtils.formatNumber(ctx.raw, 0)} MWh`
+              label: (ctx) => ` ${ctx.dataset.label}: ${AbhivantaUtils.formatNumber(ctx.raw, 0)} MWh`
             }
           }
         },
@@ -200,7 +200,7 @@ const SolvantaCharts = (() => {
           legend: { display: false },
           tooltip: {
             callbacks: {
-              label: (ctx) => ` Generation: ${SolvantaUtils.formatNumber(ctx.raw, 1)} MWh`
+              label: (ctx) => ` Generation: ${AbhivantaUtils.formatNumber(ctx.raw, 1)} MWh`
             }
           }
         },

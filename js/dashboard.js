@@ -1,5 +1,5 @@
 /**
- * SOLVANTA - Dashboard Overview Controller
+ * ABHIVANTA - Dashboard Overview Controller
  * Connects underlying plant dataset to KPI cards, interactive Chart.js charts,
  * alert streams, and instant PDF report export.
  */
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getFilteredPlants() {
-    let plants = SolvantaStorage.getPlants();
+    let plants = AbhivantaStorage.getPlants();
     if (activeTechFilter !== 'ALL') {
       plants = plants.filter(p => p.type === activeTechFilter);
     }
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Calculate and update 8 KPI Cards
   function renderKPIs() {
     const plants = getFilteredPlants();
-    const settings = SolvantaStorage.getSettings();
+    const settings = AbhivantaStorage.getSettings();
 
     const totalPlants = plants.length;
     const operationalCount = plants.filter(p => p.status === 'Operational').length;
@@ -74,27 +74,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (elTotalPlants) elTotalPlants.textContent = totalPlants;
     if (elOpPlants) elOpPlants.textContent = `${operationalCount} Operational`;
-    if (elTotalCapacity) elTotalCapacity.textContent = `${SolvantaUtils.formatNumber(totalCapacityMW, 0)} MW`;
-    if (elTodayGen) elTodayGen.textContent = `${SolvantaUtils.formatNumber(todayGenMWh, 1)} MWh`;
+    if (elTotalCapacity) elTotalCapacity.textContent = `${AbhivantaUtils.formatNumber(totalCapacityMW, 0)} MW`;
+    if (elTodayGen) elTodayGen.textContent = `${AbhivantaUtils.formatNumber(todayGenMWh, 1)} MWh`;
     if (elMonthGen) elMonthGen.textContent = `${(monthGenMWh / 1000).toFixed(1)}k MWh`;
-    if (elAvgPR) elAvgPR.textContent = SolvantaUtils.formatPercent(weightedPR, 1);
-    if (elAvail) elAvail.textContent = SolvantaUtils.formatPercent(weightedAvail, 1);
+    if (elAvgPR) elAvgPR.textContent = AbhivantaUtils.formatPercent(weightedPR, 1);
+    if (elAvail) elAvail.textContent = AbhivantaUtils.formatPercent(weightedAvail, 1);
     if (elRevenue) {
       const cr = totalRevenueINR / 10000000;
       elRevenue.textContent = `₹${cr.toFixed(2)} Cr`;
     }
-    if (elCO2) elCO2.textContent = `${SolvantaUtils.formatNumber(co2Tonnes, 0)} T`;
+    if (elCO2) elCO2.textContent = `${AbhivantaUtils.formatNumber(co2Tonnes, 0)} T`;
   }
 
   // Render Charts
   function renderCharts() {
     const plants = getFilteredPlants();
-    const store = SolvantaStorage.getStore();
+    const store = AbhivantaStorage.getStore();
 
     // 1. Generation Trend
     if (trendViewMode === '30days') {
-      const history30 = store.history30Days || SolvantaDemoData.generate30DaysHistory();
-      SolvantaCharts.renderGenerationTrendChart('generationTrendChart', history30, false);
+      const history30 = store.history30Days || AbhivantaDemoData.generate30DaysHistory();
+      AbhivantaCharts.renderGenerationTrendChart('generationTrendChart', history30, false);
       const titleEl = document.getElementById('trend-chart-title');
       if (titleEl) titleEl.textContent = '30-Day Fleet Generation Profile';
     } else {
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const timeLabel = `${String(h).padStart(2, '0')}:00`;
         let totalHGenKW = 0;
         plants.forEach(p => {
-          const pCurve = SolvantaDemoData.generateHourlyCurve(p);
+          const pCurve = AbhivantaDemoData.generateHourlyCurve(p);
           if (pCurve[h]) totalHGenKW += pCurve[h].generationKW;
         });
         hourlyAgg.push({
@@ -113,20 +113,20 @@ document.addEventListener('DOMContentLoaded', () => {
           generationMWh: +(totalHGenKW / 1000).toFixed(2)
         });
       }
-      SolvantaCharts.renderGenerationTrendChart('generationTrendChart', hourlyAgg, true);
+      AbhivantaCharts.renderGenerationTrendChart('generationTrendChart', hourlyAgg, true);
       const titleEl = document.getElementById('trend-chart-title');
       if (titleEl) titleEl.textContent = "Today's Diurnal Generation Curve (Hourly)";
     }
 
     // 2. Technology Mix Doughnut
-    SolvantaCharts.renderTechnologyMixChart('technologyMixChart', plants);
+    AbhivantaCharts.renderTechnologyMixChart('technologyMixChart', plants);
 
     // 3. Plant-Wise Generation Bar
-    SolvantaCharts.renderPlantComparisonChart('plantComparisonChart', plants);
+    AbhivantaCharts.renderPlantComparisonChart('plantComparisonChart', plants);
 
     // 4. Monthly Actual vs Target Bar
-    const monthlyData = store.monthlyHistory || SolvantaDemoData.monthlyHistory;
-    SolvantaCharts.renderMonthlyComparisonChart('monthlyComparisonChart', monthlyData);
+    const monthlyData = store.monthlyHistory || AbhivantaDemoData.monthlyHistory;
+    AbhivantaCharts.renderMonthlyComparisonChart('monthlyComparisonChart', monthlyData);
   }
 
   // Plant Ranking Table (Top performers & Underperformers)
@@ -145,17 +145,17 @@ document.addEventListener('DOMContentLoaded', () => {
     tbody.innerHTML = sorted.slice(0, 5).map(p => `
       <tr>
         <td>
-          <div style="font-weight:600; color:#0f172a;">${SolvantaUtils.escapeHtml(p.name)}</div>
-          <div style="font-size:11px; color:#64748b;">${SolvantaUtils.escapeHtml(p.id)} &bull; ${SolvantaUtils.escapeHtml(p.state)}</div>
+          <div style="font-weight:600; color:#0f172a;">${AbhivantaUtils.escapeHtml(p.name)}</div>
+          <div style="font-size:11px; color:#64748b;">${AbhivantaUtils.escapeHtml(p.id)} &bull; ${AbhivantaUtils.escapeHtml(p.state)}</div>
         </td>
-        <td>${SolvantaUI.getTypeBadge(p.type)}</td>
+        <td>${AbhivantaUI.getTypeBadge(p.type)}</td>
         <td style="font-family:var(--font-mono); font-weight:600;">${p.capacityMW} MW</td>
         <td>
           <span style="font-weight:700; color:${p.performanceRatio >= 80 ? '#10b981' : '#f59e0b'};">
             ${p.performanceRatio}%
           </span>
         </td>
-        <td>${SolvantaUI.getStatusBadge(p.status)}</td>
+        <td>${AbhivantaUI.getStatusBadge(p.status)}</td>
       </tr>
     `).join('');
   }
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('dashboard-alerts-list');
     if (!container) return;
 
-    const alerts = SolvantaStorage.getAlerts().slice(0, 4);
+    const alerts = AbhivantaStorage.getAlerts().slice(0, 4);
     if (alerts.length === 0) {
       container.innerHTML = `<div class="empty-state-desc" style="padding:16px;">All systems normal. No active operational alerts.</div>`;
       return;
@@ -184,19 +184,19 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <div class="activity-details">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span class="activity-title">${SolvantaUtils.escapeHtml(a.category)}</span>
+              <span class="activity-title">${AbhivantaUtils.escapeHtml(a.category)}</span>
               <span class="badge ${a.status === 'Open' ? 'badge-danger' : 'badge-warning'}" style="font-size:10px; padding:1px 6px;">
                 ${a.status}
               </span>
             </div>
-            <div class="activity-desc">${SolvantaUtils.escapeHtml(a.message)}</div>
-            <div class="activity-time">${SolvantaUtils.escapeHtml(a.plantName)} &bull; ${SolvantaUtils.getRelativeTime(a.timestamp)}</div>
+            <div class="activity-desc">${AbhivantaUtils.escapeHtml(a.message)}</div>
+            <div class="activity-time">${AbhivantaUtils.escapeHtml(a.plantName)} &bull; ${AbhivantaUtils.getRelativeTime(a.timestamp)}</div>
           </div>
         </div>
       `;
     }).join('');
 
-    SolvantaUI.initIcons();
+    AbhivantaUI.initIcons();
   }
 
   // Event Listeners
@@ -243,13 +243,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const refreshBtn = document.getElementById('refresh-dashboard-btn');
     if (refreshBtn) {
       refreshBtn.addEventListener('click', () => {
-        SolvantaUI.toast('Synchronizing telemetry stream from virtual RTUs...', 'info', 'Telemetry Sync', 2000);
+        AbhivantaUI.toast('Synchronizing telemetry stream from virtual RTUs...', 'info', 'Telemetry Sync', 2000);
         setTimeout(() => {
           renderKPIs();
           renderCharts();
           renderRankingTable();
           renderAlertsStream();
-          SolvantaUI.toast('Dashboard metrics updated with latest virtual readings.', 'success');
+          AbhivantaUI.toast('Dashboard metrics updated with latest virtual readings.', 'success');
         }, 500);
       });
     }
@@ -270,26 +270,26 @@ document.addEventListener('DOMContentLoaded', () => {
           p.name,
           p.type,
           `${p.capacityMW} MW`,
-          `${SolvantaUtils.formatNumber(p.todayGenMWh, 1)} MWh`,
-          `${SolvantaUtils.calculateCUF(p.todayGenMWh, p.capacityMW).toFixed(1)}%`,
+          `${AbhivantaUtils.formatNumber(p.todayGenMWh, 1)} MWh`,
+          `${AbhivantaUtils.calculateCUF(p.todayGenMWh, p.capacityMW).toFixed(1)}%`,
           `${p.performanceRatio}%`,
           p.status
         ]);
 
-        SolvantaPDF.generateReportPDF({
+        AbhivantaPDF.generateReportPDF({
           title: 'EXECUTIVE FLEET DASHBOARD SUMMARY',
           reportType: 'Portfolio Overview',
           plantName: `Fleet Scope (${plants.length} Plants)`,
-          period: SolvantaUtils.formatDate(new Date()),
+          period: AbhivantaUtils.formatDate(new Date()),
           capacityMW: totalCap,
           preparedBy: 'Aditya Sharma (Operations Lead)',
           kpis: [
-            { label: 'Fleet Generation Today', value: `${SolvantaUtils.formatNumber(todayGen, 1)} MWh` },
+            { label: 'Fleet Generation Today', value: `${AbhivantaUtils.formatNumber(todayGen, 1)} MWh` },
             { label: 'Fleet Capacity', value: `${totalCap} MW` },
             { label: 'Weighted Performance Ratio', value: `${avgPR.toFixed(1)}%` },
             { label: 'Fleet Availability', value: `${avgAvail.toFixed(1)}%` },
             { label: 'Est. Revenue Today', value: `₹${(rev / 10000000).toFixed(2)} Cr` },
-            { label: 'CO2 Avoidance Today', value: `${SolvantaUtils.formatNumber(co2, 0)} Tonnes` }
+            { label: 'CO2 Avoidance Today', value: `${AbhivantaUtils.formatNumber(co2, 0)} Tonnes` }
           ],
           tableHeaders: ['Plant Name', 'Type', 'Capacity', 'Gen (MWh)', 'CUF %', 'PR %', 'Status'],
           tableRows: tableRows,

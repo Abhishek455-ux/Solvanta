@@ -1,12 +1,12 @@
-/**
- * SOLVANTA - Navigation & Global Shell Controller
+﻿/**
+ * ABHIVANTA - Navigation & Global Shell Controller
  * Handles active route detection, mobile menu drawer, global search,
  * and badge synchronization.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   // Ensure storage is initialized
-  SolvantaStorage.initStore();
+  AbhivantaStorage.initStore();
 
   // Highlight active sidebar navigation
   const currentPath = window.location.pathname;
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Sync open alerts counter badge on sidebar
   const alertBadge = document.getElementById('sidebar-alert-badge');
   if (alertBadge) {
-    const alerts = SolvantaStorage.getAlerts();
+    const alerts = AbhivantaStorage.getAlerts();
     const openCount = alerts.filter(a => a.status === 'Open').length;
     if (openCount > 0) {
       alertBadge.textContent = openCount;
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
   if (sidebarToggleBtn) {
     // Check saved preference
-    const isCollapsed = localStorage.getItem('SOLVANTA_SIDEBAR_COLLAPSED') === 'true';
+    const isCollapsed = localStorage.getItem('ABHIVANTA_SIDEBAR_COLLAPSED') === 'true';
     if (isCollapsed) {
       document.body.classList.add('sidebar-collapsed');
     }
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sidebarToggleBtn.addEventListener('click', () => {
       document.body.classList.toggle('sidebar-collapsed');
       const collapsedNow = document.body.classList.contains('sidebar-collapsed');
-      localStorage.setItem('SOLVANTA_SIDEBAR_COLLAPSED', collapsedNow);
+      localStorage.setItem('ABHIVANTA_SIDEBAR_COLLAPSED', collapsedNow);
       // Re-render chart sizes if needed
       window.dispatchEvent(new Event('resize'));
     });
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const isOpen = mobileNavDrawer.classList.toggle('open');
       if (navToggleIcon) {
         navToggleIcon.setAttribute('data-lucide', isOpen ? 'x' : 'menu');
-        SolvantaUI.initIcons();
+        AbhivantaUI.initIcons();
       }
     });
 
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileNavDrawer.classList.remove('open');
         if (navToggleIcon) {
           navToggleIcon.setAttribute('data-lucide', 'menu');
-          SolvantaUI.initIcons();
+          AbhivantaUI.initIcons();
         }
       });
     });
@@ -120,12 +120,12 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileNavDrawer.classList.remove('open');
         if (navToggleIcon) {
           navToggleIcon.setAttribute('data-lucide', 'menu');
-          SolvantaUI.initIcons();
+          AbhivantaUI.initIcons();
         }
       }
     });
   }
 
   // Initialize Lucide icons on load
-  SolvantaUI.initIcons();
+  AbhivantaUI.initIcons();
 });

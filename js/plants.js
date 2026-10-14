@@ -1,5 +1,5 @@
 /**
- * SOLVANTA - Plant Management Controller
+ * ABHIVANTA - Plant Management Controller
  * CRUD operations, search, filters, sorting, detailed plant profiles,
  * and roster spreadsheet export.
  */
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getProcessedPlants() {
-    let plants = SolvantaStorage.getPlants();
+    let plants = AbhivantaStorage.getPlants();
 
     // 1. Text Search
     if (searchQuery) {
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderTable() {
     const plants = getProcessedPlants();
     if (countDisplay) {
-      countDisplay.textContent = `Showing ${plants.length} of ${SolvantaStorage.getPlants().length} Plants`;
+      countDisplay.textContent = `Showing ${plants.length} of ${AbhivantaStorage.getPlants().length} Plants`;
     }
 
     if (plants.length === 0) {
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
           renderTable();
         });
       }
-      SolvantaUI.initIcons();
+      AbhivantaUI.initIcons();
       return;
     }
 
@@ -108,22 +108,22 @@ document.addEventListener('DOMContentLoaded', () => {
       <tr>
         <td>
           <div style="font-weight:700; color:#0f172a; cursor:pointer;" onclick="viewPlantDetails('${p.id}')">
-            ${SolvantaUtils.escapeHtml(p.name)}
+            ${AbhivantaUtils.escapeHtml(p.name)}
           </div>
           <div style="font-family:var(--font-mono); font-size:11px; color:#64748b;">
-            ${SolvantaUtils.escapeHtml(p.id)}
+            ${AbhivantaUtils.escapeHtml(p.id)}
           </div>
         </td>
-        <td>${SolvantaUI.getTypeBadge(p.type)}</td>
+        <td>${AbhivantaUI.getTypeBadge(p.type)}</td>
         <td>
-          <div>${SolvantaUtils.escapeHtml(p.state)}</div>
-          <div style="font-size:11px; color:#94a3b8;">${SolvantaUtils.escapeHtml(p.location)}</div>
+          <div>${AbhivantaUtils.escapeHtml(p.state)}</div>
+          <div style="font-size:11px; color:#94a3b8;">${AbhivantaUtils.escapeHtml(p.location)}</div>
         </td>
         <td style="font-family:var(--font-mono); font-weight:700;">
-          ${SolvantaUtils.formatNumber(p.capacityMW, 0)} MW
+          ${AbhivantaUtils.formatNumber(p.capacityMW, 0)} MW
         </td>
         <td style="font-family:var(--font-mono);">
-          ${SolvantaUtils.formatNumber(p.todayGenMWh, 1)}
+          ${AbhivantaUtils.formatNumber(p.todayGenMWh, 1)}
         </td>
         <td>
           <span style="font-weight:700; color:${p.performanceRatio >= 80 ? '#10b981' : (p.performanceRatio >= 70 ? '#f59e0b' : '#ef4444')};">
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>
           <span style="font-weight:600;">${p.availability}%</span>
         </td>
-        <td>${SolvantaUI.getStatusBadge(p.status)}</td>
+        <td>${AbhivantaUI.getStatusBadge(p.status)}</td>
         <td style="text-align:right; white-space:nowrap;">
           <button class="btn-icon" title="View Plant Profile" onclick="viewPlantDetails('${p.id}')">
             <i data-lucide="eye"></i>
@@ -148,33 +148,33 @@ document.addEventListener('DOMContentLoaded', () => {
       </tr>
     `).join('');
 
-    SolvantaUI.initIcons();
+    AbhivantaUI.initIcons();
   }
 
   // View Plant Details Profile Modal
   window.viewPlantDetails = function(plantId) {
-    const plant = SolvantaStorage.getPlant(plantId);
+    const plant = AbhivantaStorage.getPlant(plantId);
     if (!plant) {
-      SolvantaUI.toast('Plant not found.', 'danger');
+      AbhivantaUI.toast('Plant not found.', 'danger');
       return;
     }
 
-    const cuf = SolvantaUtils.calculateCUF(plant.todayGenMWh, plant.capacityMW);
-    const revenue = SolvantaUtils.calculateRevenue(plant.todayGenMWh, plant.tariffINR);
-    const co2 = SolvantaUtils.calculateCO2Avoided(plant.todayGenMWh);
+    const cuf = AbhivantaUtils.calculateCUF(plant.todayGenMWh, plant.capacityMW);
+    const revenue = AbhivantaUtils.calculateRevenue(plant.todayGenMWh, plant.tariffINR);
+    const co2 = AbhivantaUtils.calculateCO2Avoided(plant.todayGenMWh);
 
     const bodyHtml = `
       <div style="display:flex; flex-direction:column; gap:20px;">
         <!-- Top Profile Banner -->
         <div style="background:var(--slate-50); border:1px solid var(--border-light); border-radius:12px; padding:16px; display:flex; justify-content:space-between; align-items:center;">
           <div>
-            <h3 style="margin:0; font-size:18px;">${SolvantaUtils.escapeHtml(plant.name)}</h3>
+            <h3 style="margin:0; font-size:18px;">${AbhivantaUtils.escapeHtml(plant.name)}</h3>
             <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">
-              ${plant.id} &bull; ${SolvantaUtils.escapeHtml(plant.location)}, ${SolvantaUtils.escapeHtml(plant.state)}
+              ${plant.id} &bull; ${AbhivantaUtils.escapeHtml(plant.location)}, ${AbhivantaUtils.escapeHtml(plant.state)}
             </div>
           </div>
           <div>
-            ${SolvantaUI.getStatusBadge(plant.status)}
+            ${AbhivantaUI.getStatusBadge(plant.status)}
           </div>
         </div>
 
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:8px; padding:12px;">
             <div style="font-size:11px; color:#64748b; text-transform:uppercase;">Today's Output</div>
-            <div style="font-size:18px; font-weight:800; color:#10b981; margin-top:2px;">${SolvantaUtils.formatNumber(plant.todayGenMWh, 1)} MWh</div>
+            <div style="font-size:18px; font-weight:800; color:#10b981; margin-top:2px;">${AbhivantaUtils.formatNumber(plant.todayGenMWh, 1)} MWh</div>
           </div>
           <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:8px; padding:12px;">
             <div style="font-size:11px; color:#64748b; text-transform:uppercase;">Performance Ratio</div>
@@ -208,11 +208,11 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:8px; padding:12px;">
             <div style="font-size:11px; color:#64748b; text-transform:uppercase;">Est. Revenue (Today)</div>
-            <div style="font-size:16px; font-weight:700; color:#334155; margin-top:2px;">${SolvantaUtils.formatINR(revenue)}</div>
+            <div style="font-size:16px; font-weight:700; color:#334155; margin-top:2px;">${AbhivantaUtils.formatINR(revenue)}</div>
           </div>
           <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:8px; padding:12px;">
             <div style="font-size:11px; color:#64748b; text-transform:uppercase;">CO2 Avoided Today</div>
-            <div style="font-size:16px; font-weight:700; color:#334155; margin-top:2px;">${SolvantaUtils.formatNumber(co2, 0)} Tonnes</div>
+            <div style="font-size:16px; font-weight:700; color:#334155; margin-top:2px;">${AbhivantaUtils.formatNumber(co2, 0)} Tonnes</div>
           </div>
         </div>
 
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </tr>
             <tr style="border-bottom:1px solid var(--border-light);">
               <td style="padding:6px 0; color:#64748b;">Commissioning Date:</td>
-              <td style="padding:6px 0; font-weight:600; text-align:right;">${SolvantaUtils.formatDate(plant.commissionDate)}</td>
+              <td style="padding:6px 0; font-weight:600; text-align:right;">${AbhivantaUtils.formatDate(plant.commissionDate)}</td>
             </tr>
             <tr style="border-bottom:1px solid var(--border-light);">
               <td style="padding:6px 0; color:#64748b;">Central Inverters / Units:</td>
@@ -238,14 +238,14 @@ document.addEventListener('DOMContentLoaded', () => {
             </tr>
             <tr style="border-bottom:1px solid var(--border-light);">
               <td style="padding:6px 0; color:#64748b;">Next Maintenance Window:</td>
-              <td style="padding:6px 0; font-weight:600; text-align:right;">${SolvantaUtils.formatDate(plant.nextMaintenance)}</td>
+              <td style="padding:6px 0; font-weight:600; text-align:right;">${AbhivantaUtils.formatDate(plant.nextMaintenance)}</td>
             </tr>
           </table>
         </div>
       </div>
     `;
 
-    SolvantaUI.modal({
+    AbhivantaUI.modal({
       title: 'Plant Profile & Telemetry Specification',
       bodyHtml,
       size: 'lg',
@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const addBtn = document.getElementById('add-plant-btn');
   if (addBtn) {
     addBtn.addEventListener('click', () => {
-      const nextId = `PLANT-SOL-${String(SolvantaStorage.getPlants().length + 1).padStart(2, '0')}`;
+      const nextId = `PLANT-SOL-${String(AbhivantaStorage.getPlants().length + 1).padStart(2, '0')}`;
       const bodyHtml = `
         <form id="new-plant-form" style="display:flex; flex-direction:column; gap:12px;">
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
@@ -344,13 +344,13 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="form-group" style="margin:0;">
               <label class="form-label">Commission Date</label>
-              <input type="date" id="add-plant-date" class="form-control" value="${SolvantaUtils.getTodayISO()}">
+              <input type="date" id="add-plant-date" class="form-control" value="${AbhivantaUtils.getTodayISO()}">
             </div>
           </div>
         </form>
       `;
 
-      SolvantaUI.modal({
+      AbhivantaUI.modal({
         title: 'Register New Renewable Plant Asset',
         bodyHtml,
         size: 'lg',
@@ -368,15 +368,15 @@ document.addEventListener('DOMContentLoaded', () => {
               const cap = parseFloat(document.getElementById('add-plant-cap').value);
               const tariff = parseFloat(document.getElementById('add-plant-tariff').value) || 3.3;
               const status = document.getElementById('add-plant-status').value;
-              const date = document.getElementById('add-plant-date').value || SolvantaUtils.getTodayISO();
+              const date = document.getElementById('add-plant-date').value || AbhivantaUtils.getTodayISO();
 
               if (!id || !name || isNaN(cap) || cap <= 0) {
-                SolvantaUI.toast('Please fill all mandatory fields with valid values.', 'warning');
+                AbhivantaUI.toast('Please fill all mandatory fields with valid values.', 'warning');
                 return false;
               }
 
               try {
-                SolvantaStorage.addPlant({
+                AbhivantaStorage.addPlant({
                   id,
                   name,
                   type,
@@ -393,11 +393,11 @@ document.addEventListener('DOMContentLoaded', () => {
                   performanceRatio: 81.5,
                   nextMaintenance: '2026-12-01'
                 });
-                SolvantaUI.toast(`Plant "${name}" registered successfully.`, 'success');
+                AbhivantaUI.toast(`Plant "${name}" registered successfully.`, 'success');
                 renderTable();
                 close();
               } catch (err) {
-                SolvantaUI.toast(err.message, 'danger');
+                AbhivantaUI.toast(err.message, 'danger');
                 return false;
               }
             }
@@ -409,14 +409,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Edit Plant Modal
   window.openEditPlantModal = function(plantId) {
-    const plant = SolvantaStorage.getPlant(plantId);
+    const plant = AbhivantaStorage.getPlant(plantId);
     if (!plant) return;
 
     const bodyHtml = `
       <form id="edit-plant-form" style="display:flex; flex-direction:column; gap:12px;">
         <div class="form-group" style="margin:0;">
           <label class="form-label">Plant Name</label>
-          <input type="text" id="edit-plant-name" class="form-control" value="${SolvantaUtils.escapeHtml(plant.name)}" required>
+          <input type="text" id="edit-plant-name" class="form-control" value="${AbhivantaUtils.escapeHtml(plant.name)}" required>
         </div>
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
@@ -453,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </form>
     `;
 
-    SolvantaUI.modal({
+    AbhivantaUI.modal({
       title: `Update Plant — ${plant.name}`,
       bodyHtml,
       footerButtons: [
@@ -470,11 +470,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const tariff = parseFloat(document.getElementById('edit-plant-tariff').value);
 
             if (!name || isNaN(cap)) {
-              SolvantaUI.toast('Please provide valid plant attributes.', 'warning');
+              AbhivantaUI.toast('Please provide valid plant attributes.', 'warning');
               return false;
             }
 
-            SolvantaStorage.updatePlant(plantId, {
+            AbhivantaStorage.updatePlant(plantId, {
               name,
               capacityMW: cap,
               status,
@@ -483,7 +483,7 @@ document.addEventListener('DOMContentLoaded', () => {
               tariffINR: tariff
             });
 
-            SolvantaUI.toast(`Updated plant "${name}" successfully.`, 'success');
+            AbhivantaUI.toast(`Updated plant "${name}" successfully.`, 'success');
             renderTable();
             close();
           }
@@ -494,15 +494,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Delete Plant with Custom Confirmation
   window.handleDeletePlant = function(plantId) {
-    const plant = SolvantaStorage.getPlant(plantId);
+    const plant = AbhivantaStorage.getPlant(plantId);
     if (!plant) return;
 
-    SolvantaUI.confirm(
+    AbhivantaUI.confirm(
       'Decommission Plant Asset',
       `Are you sure you want to delete "${plant.name}" (${plant.id})? This will remove all associated telemetry bindings.`,
       () => {
-        SolvantaStorage.deletePlant(plantId);
-        SolvantaUI.toast(`Plant "${plant.name}" decommissioned.`, 'success');
+        AbhivantaStorage.deletePlant(plantId);
+        AbhivantaUI.toast(`Plant "${plant.name}" decommissioned.`, 'success');
         renderTable();
       },
       'Decommission Plant',
@@ -562,7 +562,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const exportBtn = document.getElementById('export-plants-btn');
   if (exportBtn) {
     exportBtn.addEventListener('click', () => {
-      SolvantaExport.exportHtmlTable('plants-table', 'Solvanta_Plant_Inventory');
+      AbhivantaExport.exportHtmlTable('plants-table', 'Abhivanta_Plant_Inventory');
     });
   }
 

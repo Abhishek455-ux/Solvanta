@@ -1,9 +1,9 @@
 /**
- * SOLVANTA - Core Utility Functions
+ * ABHIVANTA - Core Utility Functions
  * Formatting, date helpers, energy calculations, and security sanitization.
  */
 
-const SolvantaUtils = (() => {
+const AbhivantaUtils = (() => {
   // Safe HTML Escaping (prevents XSS vulnerabilities)
   function escapeHtml(str) {
     if (str === null || str === undefined) return '';

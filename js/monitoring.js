@@ -1,5 +1,5 @@
 /**
- * SOLVANTA - Live SCADA Monitoring Controller
+ * ABHIVANTA - Live SCADA Monitoring Controller
  * Real-time telemetry emulation, inverter string matrix, diurnal charts,
  * and automated telemetry stress-test event injection.
  */
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Check URL params
   const urlParams = new URLSearchParams(window.location.search);
   const paramPlantId = urlParams.get('plantId');
-  if (paramPlantId && SolvantaStorage.getPlant(paramPlantId)) {
+  if (paramPlantId && AbhivantaStorage.getPlant(paramPlantId)) {
     selectedPlantId = paramPlantId;
   }
 
@@ -28,10 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const select = document.getElementById('monitoring-plant-select');
     if (!select) return;
 
-    const plants = SolvantaStorage.getPlants();
+    const plants = AbhivantaStorage.getPlants();
     select.innerHTML = plants.map(p => `
       <option value="${p.id}" ${p.id === selectedPlantId ? 'selected' : ''}>
-        ${p.id} &bull; ${SolvantaUtils.escapeHtml(p.name)} (${p.capacityMW} MW ${p.type})
+        ${p.id} &bull; ${AbhivantaUtils.escapeHtml(p.name)} (${p.capacityMW} MW ${p.type})
       </option>
     `).join('');
 
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderPlantTelemetry() {
-    const plant = SolvantaStorage.getPlant(selectedPlantId);
+    const plant = AbhivantaStorage.getPlant(selectedPlantId);
     if (!plant) return;
 
     // Title
@@ -67,10 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const elTodayGen = document.getElementById('tel-today-gen');
     const elRevenue = document.getElementById('tel-revenue');
     if (elTodayGen) {
-      elTodayGen.textContent = `${SolvantaUtils.formatNumber(plant.todayGenMWh, 1)} MWh`;
+      elTodayGen.textContent = `${AbhivantaUtils.formatNumber(plant.todayGenMWh, 1)} MWh`;
       if (elRevenue) {
         const rev = plant.todayGenMWh * 1000 * (plant.tariffINR || 3.3);
-        elRevenue.textContent = `${SolvantaUtils.formatINR(rev)} revenue today`;
+        elRevenue.textContent = `${AbhivantaUtils.formatINR(rev)} revenue today`;
       }
     }
 
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = document.getElementById('bms-rack-grid');
     if (!grid) return;
 
-    const bessFleet = SolvantaStorage.getBessFleet ? SolvantaStorage.getBessFleet() : (SolvantaDemoData.bessFleet || []);
+    const bessFleet = AbhivantaStorage.getBessFleet ? AbhivantaStorage.getBessFleet() : (AbhivantaDemoData.bessFleet || []);
     const bess = bessFleet.find(b => b.plantId === plant.id) || bessFleet[0];
     const totalRacks = bess ? bess.rackCount : 32;
 
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const statusLabel = isBalancing ? 'Balancing' : 'Nominal';
 
       html += `
-        <div class="bms-rack-item" style="background:#ffffff; border:1px solid var(--border-light); border-radius:8px; padding:8px 10px; cursor:pointer; transition:transform 0.2s, box-shadow 0.2s; border-left:3px solid ${statusColor};" onclick="SolvantaUI.toast('Rack ${rackId}: Cell voltage ${baseV.toFixed(3)}V (\\u0394V: ${deltaMv}mV), Temp: ${rackTemp}\\u00b0C, Liquid chilling loop 100% nominal.', 'info', 'BMS Rack Diagnostics')">
+        <div class="bms-rack-item" style="background:#ffffff; border:1px solid var(--border-light); border-radius:8px; padding:8px 10px; cursor:pointer; transition:transform 0.2s, box-shadow 0.2s; border-left:3px solid ${statusColor};" onclick="AbhivantaUI.toast('Rack ${rackId}: Cell voltage ${baseV.toFixed(3)}V (\\u0394V: ${deltaMv}mV), Temp: ${rackTemp}\\u00b0C, Liquid chilling loop 100% nominal.', 'info', 'BMS Rack Diagnostics')">
           <div style="display:flex; justify-content:space-between; align-items:center;">
             <strong style="font-size:11px; font-family:var(--font-mono); color:#0f172a;">${rackId}</strong>
             <span style="width:6px; height:6px; border-radius:50%; background:${statusColor};"></span>
@@ -198,19 +198,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (elSolarP) elSolarP.textContent = `${actualMW} MW`;
     if (elBessP) {
-      const bessFleet = SolvantaStorage.getBessFleet ? SolvantaStorage.getBessFleet() : (SolvantaDemoData.bessFleet || []);
+      const bessFleet = AbhivantaStorage.getBessFleet ? AbhivantaStorage.getBessFleet() : (AbhivantaDemoData.bessFleet || []);
       const bess = bessFleet.find(b => b.plantId === plant.id) || bessFleet[0];
       if (bess) elBessP.textContent = `${bess.currentPowerMW >= 0 ? '+' : ''}${bess.currentPowerMW} MW`;
     }
   }
 
   function renderMonitoringChart(plant) {
-    const hourlyData = SolvantaDemoData.generateHourlyCurve(plant);
-    SolvantaCharts.renderGenerationTrendChart('liveMonitoringChart', hourlyData, true);
+    const hourlyData = AbhivantaDemoData.generateHourlyCurve(plant);
+    AbhivantaCharts.renderGenerationTrendChart('liveMonitoringChart', hourlyData, true);
   }
 
   function renderBessConsole(plant) {
-    const bessFleet = SolvantaStorage.getBessFleet ? SolvantaStorage.getBessFleet() : (SolvantaDemoData.bessFleet || []);
+    const bessFleet = AbhivantaStorage.getBessFleet ? AbhivantaStorage.getBessFleet() : (AbhivantaDemoData.bessFleet || []);
     // Find co-located BESS or pick primary
     const bess = bessFleet.find(b => b.plantId === plant.id) || bessFleet[0];
     if (!bess) return;
@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (elRte) elRte.textContent = `${bess.roundTripEfficiency}%`;
     if (elSoh) elSoh.textContent = `State of Health (SoH): ${bess.sohPercent}%`;
     if (elCycles) elCycles.textContent = `${bess.cycleCount} Cumulative Cycles`;
-    if (elArbitrage) elArbitrage.textContent = SolvantaUtils.formatINR(bess.todayArbitrageRevenueINR);
+    if (elArbitrage) elArbitrage.textContent = AbhivantaUtils.formatINR(bess.todayArbitrageRevenueINR);
 
     if (elRacks) elRacks.textContent = `${bess.racksOnline} / ${bess.rackCount} Online (100%)`;
     if (elTemp) elTemp.textContent = `${bess.cellTempC} °C (${bess.coolingSystem})`;
@@ -273,9 +273,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (elBus) elBus.textContent = `1,250 V DC &bull; ${bess.busVoltageKV} kV POI`;
 
     // Render BESS 24h diurnal curve
-    if (window.SolvantaCharts && SolvantaCharts.renderBessDispatchChart) {
-      const bessCurve = SolvantaDemoData.generateBessDiurnalCurve(bess);
-      SolvantaCharts.renderBessDispatchChart('bessDispatchChart', bessCurve);
+    if (window.AbhivantaCharts && AbhivantaCharts.renderBessDispatchChart) {
+      const bessCurve = AbhivantaDemoData.generateBessDiurnalCurve(bess);
+      AbhivantaCharts.renderBessDispatchChart('bessDispatchChart', bessCurve);
     }
   }
 
@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
     simIntervalId = setInterval(() => {
       if (!isSimulating) return;
 
-      const plant = SolvantaStorage.getPlant(selectedPlantId);
+      const plant = AbhivantaStorage.getPlant(selectedPlantId);
       if (!plant) return;
 
       // Random jitter
@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
       plant.gridVoltage = +(33.0 + (Math.random() - 0.5) * 0.2).toFixed(1);
 
       // Save subtle update
-      SolvantaStorage.updatePlant(plant.id, plant);
+      AbhivantaStorage.updatePlant(plant.id, plant);
 
       // Quick DOM update
       const elPower = document.getElementById('tel-power');
@@ -377,14 +377,14 @@ document.addEventListener('DOMContentLoaded', () => {
           simText.textContent = 'Active (4s)';
           simIcon.setAttribute('data-lucide', 'pause');
           toggleBtn.className = 'btn btn-emerald btn-sm';
-          SolvantaUI.toast('SCADA telemetry polling resumed.', 'info');
+          AbhivantaUI.toast('SCADA telemetry polling resumed.', 'info');
         } else {
           simText.textContent = 'Paused';
           simIcon.setAttribute('data-lucide', 'play');
           toggleBtn.className = 'btn btn-secondary btn-sm';
-          SolvantaUI.toast('SCADA telemetry polling paused.', 'warning');
+          AbhivantaUI.toast('SCADA telemetry polling paused.', 'warning');
         }
-        SolvantaUI.initIcons();
+        AbhivantaUI.initIcons();
       });
     }
 
@@ -392,7 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const injectBtn = document.getElementById('inject-event-btn');
     if (injectBtn) {
       injectBtn.addEventListener('click', () => {
-        const plant = SolvantaStorage.getPlant(selectedPlantId);
+        const plant = AbhivantaStorage.getPlant(selectedPlantId);
         if (!plant) return;
 
         // Simulate inverter trip & high temp
@@ -404,10 +404,10 @@ document.addEventListener('DOMContentLoaded', () => {
         plant.currentPowerKW = powerDropKW;
         plant.moduleTemp = +(plant.moduleTemp + 4.5).toFixed(1);
 
-        SolvantaStorage.updatePlant(plant.id, plant);
+        AbhivantaStorage.updatePlant(plant.id, plant);
 
         // Record real alert
-        const alert = SolvantaStorage.addAlert({
+        const alert = AbhivantaStorage.addAlert({
           plantId: plant.id,
           plantName: plant.name,
           category: 'Inverter Trip Anomaly',
@@ -416,7 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
           remediation: 'Dispatch field inspection crew to check combiner box diodes.'
         });
 
-        SolvantaUI.toast(
+        AbhivantaUI.toast(
           `Simulated fault event injected! 2 Inverters tripped on ${plant.name}. New alert created (${alert.id}).`,
           'danger',
           'Telemetry Anomaly Triggered',
@@ -441,13 +441,13 @@ document.addEventListener('DOMContentLoaded', () => {
           cbSolarBtn.className = 'btn btn-sm btn-emerald';
           if (cbSolarSvg) cbSolarSvg.setAttribute('fill', '#10b981');
           if (cbSolarDesc) cbSolarDesc.textContent = 'Status: Closed (33 kV Connected)';
-          SolvantaUI.toast('Feeder Breaker CB-01 CLOSED. Solar array synchronized with 33 kV pooling bus.', 'success');
+          AbhivantaUI.toast('Feeder Breaker CB-01 CLOSED. Solar array synchronized with 33 kV pooling bus.', 'success');
         } else {
           cbSolarBtn.textContent = 'Close / Sync';
           cbSolarBtn.className = 'btn btn-sm btn-secondary';
           if (cbSolarSvg) cbSolarSvg.setAttribute('fill', '#ef4444');
           if (cbSolarDesc) cbSolarDesc.textContent = 'Status: OPEN (Feeder Tripped)';
-          SolvantaUI.toast('WARNING: Feeder Breaker CB-01 TRIPPED. Solar array isolated from grid.', 'danger');
+          AbhivantaUI.toast('WARNING: Feeder Breaker CB-01 TRIPPED. Solar array isolated from grid.', 'danger');
         }
       });
     }
@@ -466,13 +466,13 @@ document.addEventListener('DOMContentLoaded', () => {
           cbBessBtn.className = 'btn btn-sm btn-emerald';
           if (cbBessSvg) cbBessSvg.setAttribute('fill', '#10b981');
           if (cbBessDesc) cbBessDesc.textContent = 'Status: Closed (Grid Injected)';
-          SolvantaUI.toast('Feeder Breaker CB-02 CLOSED. BESS Container Bay synchronized for arbitrage dispatch.', 'success');
+          AbhivantaUI.toast('Feeder Breaker CB-02 CLOSED. BESS Container Bay synchronized for arbitrage dispatch.', 'success');
         } else {
           cbBessBtn.textContent = 'Close / Sync';
           cbBessBtn.className = 'btn btn-sm btn-secondary';
           if (cbBessSvg) cbBessSvg.setAttribute('fill', '#ef4444');
           if (cbBessDesc) cbBessDesc.textContent = 'Status: OPEN (BESS Standby)';
-          SolvantaUI.toast('Feeder Breaker CB-02 OPENED. Battery container bay placed on float isolation.', 'warning');
+          AbhivantaUI.toast('Feeder Breaker CB-02 OPENED. Battery container bay placed on float isolation.', 'warning');
         }
       });
     }
@@ -485,10 +485,10 @@ document.addEventListener('DOMContentLoaded', () => {
       curtailmentSlider.addEventListener('input', (e) => {
         const val = e.target.value;
         curtailmentVal.textContent = val === '100' ? '100% (No Curtailment)' : `${val}% Derated (SLDC Demand Response)`;
-        const plant = SolvantaStorage.getPlant(selectedPlantId);
+        const plant = AbhivantaStorage.getPlant(selectedPlantId);
         if (plant) {
           plant.currentPowerKW = Math.round(plant.capacityMW * 800 * (val / 100));
-          SolvantaStorage.updatePlant(plant.id, plant);
+          AbhivantaStorage.updatePlant(plant.id, plant);
           renderPlantTelemetry();
         }
       });
@@ -498,11 +498,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const stowBtn = document.getElementById('tracker-stow-btn');
     if (stowBtn) {
       stowBtn.addEventListener('click', () => {
-        SolvantaUI.confirm(
+        AbhivantaUI.confirm(
           'Emergency Tracker Stow Command',
           'Deploy high-wind aerodynamic stow command? All single-axis tracker tables will pivot to 0° horizontal to protect modules from mechanical wind gusts.',
           () => {
-            SolvantaUI.toast('EMERGENCY STOW ENGAGED! All 48 tracking blocks locked at 0° horizontal safety flat.', 'warning', 'Aero Wind Protection Active', 8000);
+            AbhivantaUI.toast('EMERGENCY STOW ENGAGED! All 48 tracking blocks locked at 0° horizontal safety flat.', 'warning', 'Aero Wind Protection Active', 8000);
           },
           'Engage 0° Stow',
           false

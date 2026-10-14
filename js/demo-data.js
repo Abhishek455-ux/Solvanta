@@ -1,10 +1,10 @@
 /**
- * SOLVANTA - Comprehensive Demo Dataset
+ * ABHIVANTA - Comprehensive Demo Dataset
  * All plant metrics, historical generation profiles, alerts, maintenance schedules,
  * and reports are simulated for high-fidelity evaluation and enterprise proof-of-concept demonstrations.
  */
 
-const SolvantaDemoData = (() => {
+const AbhivantaDemoData = (() => {
   // 9 Realistic Fictional Indian Renewable Plants
   const plants = [
     {
@@ -740,10 +740,10 @@ const SolvantaDemoData = (() => {
 
   // Default User & App Settings
   const defaultSettings = {
-    organizationName: 'Solvanta Clean Energy Corp',
+    organizationName: 'Abhivanta Clean Energy Corp',
     userDisplayName: 'Aditya Sharma',
     userRole: 'Plant Operations Lead',
-    reportBranding: 'Solvanta Intelligence Reports',
+    reportBranding: 'Abhivanta Intelligence Reports',
     defaultCurrency: 'INR',
     energyUnit: 'MWh',
     emissionsFactor: 0.82, // Tonnes CO2 / MWh

@@ -1,5 +1,5 @@
 /**
- * SOLVANTA - Alerts & Fault Controller
+ * ABHIVANTA - Alerts & Fault Controller
  * Fault triage, severity status counters, modal diagnostics, and demo simulation.
  */
 
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getProcessedAlerts() {
-    let alerts = SolvantaStorage.getAlerts();
+    let alerts = AbhivantaStorage.getAlerts();
 
     if (searchQuery) {
       alerts = alerts.filter(a =>
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const alerts = getProcessedAlerts();
     if (countDisplay) {
-      countDisplay.textContent = `Showing ${alerts.length} of ${SolvantaStorage.getAlerts().length} Alerts`;
+      countDisplay.textContent = `Showing ${alerts.length} of ${AbhivantaStorage.getAlerts().length} Alerts`;
     }
 
     if (alerts.length === 0) {
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </td>
         </tr>
       `;
-      SolvantaUI.initIcons();
+      AbhivantaUI.initIcons();
       return;
     }
 
@@ -70,22 +70,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
       return `
         <tr>
-          <td style="font-family:var(--font-mono); font-weight:700; color:#0f172a;">${SolvantaUtils.escapeHtml(a.id)}</td>
+          <td style="font-family:var(--font-mono); font-weight:700; color:#0f172a;">${AbhivantaUtils.escapeHtml(a.id)}</td>
           <td>
-            <div style="font-weight:600; color:#0f172a;">${SolvantaUtils.escapeHtml(a.plantName)}</div>
-            <div style="font-size:11px; color:#64748b;">${SolvantaUtils.escapeHtml(a.plantId)}</div>
+            <div style="font-weight:600; color:#0f172a;">${AbhivantaUtils.escapeHtml(a.plantName)}</div>
+            <div style="font-size:11px; color:#64748b;">${AbhivantaUtils.escapeHtml(a.plantId)}</div>
           </td>
-          <td>${SolvantaUtils.escapeHtml(a.category)}</td>
+          <td>${AbhivantaUtils.escapeHtml(a.category)}</td>
           <td>${sevBadge}</td>
           <td style="max-width:280px;">
-            <div class="truncate" title="${SolvantaUtils.escapeHtml(a.message)}">
-              ${SolvantaUtils.escapeHtml(a.message)}
+            <div class="truncate" title="${AbhivantaUtils.escapeHtml(a.message)}">
+              ${AbhivantaUtils.escapeHtml(a.message)}
             </div>
           </td>
           <td style="font-size:11px; color:#64748b; white-space:nowrap;">
-            ${SolvantaUtils.getRelativeTime(a.timestamp)}
+            ${AbhivantaUtils.getRelativeTime(a.timestamp)}
           </td>
-          <td>${SolvantaUI.getStatusBadge(a.status)}</td>
+          <td>${AbhivantaUI.getStatusBadge(a.status)}</td>
           <td style="text-align:right; white-space:nowrap;">
             <button class="btn btn-secondary btn-sm" onclick="viewAlertDetails('${a.id}')" title="Diagnostic View">
               <i data-lucide="info"></i> Details
@@ -105,11 +105,11 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }).join('');
 
-    SolvantaUI.initIcons();
+    AbhivantaUI.initIcons();
   }
 
   function updateSummaryCounters() {
-    const alerts = SolvantaStorage.getAlerts();
+    const alerts = AbhivantaStorage.getAlerts();
     const critical = alerts.filter(a => a.severity === 'Critical' && a.status !== 'Resolved').length;
     const high = alerts.filter(a => a.severity === 'High' && a.status !== 'Resolved').length;
     const medium = alerts.filter(a => a.severity === 'Medium' && a.status !== 'Resolved').length;
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // View Alert Details Modal
   window.viewAlertDetails = function(alertId) {
-    const alerts = SolvantaStorage.getAlerts();
+    const alerts = AbhivantaStorage.getAlerts();
     const alert = alerts.find(a => a.id === alertId);
     if (!alert) return;
 
@@ -157,39 +157,39 @@ document.addEventListener('DOMContentLoaded', () => {
         <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:8px; padding:12px; display:flex; justify-content:space-between; align-items:center;">
           <div>
             <div style="font-size:12px; font-weight:700; color:#0f172a; font-family:var(--font-mono);">${alert.id}</div>
-            <div style="font-size:14px; font-weight:700; color:var(--primary-700); margin-top:2px;">${SolvantaUtils.escapeHtml(alert.plantName)}</div>
+            <div style="font-size:14px; font-weight:700; color:var(--primary-700); margin-top:2px;">${AbhivantaUtils.escapeHtml(alert.plantName)}</div>
           </div>
-          <div>${SolvantaUI.getStatusBadge(alert.status)}</div>
+          <div>${AbhivantaUI.getStatusBadge(alert.status)}</div>
         </div>
 
         <div>
           <div style="font-size:11px; color:#64748b; text-transform:uppercase; font-weight:600;">Alert Classification &amp; Severity</div>
           <div style="font-size:14px; font-weight:700; color:#0f172a; margin-top:2px;">
-            ${SolvantaUtils.escapeHtml(alert.category)} &bull; ${alert.severity} Severity
+            ${AbhivantaUtils.escapeHtml(alert.category)} &bull; ${alert.severity} Severity
           </div>
         </div>
 
         <div>
           <div style="font-size:11px; color:#64748b; text-transform:uppercase; font-weight:600;">Telemetry Diagnostics Message</div>
           <div style="background:#f1f5f9; padding:10px 12px; border-radius:6px; font-size:13px; color:#1e293b; margin-top:4px; font-family:var(--font-mono);">
-            ${SolvantaUtils.escapeHtml(alert.message)}
+            ${AbhivantaUtils.escapeHtml(alert.message)}
           </div>
         </div>
 
         <div>
           <div style="font-size:11px; color:#64748b; text-transform:uppercase; font-weight:600;">Standard Operating Procedure (SOP) Remediation</div>
           <div style="font-size:13px; color:#334155; margin-top:4px; line-height:1.5;">
-            ${SolvantaUtils.escapeHtml(alert.remediation || 'Inspect physical DC disconnects and SCADA logging node.')}
+            ${AbhivantaUtils.escapeHtml(alert.remediation || 'Inspect physical DC disconnects and SCADA logging node.')}
           </div>
         </div>
 
         <div style="font-size:11px; color:#64748b; border-top:1px solid var(--border-light); padding-top:8px;">
-          Timestamp: ${SolvantaUtils.formatDateTime(alert.timestamp)}
+          Timestamp: ${AbhivantaUtils.formatDateTime(alert.timestamp)}
         </div>
       </div>
     `;
 
-    SolvantaUI.modal({
+    AbhivantaUI.modal({
       title: 'Telemetry Fault Diagnostic Inspection',
       bodyHtml,
       footerButtons: [
@@ -208,15 +208,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Acknowledge Alert
   window.handleAcknowledge = function(alertId) {
-    SolvantaStorage.acknowledgeAlert(alertId);
-    SolvantaUI.toast(`Alert ${alertId} acknowledged by operator.`, 'info');
+    AbhivantaStorage.acknowledgeAlert(alertId);
+    AbhivantaUI.toast(`Alert ${alertId} acknowledged by operator.`, 'info');
     renderAlerts();
   };
 
   // Resolve Alert
   window.handleResolve = function(alertId) {
-    SolvantaStorage.resolveAlert(alertId);
-    SolvantaUI.toast(`Alert ${alertId} marked as resolved. Normal telemetry restored.`, 'success');
+    AbhivantaStorage.resolveAlert(alertId);
+    AbhivantaUI.toast(`Alert ${alertId} marked as resolved. Normal telemetry restored.`, 'success');
     renderAlerts();
   };
 
@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const simBtn = document.getElementById('simulate-alert-btn');
     if (simBtn) {
       simBtn.addEventListener('click', () => {
-        const plants = SolvantaStorage.getPlants();
+        const plants = AbhivantaStorage.getPlants();
         const randPlant = plants[Math.floor(Math.random() * plants.length)];
 
         const faultPool = [
@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
         const selectedFault = faultPool[Math.floor(Math.random() * faultPool.length)];
 
-        const newAlert = SolvantaStorage.addAlert({
+        const newAlert = AbhivantaStorage.addAlert({
           plantId: randPlant.id,
           plantName: randPlant.name,
           category: selectedFault.cat,
@@ -268,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
           remediation: selectedFault.rem
         });
 
-        SolvantaUI.toast(`New simulated alert [${newAlert.id}] generated on ${randPlant.name}!`, 'warning', 'Synthetic Fault Triggered');
+        AbhivantaUI.toast(`New simulated alert [${newAlert.id}] generated on ${randPlant.name}!`, 'warning', 'Synthetic Fault Triggered');
         renderAlerts();
       });
     }

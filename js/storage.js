@@ -1,11 +1,11 @@
-/**
- * SOLVANTA - Persistent Storage Layer
+﻿/**
+ * ABHIVANTA - Persistent Storage Layer
  * Manages localStorage with versioning, safe error handling, schema migration,
  * JSON export/import backups, and reset capability.
  */
 
-const SolvantaStorage = (() => {
-  const STORAGE_KEY = 'SOLVANTA_DATA_V1.0';
+const AbhivantaStorage = (() => {
+  const STORAGE_KEY = 'ABHIVANTA_DATA_V1.0';
 
   // Initialize store if not present
   function initStore() {
@@ -20,12 +20,12 @@ const SolvantaStorage = (() => {
         return resetToDefault();
       }
       if (!parsed.bessFleet || !Array.isArray(parsed.bessFleet)) {
-        parsed.bessFleet = JSON.parse(JSON.stringify(SolvantaDemoData.bessFleet || []));
+        parsed.bessFleet = JSON.parse(JSON.stringify(AbhivantaDemoData.bessFleet || []));
         saveStore(parsed);
       }
       return parsed;
     } catch (e) {
-      console.warn('SolvantaStorage: LocalStorage parse failure, resetting to defaults.', e);
+      console.warn('AbhivantaStorage: LocalStorage parse failure, resetting to defaults.', e);
       return resetToDefault();
     }
   }
@@ -41,7 +41,7 @@ const SolvantaStorage = (() => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
       return true;
     } catch (e) {
-      console.error('SolvantaStorage: Failed to persist data to localStorage.', e);
+      console.error('AbhivantaStorage: Failed to persist data to localStorage.', e);
       return false;
     }
   }
@@ -51,14 +51,14 @@ const SolvantaStorage = (() => {
     const defaultData = {
       version: '1.0',
       timestamp: new Date().toISOString(),
-      plants: JSON.parse(JSON.stringify(SolvantaDemoData.plants)),
-      bessFleet: JSON.parse(JSON.stringify(SolvantaDemoData.bessFleet || [])),
-      alerts: JSON.parse(JSON.stringify(SolvantaDemoData.initialAlerts)),
-      maintenance: JSON.parse(JSON.stringify(SolvantaDemoData.initialMaintenance)),
-      reports: JSON.parse(JSON.stringify(SolvantaDemoData.initialReports)),
-      settings: JSON.parse(JSON.stringify(SolvantaDemoData.defaultSettings)),
-      history30Days: SolvantaDemoData.generate30DaysHistory(),
-      monthlyHistory: JSON.parse(JSON.stringify(SolvantaDemoData.monthlyHistory))
+      plants: JSON.parse(JSON.stringify(AbhivantaDemoData.plants)),
+      bessFleet: JSON.parse(JSON.stringify(AbhivantaDemoData.bessFleet || [])),
+      alerts: JSON.parse(JSON.stringify(AbhivantaDemoData.initialAlerts)),
+      maintenance: JSON.parse(JSON.stringify(AbhivantaDemoData.initialMaintenance)),
+      reports: JSON.parse(JSON.stringify(AbhivantaDemoData.initialReports)),
+      settings: JSON.parse(JSON.stringify(AbhivantaDemoData.defaultSettings)),
+      history30Days: AbhivantaDemoData.generate30DaysHistory(),
+      monthlyHistory: JSON.parse(JSON.stringify(AbhivantaDemoData.monthlyHistory))
     };
     saveStore(defaultData);
     return defaultData;
@@ -133,7 +133,7 @@ const SolvantaStorage = (() => {
   function getBessFleet() {
     const store = getStore();
     if (!store.bessFleet || !Array.isArray(store.bessFleet) || store.bessFleet.length === 0) {
-      store.bessFleet = JSON.parse(JSON.stringify(SolvantaDemoData.bessFleet || []));
+      store.bessFleet = JSON.parse(JSON.stringify(AbhivantaDemoData.bessFleet || []));
       saveStore(store);
     }
     return store.bessFleet;
@@ -165,7 +165,7 @@ const SolvantaStorage = (() => {
   function addAlert(alert) {
     const store = getStore();
     const newAlert = {
-      id: alert.id || SolvantaUtils.generateUUID('ALT'),
+      id: alert.id || AbhivantaUtils.generateUUID('ALT'),
       plantId: alert.plantId,
       plantName: alert.plantName || 'General Plant Warning',
       category: alert.category || 'System Alert',
@@ -211,13 +211,13 @@ const SolvantaStorage = (() => {
   function addMaintenance(record) {
     const store = getStore();
     const newRecord = {
-      id: record.id || SolvantaUtils.generateUUID('MNT'),
+      id: record.id || AbhivantaUtils.generateUUID('MNT'),
       plantId: record.plantId,
       plantName: record.plantName,
       type: record.type || 'Preventive',
       description: record.description,
       scheduledDate: record.scheduledDate,
-      completedDate: record.status === 'Completed' ? (record.completedDate || SolvantaUtils.getTodayISO()) : null,
+      completedDate: record.status === 'Completed' ? (record.completedDate || AbhivantaUtils.getTodayISO()) : null,
       technician: record.technician || 'Plant Staff',
       priority: record.priority || 'Medium',
       status: record.status || 'Scheduled',
@@ -234,7 +234,7 @@ const SolvantaStorage = (() => {
     if (index === -1) throw new Error('Maintenance record not found');
     store.maintenance[index] = { ...store.maintenance[index], ...fields };
     if (fields.status === 'Completed' && !store.maintenance[index].completedDate) {
-      store.maintenance[index].completedDate = SolvantaUtils.getTodayISO();
+      store.maintenance[index].completedDate = AbhivantaUtils.getTodayISO();
     }
     saveStore(store);
     return store.maintenance[index];
@@ -256,12 +256,12 @@ const SolvantaStorage = (() => {
   function saveReport(reportMeta) {
     const store = getStore();
     const newReport = {
-      id: reportMeta.id || SolvantaUtils.generateUUID('RPT'),
+      id: reportMeta.id || AbhivantaUtils.generateUUID('RPT'),
       title: reportMeta.title || 'Plant Performance Report',
       reportType: reportMeta.reportType || 'Custom Report',
       plantId: reportMeta.plantId || 'ALL',
       plantName: reportMeta.plantName || 'Fleet Portfolio',
-      period: reportMeta.period || SolvantaUtils.formatDate(new Date()),
+      period: reportMeta.period || AbhivantaUtils.formatDate(new Date()),
       generatedDate: new Date().toISOString(),
       fileFormat: reportMeta.fileFormat || 'PDF',
       metricsIncluded: reportMeta.metricsIncluded || ['Generation', 'CUF', 'PR']
@@ -281,7 +281,7 @@ const SolvantaStorage = (() => {
   // ==================== SETTINGS CRUD ====================
   function getSettings() {
     const store = getStore();
-    return store.settings || SolvantaDemoData.defaultSettings;
+    return store.settings || AbhivantaDemoData.defaultSettings;
   }
 
   function updateSettings(newSettings) {

@@ -1,14 +1,14 @@
 /**
- * SOLVANTA - Automated PDF Report Generator
+ * ABHIVANTA - Automated PDF Report Generator
  * Powered by jsPDF & jsPDF-AutoTable via CDN.
  * Generates enterprise-grade, styled PDF reports with brand headers,
  * KPI matrices, data tables, observations, and regulatory audit compliance.
  */
 
-const SolvantaPDF = (() => {
+const AbhivantaPDF = (() => {
   function checkLibraries() {
     if (!window.jspdf || !window.jspdf.jsPDF) {
-      SolvantaUI.toast('jsPDF library is not loaded. Please verify internet connection for CDN.', 'danger');
+      AbhivantaUI.toast('jsPDF library is not loaded. Please verify internet connection for CDN.', 'danger');
       return false;
     }
     return true;
@@ -48,7 +48,7 @@ const SolvantaPDF = (() => {
       doc.setTextColor(255, 255, 255);
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(16);
-      doc.text('SOLVANTA', margin + 6, currentY + 11);
+      doc.text('ABHIVANTA', margin + 6, currentY + 11);
 
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(8.5);
@@ -64,7 +64,7 @@ const SolvantaPDF = (() => {
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(8);
       doc.setTextColor(203, 213, 225);
-      const genTimestamp = SolvantaUtils.formatDateTime(new Date());
+      const genTimestamp = AbhivantaUtils.formatDateTime(new Date());
       doc.text(`Generated: ${genTimestamp}`, pageWidth - margin - 6, currentY + 16, { align: 'right' });
       doc.text(`Report ID: ${config.reportId || 'RPT-' + Date.now().toString().slice(-6)}`, pageWidth - margin - 6, currentY + 21, { align: 'right' });
 
@@ -77,7 +77,7 @@ const SolvantaPDF = (() => {
       doc.setTextColor(30, 64, 175);   // blue 800
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(7.5);
-      doc.text('SOLVANTA ENTERPRISE PERFORMANCE AUDIT — CONTINUOUS SCADA INTELLIGENCE STREAM', pageWidth / 2, currentY + 5.5, { align: 'center' });
+      doc.text('ABHIVANTA ENTERPRISE PERFORMANCE AUDIT — CONTINUOUS SCADA INTELLIGENCE STREAM', pageWidth / 2, currentY + 5.5, { align: 'center' });
 
       currentY += 13;
 
@@ -90,7 +90,7 @@ const SolvantaPDF = (() => {
 
       const metaTable = [
         ['Plant Scope:', config.plantName || 'Fleet Portfolio', 'Reporting Period:', config.period || 'Current Cycle'],
-        ['Report Type:', config.reportType || 'Performance Audit', 'Prepared By:', config.preparedBy || 'Solvanta Plant Lead'],
+        ['Report Type:', config.reportType || 'Performance Audit', 'Prepared By:', config.preparedBy || 'Abhivanta Plant Lead'],
         ['Installed Capacity:', `${config.capacityMW || '1,180'} MW`, 'Currency / Unit:', 'INR / MWh']
       ];
 
@@ -237,14 +237,14 @@ const SolvantaPDF = (() => {
       doc.setTextColor(...slateDark);
       doc.text('PREPARED BY:', margin, currentY);
       doc.text('VERIFIED BY OPERATIONS LEAD:', margin + 70, currentY);
-      doc.text('SOLVANTA AUDIT STAMP:', pageWidth - margin - 40, currentY);
+      doc.text('ABHIVANTA AUDIT STAMP:', pageWidth - margin - 40, currentY);
 
       currentY += 5;
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(8);
       doc.setTextColor(...slateMuted);
       doc.text(config.preparedBy || 'Aditya Sharma (Lead)', margin, currentY);
-      doc.text('Solvanta Quality Assurance', margin + 70, currentY);
+      doc.text('Abhivanta Quality Assurance', margin + 70, currentY);
       doc.text('[ VERIFIED / SYSTEM GENERATED ]', pageWidth - margin - 40, currentY);
 
       // --- FOOTER WITH PAGE NUMBERS ---
@@ -254,19 +254,19 @@ const SolvantaPDF = (() => {
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(7.5);
         doc.setTextColor(...slateMuted);
-        doc.text('SOLVANTA Renewable Energy Intelligence Platform | Enterprise Asset Management Edition', margin, pageHeight - 6);
+        doc.text('ABHIVANTA Renewable Energy Intelligence Platform | Enterprise Asset Management Edition', margin, pageHeight - 6);
         doc.text(`Page ${i} of ${totalPages}`, pageWidth - margin, pageHeight - 6, { align: 'right' });
       }
 
       // Trigger actual download
-      const filename = `Solvanta_${(config.reportType || 'Report').replace(/\s+/g, '_')}_${Date.now().toString().slice(-4)}.pdf`;
+      const filename = `Abhivanta_${(config.reportType || 'Report').replace(/\s+/g, '_')}_${Date.now().toString().slice(-4)}.pdf`;
       doc.save(filename);
 
-      SolvantaUI.toast(`PDF Report "${filename}" generated and downloaded successfully!`, 'success');
+      AbhivantaUI.toast(`PDF Report "${filename}" generated and downloaded successfully!`, 'success');
       return true;
     } catch (err) {
       console.error('Error generating PDF:', err);
-      SolvantaUI.toast(`Failed to generate PDF: ${err.message}`, 'danger');
+      AbhivantaUI.toast(`Failed to generate PDF: ${err.message}`, 'danger');
       return false;
     }
   }

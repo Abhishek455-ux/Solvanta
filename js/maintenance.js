@@ -1,5 +1,5 @@
 /**
- * SOLVANTA - Maintenance Controller
+ * ABHIVANTA - Maintenance Controller
  * Work order scheduling, technician assignments, status toggling, and budget tracking.
  */
 
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getProcessedMaintenance() {
-    let list = SolvantaStorage.getMaintenance();
+    let list = AbhivantaStorage.getMaintenance();
 
     if (searchQuery) {
       list = list.filter(m =>
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const list = getProcessedMaintenance();
     if (countDisplay) {
-      countDisplay.textContent = `Showing ${list.length} of ${SolvantaStorage.getMaintenance().length} Records`;
+      countDisplay.textContent = `Showing ${list.length} of ${AbhivantaStorage.getMaintenance().length} Records`;
     }
 
     if (list.length === 0) {
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </td>
         </tr>
       `;
-      SolvantaUI.initIcons();
+      AbhivantaUI.initIcons();
       return;
     }
 
@@ -79,24 +79,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
       return `
         <tr>
-          <td style="font-family:var(--font-mono); font-weight:700; color:#0f172a;">${SolvantaUtils.escapeHtml(m.id)}</td>
+          <td style="font-family:var(--font-mono); font-weight:700; color:#0f172a;">${AbhivantaUtils.escapeHtml(m.id)}</td>
           <td>
-            <div style="font-weight:600; color:#0f172a;">${SolvantaUtils.escapeHtml(m.plantName)}</div>
-            <div style="font-size:11px; color:#64748b;">${SolvantaUtils.escapeHtml(m.plantId)}</div>
+            <div style="font-weight:600; color:#0f172a;">${AbhivantaUtils.escapeHtml(m.plantName)}</div>
+            <div style="font-size:11px; color:#64748b;">${AbhivantaUtils.escapeHtml(m.plantId)}</div>
           </td>
-          <td><span class="badge badge-neutral">${SolvantaUtils.escapeHtml(m.type)}</span></td>
+          <td><span class="badge badge-neutral">${AbhivantaUtils.escapeHtml(m.type)}</span></td>
           <td style="max-width:240px;">
-            <div class="truncate" title="${SolvantaUtils.escapeHtml(m.description)}">
-              ${SolvantaUtils.escapeHtml(m.description)}
+            <div class="truncate" title="${AbhivantaUtils.escapeHtml(m.description)}">
+              ${AbhivantaUtils.escapeHtml(m.description)}
             </div>
           </td>
           <td style="font-size:11px; color:#64748b;">
-            ${SolvantaUtils.formatDate(m.scheduledDate)}
+            ${AbhivantaUtils.formatDate(m.scheduledDate)}
           </td>
-          <td style="font-weight:500;">${SolvantaUtils.escapeHtml(m.technician || 'Field Crew')}</td>
+          <td style="font-weight:500;">${AbhivantaUtils.escapeHtml(m.technician || 'Field Crew')}</td>
           <td>${prioBadge}</td>
-          <td style="font-family:var(--font-mono); font-weight:600;">${SolvantaUtils.formatINR(m.costINR)}</td>
-          <td>${SolvantaUI.getStatusBadge(m.status)}</td>
+          <td style="font-family:var(--font-mono); font-weight:600;">${AbhivantaUtils.formatINR(m.costINR)}</td>
+          <td>${AbhivantaUI.getStatusBadge(m.status)}</td>
           <td style="text-align:right; white-space:nowrap;">
             ${m.status !== 'Completed' ? `
               <button class="btn btn-emerald btn-sm" onclick="markComplete('${m.id}')" title="Mark Task as Done">
@@ -114,11 +114,11 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }).join('');
 
-    SolvantaUI.initIcons();
+    AbhivantaUI.initIcons();
   }
 
   function updateSummaryKPIs() {
-    const records = SolvantaStorage.getMaintenance();
+    const records = AbhivantaStorage.getMaintenance();
     const active = records.filter(r => r.status === 'Scheduled' || r.status === 'In Progress').length;
     const inProgress = records.filter(r => r.status === 'In Progress').length;
     const completed = records.filter(r => r.status === 'Completed').length;
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Create Work Order Modal
   function openCreateModal(prefillPlantId = null, prefillAlertId = null) {
-    const plants = SolvantaStorage.getPlants();
+    const plants = AbhivantaStorage.getPlants();
     const plantOpts = plants.map(p => `
       <option value="${p.id}" ${p.id === prefillPlantId ? 'selected' : ''}>
         ${p.id} &bull; ${p.name}
@@ -185,13 +185,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         <div class="form-group" style="margin:0;">
           <label class="form-label">Work Order Description <span class="required">*</span></label>
-          <input type="text" id="mnt-desc" class="form-control" value="${SolvantaUtils.escapeHtml(descPrefill)}" placeholder="e.g. Inverter capacitor replacement..." required>
+          <input type="text" id="mnt-desc" class="form-control" value="${AbhivantaUtils.escapeHtml(descPrefill)}" placeholder="e.g. Inverter capacitor replacement..." required>
         </div>
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
           <div class="form-group" style="margin:0;">
             <label class="form-label">Scheduled Date</label>
-            <input type="date" id="mnt-date" class="form-control" value="${SolvantaUtils.getTodayISO()}">
+            <input type="date" id="mnt-date" class="form-control" value="${AbhivantaUtils.getTodayISO()}">
           </div>
           <div class="form-group" style="margin:0;">
             <label class="form-label">Assigned Technician</label>
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </form>
     `;
 
-    SolvantaUI.modal({
+    AbhivantaUI.modal({
       title: 'Schedule Asset Maintenance Work Order',
       bodyHtml,
       size: 'lg',
@@ -227,21 +227,21 @@ document.addEventListener('DOMContentLoaded', () => {
           className: 'btn btn-primary',
           onClick: (close) => {
             const plantId = document.getElementById('mnt-plant-sel').value;
-            const plant = SolvantaStorage.getPlant(plantId);
+            const plant = AbhivantaStorage.getPlant(plantId);
             const type = document.getElementById('mnt-type-sel').value;
             const prio = document.getElementById('mnt-prio-sel').value;
             const desc = document.getElementById('mnt-desc').value.trim();
-            const date = document.getElementById('mnt-date').value || SolvantaUtils.getTodayISO();
+            const date = document.getElementById('mnt-date').value || AbhivantaUtils.getTodayISO();
             const tech = document.getElementById('mnt-tech').value.trim() || 'Internal Crew';
             const cost = parseFloat(document.getElementById('mnt-cost').value) || 0;
             const stat = document.getElementById('mnt-status-sel').value;
 
             if (!desc) {
-              SolvantaUI.toast('Please provide a work order description.', 'warning');
+              AbhivantaUI.toast('Please provide a work order description.', 'warning');
               return false;
             }
 
-            SolvantaStorage.addMaintenance({
+            AbhivantaStorage.addMaintenance({
               plantId,
               plantName: plant ? plant.name : 'Plant Asset',
               type,
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
               status: stat
             });
 
-            SolvantaUI.toast('Maintenance work order scheduled successfully.', 'success');
+            AbhivantaUI.toast('Maintenance work order scheduled successfully.', 'success');
             renderMaintenance();
             close();
           }
@@ -264,14 +264,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Edit Work Order Modal
   window.openEditModal = function(id) {
-    const record = SolvantaStorage.getMaintenance().find(r => r.id === id);
+    const record = AbhivantaStorage.getMaintenance().find(r => r.id === id);
     if (!record) return;
 
     const bodyHtml = `
       <form id="edit-mnt-form" style="display:flex; flex-direction:column; gap:12px;">
         <div class="form-group" style="margin:0;">
           <label class="form-label">Description</label>
-          <input type="text" id="edit-desc" class="form-control" value="${SolvantaUtils.escapeHtml(record.description)}" required>
+          <input type="text" id="edit-desc" class="form-control" value="${AbhivantaUtils.escapeHtml(record.description)}" required>
         </div>
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
           <div class="form-group" style="margin:0;">
             <label class="form-label">Technician</label>
-            <input type="text" id="edit-tech" class="form-control" value="${SolvantaUtils.escapeHtml(record.technician || '')}">
+            <input type="text" id="edit-tech" class="form-control" value="${AbhivantaUtils.escapeHtml(record.technician || '')}">
           </div>
           <div class="form-group" style="margin:0;">
             <label class="form-label">Cost (INR)</label>
@@ -306,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </form>
     `;
 
-    SolvantaUI.modal({
+    AbhivantaUI.modal({
       title: `Update Work Order — ${record.id}`,
       bodyHtml,
       footerButtons: [
@@ -321,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const tech = document.getElementById('edit-tech').value.trim();
             const cost = parseFloat(document.getElementById('edit-cost').value) || 0;
 
-            SolvantaStorage.updateMaintenance(id, {
+            AbhivantaStorage.updateMaintenance(id, {
               description: desc,
               status: stat,
               priority: prio,
@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
               costINR: cost
             });
 
-            SolvantaUI.toast(`Work order ${id} updated.`, 'success');
+            AbhivantaUI.toast(`Work order ${id} updated.`, 'success');
             renderMaintenance();
             close();
           }
@@ -340,19 +340,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Mark task as done
   window.markComplete = function(id) {
-    SolvantaStorage.updateMaintenance(id, { status: 'Completed' });
-    SolvantaUI.toast(`Work order ${id} marked as completed and signed off.`, 'success');
+    AbhivantaStorage.updateMaintenance(id, { status: 'Completed' });
+    AbhivantaUI.toast(`Work order ${id} marked as completed and signed off.`, 'success');
     renderMaintenance();
   };
 
   // Delete Record
   window.deleteRecord = function(id) {
-    SolvantaUI.confirm(
+    AbhivantaUI.confirm(
       'Delete Maintenance Record',
       `Are you sure you want to delete work order ${id}?`,
       () => {
-        SolvantaStorage.deleteMaintenance(id);
-        SolvantaUI.toast(`Work order ${id} removed.`, 'info');
+        AbhivantaStorage.deleteMaintenance(id);
+        AbhivantaUI.toast(`Work order ${id} removed.`, 'info');
         renderMaintenance();
       },
       'Delete Record',

@@ -1,16 +1,16 @@
-/**
- * SOLVANTA - Reusable UI Components
+﻿/**
+ * ABHIVANTA - Reusable UI Components
  * Toast notifications, custom confirmation modals, dynamic dialogs,
  * badge helpers, and icon lifecycle hooks.
  */
 
-const SolvantaUI = (() => {
+const AbhivantaUI = (() => {
   // Ensure toast container exists
   function getToastContainer() {
-    let container = document.getElementById('solvanta-toast-container');
+    let container = document.getElementById('abhivanta-toast-container');
     if (!container) {
       container = document.createElement('div');
-      container.id = 'solvanta-toast-container';
+      container.id = 'abhivanta-toast-container';
       container.className = 'toast-container';
       document.body.appendChild(container);
     }
@@ -42,8 +42,8 @@ const SolvantaUI = (() => {
     toastEl.innerHTML = `
       <div class="toast-icon">${iconMap[type] || iconMap.info}</div>
       <div class="toast-content">
-        <div class="toast-title">${SolvantaUtils.escapeHtml(displayTitle)}</div>
-        <div class="toast-message">${SolvantaUtils.escapeHtml(message)}</div>
+        <div class="toast-title">${AbhivantaUtils.escapeHtml(displayTitle)}</div>
+        <div class="toast-message">${AbhivantaUtils.escapeHtml(message)}</div>
       </div>
       <button class="toast-close" aria-label="Close">&times;</button>
     `;
@@ -84,7 +84,7 @@ const SolvantaUI = (() => {
 
     dialog.innerHTML = `
       <div class="modal-header">
-        <h3>${SolvantaUtils.escapeHtml(title)}</h3>
+        <h3>${AbhivantaUtils.escapeHtml(title)}</h3>
         <button class="btn-icon modal-close-btn" aria-label="Close">
           <i data-lucide="x"></i>
         </button>
@@ -149,7 +149,7 @@ const SolvantaUI = (() => {
             <i data-lucide="${isDestructive ? 'alert-triangle' : 'help-circle'}"></i>
           </div>
           <div>
-            <p style="font-size:14px; color:#334155; line-height:1.5;">${SolvantaUtils.escapeHtml(message)}</p>
+            <p style="font-size:14px; color:#334155; line-height:1.5;">${AbhivantaUtils.escapeHtml(message)}</p>
           </div>
         </div>
       `,
@@ -175,18 +175,18 @@ const SolvantaUI = (() => {
   function getStatusBadge(status) {
     const s = String(status).toLowerCase();
     if (s === 'operational' || s === 'resolved' || s === 'completed') {
-      return `<span class="badge badge-success"><span class="badge-dot"></span>${SolvantaUtils.escapeHtml(status)}</span>`;
+      return `<span class="badge badge-success"><span class="badge-dot"></span>${AbhivantaUtils.escapeHtml(status)}</span>`;
     }
     if (s === 'degraded' || s === 'in progress' || s === 'medium' || s === 'acknowledged') {
-      return `<span class="badge badge-warning"><span class="badge-dot"></span>${SolvantaUtils.escapeHtml(status)}</span>`;
+      return `<span class="badge badge-warning"><span class="badge-dot"></span>${AbhivantaUtils.escapeHtml(status)}</span>`;
     }
     if (s === 'offline' || s === 'critical' || s === 'high' || s === 'open') {
-      return `<span class="badge badge-danger"><span class="badge-dot"></span>${SolvantaUtils.escapeHtml(status)}</span>`;
+      return `<span class="badge badge-danger"><span class="badge-dot"></span>${AbhivantaUtils.escapeHtml(status)}</span>`;
     }
     if (s === 'maintenance' || s === 'scheduled' || s === 'low' || s === 'inspection') {
-      return `<span class="badge badge-info"><span class="badge-dot"></span>${SolvantaUtils.escapeHtml(status)}</span>`;
+      return `<span class="badge badge-info"><span class="badge-dot"></span>${AbhivantaUtils.escapeHtml(status)}</span>`;
     }
-    return `<span class="badge badge-neutral"><span class="badge-dot"></span>${SolvantaUtils.escapeHtml(status)}</span>`;
+    return `<span class="badge badge-neutral"><span class="badge-dot"></span>${AbhivantaUtils.escapeHtml(status)}</span>`;
   }
 
   // Plant Type Badge

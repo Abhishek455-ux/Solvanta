@@ -1,5 +1,5 @@
-/**
- * SOLVANTA - Settings & Data Management Controller
+﻿/**
+ * ABHIVANTA - Settings & Data Management Controller
  * System preferences, JSON export & import backups, and factory demo data reset.
  */
 
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function loadSettings() {
-    const s = SolvantaStorage.getSettings();
+    const s = AbhivantaStorage.getSettings();
     const org = document.getElementById('setting-org-name');
     const user = document.getElementById('setting-user-name');
     const role = document.getElementById('setting-user-role');
@@ -43,8 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
       lowGenThresholdPercent: parseFloat(document.getElementById('setting-threshold').value) || 65
     };
 
-    SolvantaStorage.updateSettings(updated);
-    SolvantaUI.toast('Application preferences saved successfully.', 'success');
+    AbhivantaStorage.updateSettings(updated);
+    AbhivantaUI.toast('Application preferences saved successfully.', 'success');
 
     // Update displayed user in sidebar
     const sideName = document.querySelector('.sidebar-user .user-name');
@@ -58,17 +58,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const exportBtn = document.getElementById('export-json-btn');
     if (exportBtn) {
       exportBtn.addEventListener('click', () => {
-        const jsonStr = SolvantaStorage.exportJSON();
+        const jsonStr = AbhivantaStorage.exportJSON();
         const blob = new Blob([jsonStr], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `Solvanta_Fleet_Backup_${Date.now().toString().slice(-6)}.json`;
+        a.download = `Abhivanta_Fleet_Backup_${Date.now().toString().slice(-6)}.json`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        SolvantaUI.toast('JSON application backup downloaded successfully.', 'success');
+        AbhivantaUI.toast('JSON application backup downloaded successfully.', 'success');
       });
     }
 
@@ -76,12 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetBtn = document.getElementById('factory-reset-btn');
     if (resetBtn) {
       resetBtn.addEventListener('click', () => {
-        SolvantaUI.confirm(
+        AbhivantaUI.confirm(
           'Factory Demo Dataset Reset',
           'Are you sure you want to restore the pristine fictional demo fleet? Any custom added plants or modified records will be reset to default.',
           () => {
-            SolvantaStorage.resetToDefault();
-            SolvantaUI.toast('Demo dataset reset to initial state. Reloading...', 'info');
+            AbhivantaStorage.resetToDefault();
+            AbhivantaUI.toast('Demo dataset reset to initial state. Reloading...', 'info');
             setTimeout(() => {
               window.location.reload();
             }, 800);
@@ -101,18 +101,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const reader = new FileReader();
     reader.onload = function(evt) {
       const content = evt.target.result;
-      const res = SolvantaStorage.importJSON(content);
+      const res = AbhivantaStorage.importJSON(content);
       if (res.success) {
-        SolvantaUI.toast(res.message, 'success');
+        AbhivantaUI.toast(res.message, 'success');
         setTimeout(() => {
           window.location.reload();
         }, 1000);
       } else {
-        SolvantaUI.toast(`Import Failed: ${res.message}`, 'danger');
+        AbhivantaUI.toast(`Import Failed: ${res.message}`, 'danger');
       }
     };
     reader.onerror = function() {
-      SolvantaUI.toast('Failed to read uploaded file.', 'danger');
+      AbhivantaUI.toast('Failed to read uploaded file.', 'danger');
     };
     reader.readAsText(file);
     // Reset file input

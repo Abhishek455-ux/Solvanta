@@ -1,16 +1,16 @@
-/**
- * SOLVANTA - Spreadsheet & CSV Export Module
+﻿/**
+ * ABHIVANTA - Spreadsheet & CSV Export Module
  * Uses SheetJS (XLSX) CDN when available, with a built-in pure JavaScript CSV generator fallback.
  */
 
-const SolvantaExport = (() => {
+const AbhivantaExport = (() => {
   /**
    * Export structured data to CSV file
    * @param {Array<string>} headers - Column titles
    * @param {Array<Array<any>>} rows - 2D matrix of values
    * @param {string} filename - Target file name
    */
-  function exportToCSV(headers, rows, filename = 'Solvanta_Data_Export.csv') {
+  function exportToCSV(headers, rows, filename = 'Abhivanta_Data_Export.csv') {
     try {
       const escapeCell = (val) => {
         if (val === null || val === undefined) return '""';
@@ -35,11 +35,11 @@ const SolvantaExport = (() => {
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
 
-      SolvantaUI.toast(`Exported ${rows.length} records to ${filename}`, 'success');
+      AbhivantaUI.toast(`Exported ${rows.length} records to ${filename}`, 'success');
       return true;
     } catch (e) {
       console.error('CSV export failed:', e);
-      SolvantaUI.toast(`Export error: ${e.message}`, 'danger');
+      AbhivantaUI.toast(`Export error: ${e.message}`, 'danger');
       return false;
     }
   }
@@ -47,7 +47,7 @@ const SolvantaExport = (() => {
   /**
    * Export data to XLSX using SheetJS, fallback to CSV if library is unavailable
    */
-  function exportToExcel(sheetName, headers, rows, filename = 'Solvanta_Report.xlsx') {
+  function exportToExcel(sheetName, headers, rows, filename = 'Abhivanta_Report.xlsx') {
     if (window.XLSX && typeof window.XLSX.utils !== 'undefined') {
       try {
         const aoa = [headers, ...rows];
@@ -55,7 +55,7 @@ const SolvantaExport = (() => {
         const wb = window.XLSX.utils.book_new();
         window.XLSX.utils.book_append_sheet(wb, ws, sheetName || 'Energy Report');
         window.XLSX.writeFile(wb, filename.endsWith('.xlsx') ? filename : `${filename}.xlsx`);
-        SolvantaUI.toast(`Excel file downloaded: ${filename}`, 'success');
+        AbhivantaUI.toast(`Excel file downloaded: ${filename}`, 'success');
         return true;
       } catch (err) {
         console.warn('XLSX failed, falling back to CSV:', err);
@@ -68,10 +68,10 @@ const SolvantaExport = (() => {
   /**
    * Helper to export an existing HTML Table element
    */
-  function exportHtmlTable(tableId, filename = 'Solvanta_Table_Data') {
+  function exportHtmlTable(tableId, filename = 'Abhivanta_Table_Data') {
     const table = document.getElementById(tableId);
     if (!table) {
-      SolvantaUI.toast('Table not found to export', 'warning');
+      AbhivantaUI.toast('Table not found to export', 'warning');
       return;
     }
 
@@ -98,7 +98,7 @@ const SolvantaExport = (() => {
     });
 
     if (rows.length === 0) {
-      SolvantaUI.toast('No table records found to export.', 'warning');
+      AbhivantaUI.toast('No table records found to export.', 'warning');
       return;
     }
 

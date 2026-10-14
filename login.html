@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Operator Login — SOLVANTA</title>
+  <title>Operator Login — ABHIVANTA</title>
   
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/global.css">
@@ -18,7 +18,7 @@
   <div class="auth-card">
     <div class="auth-header">
       <a href="index.html" class="auth-brand-logo">
-        <img src="assets/images/logo.png" alt="SOLVANTA Energy Intelligence" style="height:60px; width:auto; background:#ffffff; border-radius:10px; padding:3px 8px; box-shadow:0 0 20px rgba(16,185,129,0.35);">
+        <img src="assets/images/logo.png" alt="ABHIVANTA Energy Intelligence" style="height:60px; width:auto; background:#ffffff; border-radius:10px; padding:3px 8px; box-shadow:0 0 20px rgba(16,185,129,0.35);">
       </a>
       <h2 class="auth-title">Operator Access</h2>
       <p class="auth-subtitle">Renewable Plant Telemetry &amp; Reporting Portal</p>
@@ -44,7 +44,7 @@
         <label class="form-label" for="login-email">Operator Email Address</label>
         <div class="input-icon-group">
           <i data-lucide="mail"></i>
-          <input type="email" id="login-email" class="form-control" placeholder="operator@solvanta.energy" value="aditya.lead@solvanta.energy" required>
+          <input type="email" id="login-email" class="form-control" placeholder="operator@abhivanta.energy" value="aditya.lead@abhivanta.energy" required>
         </div>
       </div>
 
@@ -52,7 +52,7 @@
         <label class="form-label" for="login-password">System Password</label>
         <div class="input-icon-group">
           <i data-lucide="lock"></i>
-          <input type="password" id="login-password" class="form-control" placeholder="Enter password" value="solvanta2026" required>
+          <input type="password" id="login-password" class="form-control" placeholder="Enter password" value="abhivanta2026" required>
           <button type="button" class="password-toggle-btn" id="toggle-pw-btn" aria-label="Toggle password visibility">
             <i data-lucide="eye" id="eye-icon"></i>
           </button>
@@ -75,7 +75,7 @@
 
     <div class="auth-footer-note">
       <p>
-        <strong>Enterprise Notice:</strong> Solvanta operates high-frequency SCADA intelligence streams with secure token authorization and multi-tier role-based access control.
+        <strong>Enterprise Notice:</strong> Abhivanta operates high-frequency SCADA intelligence streams with secure token authorization and multi-tier role-based access control.
       </p>
       <div style="margin-top:8px;">
         <a href="index.html" style="color:var(--primary-600); font-weight:600;">&larr; Return to Public Landing Page</a>
@@ -90,8 +90,8 @@
   <script src="js/app.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      SolvantaStorage.initStore();
-      SolvantaUI.initIcons();
+      AbhivantaStorage.initStore();
+      AbhivantaUI.initIcons();
 
       // Password Toggle
       const pwInput = document.getElementById('login-password');
@@ -103,7 +103,7 @@
           const isPassword = pwInput.type === 'password';
           pwInput.type = isPassword ? 'text' : 'password';
           eyeIcon.setAttribute('data-lucide', isPassword ? 'eye-off' : 'eye');
-          SolvantaUI.initIcons();
+          AbhivantaUI.initIcons();
         });
       }
     });
@@ -112,10 +112,10 @@
       e.preventDefault();
       const email = document.getElementById('login-email').value;
       if (!email) {
-        SolvantaUI.toast('Please enter a valid operator email', 'warning');
+        AbhivantaUI.toast('Please enter a valid operator email', 'warning');
         return;
       }
-      SolvantaUI.toast('Authentication verified. Loading plant dashboard...', 'success');
+      AbhivantaUI.toast('Authentication verified. Loading plant dashboard...', 'success');
       setTimeout(() => {
         window.location.href = 'dashboard.html';
       }, 700);
@@ -123,15 +123,15 @@
 
     function handleForgot(e) {
       e.preventDefault();
-      SolvantaUI.modal({
+      AbhivantaUI.modal({
         title: 'Operator Credential Recovery',
         bodyHtml: `
           <p style="font-size:13px; color:#334155; line-height:1.5;">
             In demonstration mode, default credentials are pre-configured:
           </p>
           <div style="background:#f1f5f9; padding:12px; border-radius:8px; margin:12px 0; font-family:var(--font-mono); font-size:12px;">
-            <strong>Email:</strong> aditya.lead@solvanta.energy<br>
-            <strong>Password:</strong> solvanta2026
+            <strong>Email:</strong> aditya.lead@abhivanta.energy<br>
+            <strong>Password:</strong> abhivanta2026
           </div>
           <p style="font-size:12px; color:#64748b;">
             Click "Enter Demo Dashboard" on the login screen for single-click bypass.

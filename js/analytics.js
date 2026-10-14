@@ -1,5 +1,5 @@
 /**
- * SOLVANTA - Analytics Controller
+ * ABHIVANTA - Analytics Controller
  * Implements CUF, PR, actual vs target variance analysis, multi-axis Chart.js visualizations,
  * data table rendering, and spreadsheet exports.
  */
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function populatePlantSelect() {
     if (!plantSelect) return;
-    const plants = SolvantaStorage.getPlants();
+    const plants = AbhivantaStorage.getPlants();
     plants.forEach(p => {
       const opt = document.createElement('option');
       opt.value = p.id;
@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getAnalyticsDataset() {
-    const store = SolvantaStorage.getStore();
-    const plants = SolvantaStorage.getPlants();
+    const store = AbhivantaStorage.getStore();
+    const plants = AbhivantaStorage.getPlants();
     const totalFleetCap = plants.reduce((sum, p) => sum + p.capacityMW, 0) || 1;
 
     let targetPlant = null;
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let tariff = 3.30;
 
     if (selectedPlantId !== 'ALL') {
-      targetPlant = SolvantaStorage.getPlant(selectedPlantId);
+      targetPlant = AbhivantaStorage.getPlant(selectedPlantId);
       if (targetPlant) {
         capRatio = targetPlant.capacityMW / totalFleetCap;
         tariff = targetPlant.tariffINR || 3.30;
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (selectedTimeframe === 'monthly') {
-      const rawMonthly = store.monthlyHistory || SolvantaDemoData.monthlyHistory;
+      const rawMonthly = store.monthlyHistory || AbhivantaDemoData.monthlyHistory;
       return rawMonthly.map(item => {
         const actual = +(item.actualMWh * capRatio).toFixed(1);
         const target = +(item.targetMWh * capRatio).toFixed(1);
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     } else {
       // Daily 30 days
-      const raw30 = store.history30Days || SolvantaDemoData.generate30DaysHistory();
+      const raw30 = store.history30Days || AbhivantaDemoData.generate30DaysHistory();
       return raw30.map(item => {
         const actual = +(item.totalMWh * capRatio).toFixed(1);
         const target = +(item.targetMWh * capRatio).toFixed(1);
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderBarComparisonChart(data) {
-    SolvantaCharts.destroyChart('analyticsGenChart');
+    AbhivantaCharts.destroyChart('analyticsGenChart');
     const canvas = document.getElementById('analyticsGenChart');
     if (!canvas || !window.Chart) return;
 
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
           legend: { position: 'top', labels: { boxWidth: 12 } },
           tooltip: {
             callbacks: {
-              label: (ctx) => ` ${ctx.dataset.label}: ${SolvantaUtils.formatNumber(ctx.raw, 1)} MWh`
+              label: (ctx) => ` ${ctx.dataset.label}: ${AbhivantaUtils.formatNumber(ctx.raw, 1)} MWh`
             }
           }
         },
@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderEfficiencyLineChart(data) {
-    SolvantaCharts.destroyChart('analyticsEfficiencyChart');
+    AbhivantaCharts.destroyChart('analyticsEfficiencyChart');
     const canvas = document.getElementById('analyticsEfficiencyChart');
     if (!canvas || !window.Chart) return;
 
@@ -252,9 +252,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tbody.innerHTML = data.map(d => `
       <tr>
-        <td style="font-weight:600; color:#0f172a;">${SolvantaUtils.escapeHtml(d.period)}</td>
-        <td style="font-family:var(--font-mono); font-weight:600;">${SolvantaUtils.formatNumber(d.actualMWh, 1)}</td>
-        <td style="font-family:var(--font-mono); color:#64748b;">${SolvantaUtils.formatNumber(d.targetMWh, 1)}</td>
+        <td style="font-weight:600; color:#0f172a;">${AbhivantaUtils.escapeHtml(d.period)}</td>
+        <td style="font-family:var(--font-mono); font-weight:600;">${AbhivantaUtils.formatNumber(d.actualMWh, 1)}</td>
+        <td style="font-family:var(--font-mono); color:#64748b;">${AbhivantaUtils.formatNumber(d.targetMWh, 1)}</td>
         <td>
           <span style="font-weight:700; color:${d.variancePercent >= 0 ? '#10b981' : '#ef4444'};">
             ${d.variancePercent >= 0 ? '+' : ''}${d.variancePercent}%
@@ -264,8 +264,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <td style="font-family:var(--font-mono); font-weight:700; color:${d.prPercent >= 80 ? '#10b981' : '#f59e0b'};">
           ${d.prPercent}%
         </td>
-        <td style="font-family:var(--font-mono);">${SolvantaUtils.formatINR(d.revenueINR)}</td>
-        <td style="font-family:var(--font-mono);">${SolvantaUtils.formatNumber(d.co2Tonnes, 0)}</td>
+        <td style="font-family:var(--font-mono);">${AbhivantaUtils.formatINR(d.revenueINR)}</td>
+        <td style="font-family:var(--font-mono);">${AbhivantaUtils.formatNumber(d.co2Tonnes, 0)}</td>
       </tr>
     `).join('');
   }
@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
           Math.round(d.revenueINR),
           d.co2Tonnes
         ]);
-        SolvantaExport.exportToExcel('Energy Analytics', headers, rows, 'Solvanta_Energy_Analytics');
+        AbhivantaExport.exportToExcel('Energy Analytics', headers, rows, 'Abhivanta_Energy_Analytics');
       });
     }
 
@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
           Math.round(d.revenueINR),
           d.co2Tonnes
         ]);
-        SolvantaExport.exportToCSV(headers, rows, 'Solvanta_Analytics_Data.csv');
+        AbhivantaExport.exportToCSV(headers, rows, 'Abhivanta_Analytics_Data.csv');
       });
     }
   }
