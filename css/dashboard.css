@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    ABHIVANTA APP SHELL & DASHBOARD LAYOUT
    ========================================================================== */
 
@@ -52,15 +52,21 @@
 }
 
 .brand-logo-img {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-md);
+  width: 42px;
+  height: 42px;
+  border-radius: 9px;
   object-fit: contain;
-  background: #000000;
-  padding: 2px;
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.35);
+  background: #ffffff;
+  padding: 3px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 14px rgba(16, 185, 129, 0.35);
   flex-shrink: 0;
-  border: 1px solid rgba(16, 185, 129, 0.4);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.brand-logo-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.6);
 }
 
 .brand-text-wrap {

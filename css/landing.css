@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    ABHIVANTA LANDING PAGE STYLES
    "Powering Decisions. Accelerating Clean Energy."
    ========================================================================== */
@@ -33,15 +33,22 @@
 }
 
 .brand-logo-img-nav {
-  height: 44px;
+  height: 46px;
   width: auto;
-  max-width: 190px;
+  max-width: 220px;
   object-fit: contain;
-  background: #000000;
-  padding: 3px 8px;
-  border-radius: 8px;
-  box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
-  border: 1px solid rgba(16, 185, 129, 0.4);
+  background: #ffffff;
+  padding: 3px 10px;
+  border-radius: 9px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28), 0 0 14px rgba(16, 185, 129, 0.35);
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  display: inline-block;
+}
+
+.brand-logo-img-nav:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35), 0 0 20px rgba(16, 185, 129, 0.55);
 }
 
 .landing-links {

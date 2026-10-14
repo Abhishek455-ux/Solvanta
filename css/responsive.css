@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    ABHIVANTA RESPONSIVE STYLES
    Breakpoints: 1200px, 1024px, 768px, 480px
    ========================================================================== */
@@ -132,6 +132,12 @@
     display: none;
   }
 
+  .brand-logo-img-nav {
+    height: 38px;
+    max-width: 175px;
+    padding: 2px 8px;
+  }
+
   .hero-section {
     padding: 105px 0 60px;
   }
@@ -181,5 +187,11 @@
 
   .kpi-value {
     font-size: var(--text-xl);
+  }
+
+  .brand-logo-img-nav {
+    height: 32px;
+    max-width: 150px;
+    padding: 2px 6px;
   }
 }

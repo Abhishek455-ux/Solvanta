@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    ABHIVANTA AUTHENTICATION & DEMO LOGIN STYLES (LIGHT THEME + SOLAR BACKDROP)
    ========================================================================== */
 
@@ -47,6 +47,24 @@
   gap: var(--space-3);
   margin-bottom: var(--space-4);
   text-decoration: none;
+}
+
+.auth-brand-logo-img {
+  height: 52px;
+  width: auto;
+  max-width: 250px;
+  object-fit: contain;
+  background: #ffffff;
+  padding: 4px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12), 0 0 16px rgba(16, 185, 129, 0.25);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.auth-brand-logo-img:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.16), 0 0 22px rgba(16, 185, 129, 0.4);
 }
 
 .auth-title {
