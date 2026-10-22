@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/ai-assistant.css">
   <link rel="stylesheet" href="css/responsive.css">
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -67,6 +68,13 @@
 
         <div class="nav-section-title" style="margin-top:4px;">Automation &amp; Assets</div>
         <ul class="sidebar-nav">
+          <li>
+            <a href="ai-assistant.html" class="nav-link">
+              <i data-lucide="bot" style="color:var(--primary-400);"></i>
+              <span>AI Diagnostics</span>
+              <span class="badge badge-emerald" style="font-size:9px; margin-left:auto; padding:1px 5px;">AI</span>
+            </a>
+          </li>
           <li>
             <a href="reports.html" class="nav-link">
               <i data-lucide="file-text"></i>
@@ -213,41 +221,47 @@
             </div>
           </div>
 
-          <!-- 3-Camera Panoramic Plant Array Visual Stream -->
+          <!-- 3-Camera Panoramic Plant Array Visual Stream with Authentic 4K Video Feeds -->
           <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; padding:16px; background:#04130c;">
-            <!-- CAM 01 -->
-            <div style="position:relative; height:180px; border-radius:8px; overflow:hidden; border:1px solid rgba(16,185,129,0.3);">
-              <img src="assets/images/solar_park.jpg" alt="Solar Array Visual Stream" style="width:100%; height:100%; object-fit:cover;">
-              <div style="position:absolute; top:8px; left:8px; background:rgba(6,28,18,0.85); backdrop-filter:blur(6px); padding:3px 8px; border-radius:4px; font-size:10px; color:#34d399; font-family:var(--font-mono); font-weight:700; border:1px solid rgba(16,185,129,0.4);">
-                CAM 01 &bull; TRACKER BLOCK A-04
+            <!-- CAM 01: Drone Surveillance -->
+            <div style="position:relative; height:195px; border-radius:10px; overflow:hidden; border:1px solid rgba(16,185,129,0.4); background:#000;">
+              <video autoplay muted loop playsinline poster="assets/images/abhivanta_solar_park_aerial.jpg" src="assets/videos/abhivanta_scada_surveillance.mp4" style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+              <div style="position:absolute; top:8px; left:8px; display:flex; align-items:center; gap:6px;">
+                <span class="video-hud-rec" style="font-size:10px; padding:2px 6px;">
+                  <span class="rec-pulse-dot"></span> CAM 01 &bull; DRONE SURVEILLANCE
+                </span>
               </div>
-              <div style="position:absolute; bottom:8px; left:8px; right:8px; background:rgba(6,28,18,0.85); padding:3px 8px; border-radius:4px; font-size:10px; color:#cbd5e1; font-family:var(--font-mono); display:flex; justify-content:space-between;">
-                <span>POA: 895 W/m²</span>
-                <span style="color:#34d399;">● 1080p 30fps</span>
-              </div>
-            </div>
-
-            <!-- CAM 02 -->
-            <div style="position:relative; height:180px; border-radius:8px; overflow:hidden; border:1px solid rgba(16,185,129,0.3);">
-              <img src="assets/images/service_om.jpg" alt="Robotic O&M Cleaning Stream" style="width:100%; height:100%; object-fit:cover;">
-              <div style="position:absolute; top:8px; left:8px; background:rgba(6,28,18,0.85); backdrop-filter:blur(6px); padding:3px 8px; border-radius:4px; font-size:10px; color:#34d399; font-family:var(--font-mono); font-weight:700; border:1px solid rgba(16,185,129,0.4);">
-                CAM 02 &bull; ROBOTIC CLEANER #12
-              </div>
-              <div style="position:absolute; bottom:8px; left:8px; right:8px; background:rgba(6,28,18,0.85); padding:3px 8px; border-radius:4px; font-size:10px; color:#cbd5e1; font-family:var(--font-mono); display:flex; justify-content:space-between;">
-                <span>STATUS: OPERATIONAL</span>
-                <span style="color:#34d399;">● 1080p 30fps</span>
+              <div style="position:absolute; bottom:8px; left:8px; right:8px; background:rgba(6,28,18,0.88); backdrop-filter:blur(6px); padding:4px 8px; border-radius:4px; font-size:10px; color:#cbd5e1; font-family:var(--font-mono); display:flex; justify-content:space-between; border:1px solid rgba(16,185,129,0.3);">
+                <span>POA: <strong>895 W/m²</strong> &bull; ALT: <strong>94m</strong></span>
+                <span style="color:#34d399;">● 1080p 60fps</span>
               </div>
             </div>
 
-            <!-- CAM 03 -->
-            <div style="position:relative; height:180px; border-radius:8px; overflow:hidden; border:1px solid rgba(16,185,129,0.3);">
-              <img src="assets/images/bess_storage.jpg" alt="BESS Container Bay Stream" style="width:100%; height:100%; object-fit:cover;">
-              <div style="position:absolute; top:8px; left:8px; background:rgba(6,28,18,0.85); backdrop-filter:blur(6px); padding:3px 8px; border-radius:4px; font-size:10px; color:#fbbf24; font-family:var(--font-mono); font-weight:700; border:1px solid rgba(251,191,36,0.4);">
-                CAM 03 &bull; BESS STORAGE BAY
+            <!-- CAM 02: Solar Tracker Flyover -->
+            <div style="position:relative; height:195px; border-radius:10px; overflow:hidden; border:1px solid rgba(16,185,129,0.4); background:#000;">
+              <video autoplay muted loop playsinline poster="assets/images/abhivanta_mountain_slope_solar.jpg" src="assets/videos/abhivanta_solar_aerial_flyover.mp4" style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+              <div style="position:absolute; top:8px; left:8px; display:flex; align-items:center; gap:6px;">
+                <span class="video-hud-rec" style="font-size:10px; padding:2px 6px; background:rgba(2,132,199,0.3); border-color:#38bdf8; color:#7dd3fc;">
+                  <span class="rec-pulse-dot" style="background:#38bdf8; box-shadow:0 0 6px #38bdf8;"></span> CAM 02 &bull; TRACKER BLOCK A-04
+                </span>
               </div>
-              <div style="position:absolute; bottom:8px; left:8px; right:8px; background:rgba(6,28,18,0.85); padding:3px 8px; border-radius:4px; font-size:10px; color:#cbd5e1; font-family:var(--font-mono); display:flex; justify-content:space-between;">
-                <span>SoC: 88.4% &bull; LIQUID COOLED</span>
-                <span style="color:#34d399;">● 1080p 30fps</span>
+              <div style="position:absolute; bottom:8px; left:8px; right:8px; background:rgba(6,28,18,0.88); backdrop-filter:blur(6px); padding:4px 8px; border-radius:4px; font-size:10px; color:#cbd5e1; font-family:var(--font-mono); display:flex; justify-content:space-between; border:1px solid rgba(56,189,248,0.3);">
+                <span>TILT: <strong>+24.5°</strong> &bull; STATUS: <strong>TRACKING</strong></span>
+                <span style="color:#38bdf8;">● 1080p 60fps</span>
+              </div>
+            </div>
+
+            <!-- CAM 03: Substation & BESS Interconnect -->
+            <div style="position:relative; height:195px; border-radius:10px; overflow:hidden; border:1px solid rgba(16,185,129,0.4); background:#000;">
+              <video autoplay muted loop playsinline poster="assets/images/abhivanta_hybrid_sunset_farm.jpg" src="assets/videos/abhivanta_bess_substation.mp4" style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+              <div style="position:absolute; top:8px; left:8px; display:flex; align-items:center; gap:6px;">
+                <span class="video-hud-rec" style="font-size:10px; padding:2px 6px; background:rgba(245,158,11,0.25); border-color:#f59e0b; color:#fde68a;">
+                  <span class="rec-pulse-dot" style="background:#f59e0b; box-shadow:0 0 6px #f59e0b;"></span> CAM 03 &bull; 220kV SUBSTATION &amp; BESS
+                </span>
+              </div>
+              <div style="position:absolute; bottom:8px; left:8px; right:8px; background:rgba(6,28,18,0.88); backdrop-filter:blur(6px); padding:4px 8px; border-radius:4px; font-size:10px; color:#cbd5e1; font-family:var(--font-mono); display:flex; justify-content:space-between; border:1px solid rgba(245,158,11,0.3);">
+                <span>SoC: <strong>88.4%</strong> &bull; GRID: <strong>SYNCED</strong></span>
+                <span style="color:#34d399;">● 1080p 60fps</span>
               </div>
             </div>
           </div>
@@ -789,6 +803,7 @@
   <script src="js/storage.js"></script>
   <script src="js/components.js"></script>
   <script src="js/charts.js"></script>
+  <script src="js/ai-assistant.js"></script>
   <script src="js/navigation.js"></script>
   <script src="js/app.js"></script>
   <script src="js/monitoring.js"></script>

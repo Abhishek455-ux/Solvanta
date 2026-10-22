@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Diagnostics &amp; Copilot — ABHIVANTA Energy Intelligence</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="assets/images/favicon.png">
+
+  <!-- Design System & Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/ai-assistant.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- jsPDF for Instant Diagnostic Certificate Export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" class="brand-logo">
+          <img src="assets/images/logo_icon.png" alt="ABHIVANTA Energy Intelligence" class="brand-logo-img">
+          <div class="brand-text-wrap">
+            <span class="brand-name">ABHIVANTA</span>
+            <span class="brand-tagline">Energy Intelligence</span>
+          </div>
+        </a>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" aria-label="Toggle Sidebar">
+          <i data-lucide="chevrons-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav-wrap" aria-label="Sidebar Navigation">
+        <div class="nav-section-title">Operations</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="dashboard.html" class="nav-link">
+              <i data-lucide="layout-dashboard"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="plants.html" class="nav-link">
+              <i data-lucide="cpu"></i>
+              <span>Plant Management</span>
+            </a>
+          </li>
+          <li>
+            <a href="monitoring.html" class="nav-link">
+              <i data-lucide="activity"></i>
+              <span>Live Monitoring</span>
+            </a>
+          </li>
+          <li>
+            <a href="analytics.html" class="nav-link">
+              <i data-lucide="bar-chart-2"></i>
+              <span>Analytics</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title" style="margin-top:4px;">Automation &amp; Assets</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="ai-assistant.html" class="nav-link active">
+              <i data-lucide="bot" style="color:var(--primary-400);"></i>
+              <span>AI Diagnostics</span>
+              <span class="badge badge-emerald" style="font-size:9px; margin-left:auto; padding:1px 5px;">AI</span>
+            </a>
+          </li>
+          <li>
+            <a href="reports.html" class="nav-link">
+              <i data-lucide="file-text"></i>
+              <span>Report Center</span>
+            </a>
+          </li>
+          <li>
+            <a href="alerts.html" class="nav-link">
+              <i data-lucide="alert-triangle"></i>
+              <span>Alerts &amp; Faults</span>
+              <span class="badge-counter" id="sidebar-alert-badge" style="display:none;">0</span>
+            </a>
+          </li>
+          <li>
+            <a href="maintenance.html" class="nav-link">
+              <i data-lucide="wrench"></i>
+              <span>Maintenance</span>
+            </a>
+          </li>
+          <li>
+            <a href="settings.html" class="nav-link">
+              <i data-lucide="sliders"></i>
+              <span>Settings &amp; Backup</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title" style="margin-top:4px;">Public Portal</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="index.html" class="nav-link">
+              <i data-lucide="globe"></i>
+              <span>Public Landing</span>
+            </a>
+          </li>
+          <li>
+            <a href="login.html" class="nav-link">
+              <i data-lucide="log-out"></i>
+              <span>Exit to Login</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Sidebar User Profile Footer -->
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="user-avatar">AS</div>
+          <div class="user-info">
+            <span class="user-name">Aditya Sharma</span>
+            <span class="user-role">Plant Operations Lead</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="app-main">
+      <!-- Topbar -->
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open Mobile Menu">
+            <i data-lucide="menu"></i>
+          </button>
+          <div class="breadcrumb-trail">
+            <a href="dashboard.html" class="breadcrumb-item">Abhivanta Fleet</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">AI Copilot &amp; Household Diagnostics</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="simulated-data-banner">
+            <span class="dot" style="background:#10b981;"></span>
+            <span>AI Neural Net v2.4 Active</span>
+          </div>
+
+          <div class="topbar-search">
+            <i data-lucide="search"></i>
+            <input type="text" id="topbar-search-input" placeholder="Search telemetry or fault codes (/)">
+          </div>
+
+          <a href="alerts.html" class="topbar-action-icon" title="View Alerts">
+            <i data-lucide="bell"></i>
+            <span class="notif-badge" id="topbar-alert-dot"></span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Main Workspace -->
+      <main class="app-content">
+        <!-- Page Header -->
+        <div class="page-header">
+          <div class="page-title-wrap">
+            <h1>
+              <i data-lucide="sparkles" style="color:#10b981;"></i>
+              Abhivanta AI™ Diagnostics &amp; Customer Assistant
+            </h1>
+            <p class="page-subtitle">
+              Intelligent clean energy copilot. Chat to solve rooftop solar questions, or upload an image of household panels &amp; inverters for automated defect detection.
+            </p>
+          </div>
+          <div class="page-actions">
+            <span class="badge badge-emerald" style="font-size:11px; padding:4px 10px;">
+              <i data-lucide="shield-check" style="width:13px;height:13px;display:inline;"></i> Computer Vision Engine Online
+            </span>
+          </div>
+        </div>
+
+        <!-- AI Studio Dual Workspace Grid -->
+        <div class="ai-studio-grid">
+          <!-- Left Column: Household Solar Vision Inspector -->
+          <div class="ai-card">
+            <div class="ai-card-header">
+              <h2 class="ai-card-title">
+                <i data-lucide="scan" style="color:#06b6d4;"></i>
+                <span>Household Solar Vision Inspector</span>
+              </h2>
+              <span class="ai-badge-pill vision">
+                <i data-lucide="cpu" style="width:12px;height:12px;"></i> CV Optical Scan
+              </span>
+            </div>
+
+            <div style="padding:16px;">
+              <p style="font-size:13px; color:#475569; margin:0 0 12px 0;">
+                Homeowners and technicians can upload a photo of rooftop panels, micro-cracks, or string inverter fault displays to detect soiling, hotspots, and electrical trips.
+              </p>
+
+              <!-- Upload Dropzone -->
+              <div class="vision-dropzone" id="studio-dropzone">
+                <input type="file" id="studio-file-input" accept="image/*" style="display:none;">
+                <div class="vision-dropzone-icon">
+                  <i data-lucide="upload-cloud"></i>
+                </div>
+                <div style="font-size:14px; font-weight:800; color:#0f172a; margin-bottom:4px;">
+                  Drag &amp; Drop or Click to Upload Solar Plant Image
+                </div>
+                <div style="font-size:11px; color:#64748b;">
+                  Upload rooftop solar panel arrays, thermal IR captures, or inverter LED displays (JPEG, PNG, WebP)
+                </div>
+              </div>
+
+              <!-- Quick Test Sample Images Strip -->
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase;">
+                  Or Select Pre-Loaded Test Sample:
+                </span>
+                <span style="font-size:11px; color:#059669; font-weight:600;">1-Click Instant Analysis</span>
+              </div>
+              <div class="sample-images-strip" id="studio-samples-strip">
+                <div class="sample-chip active" data-sample="assets/images/sample_household_dust.jpg" data-type="DUST_SOILING">
+                  <img src="assets/images/sample_household_dust.jpg" alt="Soiling Sample">
+                  <span>Heavy Dust / Soiling</span>
+                </div>
+                <div class="sample-chip" data-sample="assets/images/sample_household_hotspot.jpg" data-type="THERMAL_HOTSPOT">
+                  <img src="assets/images/sample_household_hotspot.jpg" alt="Hotspot Sample">
+                  <span>Cell Hotspot / Microcrack</span>
+                </div>
+                <div class="sample-chip" data-sample="assets/images/sample_inverter_fault.jpg" data-type="INVERTER_FAULT">
+                  <img src="assets/images/sample_inverter_fault.jpg" alt="Inverter Sample">
+                  <span>Inverter Error E-24</span>
+                </div>
+                <div class="sample-chip" data-sample="assets/images/sample_household_clean.jpg" data-type="OPTIMAL_HEALTH">
+                  <img src="assets/images/sample_household_clean.jpg" alt="Clean Sample">
+                  <span>Clean / Optimal Array</span>
+                </div>
+                <div class="sample-chip" data-sample="assets/images/abhivanta_solar_cells_macro.jpg" data-type="CELL_MACRO_INSPECTION">
+                  <img src="assets/images/abhivanta_solar_cells_macro.jpg" alt="Macro Cell Inspection">
+                  <span>Monocrystalline Macro</span>
+                </div>
+                <div class="sample-chip" data-sample="assets/images/abhivanta_mountain_slope_solar.jpg" data-type="TERRAIN_SHADING_SCAN">
+                  <img src="assets/images/abhivanta_mountain_slope_solar.jpg" alt="Mountain Terrain Scan">
+                  <span>Mountain Slope Array</span>
+                </div>
+              </div>
+
+              <!-- Optical Scanning Viewport -->
+              <div class="scan-viewport-container" id="studio-scan-viewport">
+                <img id="studio-scan-preview" class="scan-image-preview" src="assets/images/sample_household_dust.jpg" alt="Inspection Subject">
+                <!-- Scanning HUD Overlay -->
+                <div class="scanning-hud-overlay" id="studio-hud-overlay">
+                  <div class="hud-sweep-line"></div>
+                  <div class="hud-grid-lines"></div>
+                  <div class="hud-corner tl"></div>
+                  <div class="hud-corner tr"></div>
+                  <div class="hud-corner bl"></div>
+                  <div class="hud-corner br"></div>
+                  <div class="hud-status-badge">
+                    <i data-lucide="activity" style="width:12px;height:12px;"></i>
+                    NEURAL FEATURE EXTRACTION IN PROGRESS...
+                  </div>
+                </div>
+                <!-- Detection Bounding Box Marker -->
+                <div class="defect-bounding-box warning-tier" id="studio-bbox" style="display:block; top:48%; left:12%; width:74%; height:42%;">
+                  <div class="bbox-tag warning" id="studio-bbox-tag">EFFICIENCY PENALTY</div>
+                </div>
+              </div>
+
+              <!-- Detailed Diagnostic Output Card -->
+              <div class="diagnostic-result-card active" id="studio-diag-result">
+                <!-- Populated dynamically by js/ai-assistant.js -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Conversational AI Clean Energy Assistant -->
+          <div class="ai-card">
+            <div class="ai-card-header">
+              <h2 class="ai-card-title">
+                <i data-lucide="message-square-code" style="color:#10b981;"></i>
+                <span>Abhivanta AI™ Technical Copilot</span>
+              </h2>
+              <span class="ai-badge-pill">
+                <i data-lucide="sparkles" style="width:12px;height:12px;"></i> 24/7 Expert Assistant
+              </span>
+            </div>
+
+            <div class="chat-container">
+              <!-- Chat Messages Stream -->
+              <div class="chat-messages-area" id="studio-chat-messages">
+                <div class="chat-bubble bot">
+                  <div class="chat-avatar bot">AI</div>
+                  <div class="chat-content-box">
+                    <p>Namaste! I am the <strong>Abhivanta Renewable Energy Copilot</strong>.</p>
+                    <p>I am trained on utility SCADA engineering, rooftop solar diagnostics, DISCOM net metering regulations, and inverter fault codes. How can I assist you with your clean energy asset today?</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Prompts Chips -->
+              <div class="quick-prompts-row">
+                <button class="quick-prompt-btn" data-query="Why is my solar generation low today?">
+                  <i data-lucide="zap"></i> Output Low?
+                </button>
+                <button class="quick-prompt-btn" data-query="Inverter fault E-24 low isolation">
+                  <i data-lucide="alert-triangle"></i> Error E-24 Fix
+                </button>
+                <button class="quick-prompt-btn" data-query="How often should I clean rooftop solar panels?">
+                  <i data-lucide="droplets"></i> Cleaning Guide
+                </button>
+                <button class="quick-prompt-btn" data-query="Explain net metering & PM Surya Ghar subsidies">
+                  <i data-lucide="receipt"></i> Net Metering &amp; Subsidy
+                </button>
+                <button class="quick-prompt-btn" data-query="Can I add battery to existing solar?">
+                  <i data-lucide="battery"></i> Add Battery (BESS)
+                </button>
+              </div>
+
+              <!-- Input Area -->
+              <div class="chat-input-bar">
+                <input type="text" id="studio-chat-input" class="chat-input-field" placeholder="Ask about inverter errors, solar bills, panel cleaning, battery storage...">
+                <button class="chat-btn-attach" id="studio-chat-attach" title="Upload solar photo for diagnosis">
+                  <i data-lucide="camera" style="width:16px;height:16px;"></i>
+                </button>
+                <button class="chat-btn-send" id="studio-chat-send" title="Send Message">
+                  <i data-lucide="send" style="width:16px;height:16px;"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Application Scripts -->
+  <script src="js/demo-data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/pdf-export.js"></script>
+  <script src="js/ai-assistant.js"></script>
+  <script src="js/navigation.js"></script>
+
+  <!-- Page Setup Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Initialize full report with the initial sample
+      AbhivantaAICopilot.runImageInspection('assets/images/sample_household_dust.jpg', 'DUST_SOILING', 'studio');
+
+      // 2. Setup Dropzone & File Input for Studio
+      const dropzone = document.getElementById('studio-dropzone');
+      const fileInput = document.getElementById('studio-file-input');
+
+      if (dropzone && fileInput) {
+        dropzone.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => {
+          if (e.target.files && e.target.files[0]) {
+            AbhivantaAICopilot.handleImageUploadFile(e.target.files[0], 'studio');
+          }
+        });
+
+        dropzone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          dropzone.classList.add('drag-active');
+        });
+        dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-active'));
+        dropzone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          dropzone.classList.remove('drag-active');
+          if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            AbhivantaAICopilot.handleImageUploadFile(e.dataTransfer.files[0], 'studio');
+          }
+        });
+      }
+
+      // 3. Studio Sample chips
+      const chips = document.querySelectorAll('#studio-samples-strip .sample-chip');
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          chips.forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          const sample = chip.getAttribute('data-sample');
+          const type = chip.getAttribute('data-type');
+          AbhivantaAICopilot.runImageInspection(sample, type, 'studio');
+        });
+      });
+
+      // 4. Studio Chatbot Input & Quick Prompts
+      const chatInput = document.getElementById('studio-chat-input');
+      const chatSend = document.getElementById('studio-chat-send');
+      const attachBtn = document.getElementById('studio-chat-attach');
+
+      function sendStudioMessage(text) {
+        if (!text) return;
+        const msgArea = document.getElementById('studio-chat-messages');
+
+        // Add User Bubble
+        const userBubble = document.createElement('div');
+        userBubble.className = 'chat-bubble user';
+        userBubble.innerHTML = `
+          <div class="chat-avatar user">ME</div>
+          <div class="chat-content-box">${escapeStudio(text)}</div>
+        `;
+        msgArea.appendChild(userBubble);
+        msgArea.scrollTop = msgArea.scrollHeight;
+
+        // Show typing
+        const typing = document.createElement('div');
+        typing.className = 'chat-bubble bot';
+        typing.id = 'studio-typing-temp';
+        typing.innerHTML = `
+          <div class="chat-avatar bot">AI</div>
+          <div class="chat-content-box" style="color:#64748b;">
+            <i data-lucide="loader" style="width:14px;height:14px;display:inline-block;animation:spin 1s linear infinite;"></i> Abhivanta AI is calculating...
+          </div>
+        `;
+        msgArea.appendChild(typing);
+        if (window.lucide) window.lucide.createIcons();
+        msgArea.scrollTop = msgArea.scrollHeight;
+
+        // Simulate thought
+        setTimeout(() => {
+          const t = document.getElementById('studio-typing-temp');
+          if (t) t.remove();
+
+          const reply = AbhivantaAICopilot.generateAssistantResponse(text);
+          const botBubble = document.createElement('div');
+          botBubble.className = 'chat-bubble bot';
+          botBubble.innerHTML = `
+            <div class="chat-avatar bot">AI</div>
+            <div class="chat-content-box">${formatStudioMarkdown(reply)}</div>
+          `;
+          msgArea.appendChild(botBubble);
+          if (window.lucide) window.lucide.createIcons();
+          msgArea.scrollTop = msgArea.scrollHeight;
+        }, 500);
+      }
+
+      if (chatSend && chatInput) {
+        chatSend.addEventListener('click', () => {
+          const q = chatInput.value.trim();
+          if (q) {
+            sendStudioMessage(q);
+            chatInput.value = '';
+          }
+        });
+
+        chatInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            const q = chatInput.value.trim();
+            if (q) {
+              sendStudioMessage(q);
+              chatInput.value = '';
+            }
+          }
+        });
+      }
+
+      if (attachBtn && fileInput) {
+        attachBtn.addEventListener('click', () => fileInput.click());
+      }
+
+      document.querySelectorAll('.quick-prompts-row .quick-prompt-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const q = btn.getAttribute('data-query');
+          sendStudioMessage(q);
+        });
+      });
+
+      function escapeStudio(s) {
+        return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      function formatStudioMarkdown(text) {
+        let html = escapeStudio(text);
+        html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+        html = html.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
+        return `<p>${html}</p>`;
+      }
+
+      if (window.lucide) window.lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

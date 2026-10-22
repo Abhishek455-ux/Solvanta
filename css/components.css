@@ -764,3 +764,422 @@
   max-width: 420px;
   margin: 0 auto var(--space-4);
 }
+
+/* ==========================================================================
+   VIDEO & INTERACTIVE MEDIA COMPONENTS (ABHIVANTA HIGH-DEFINITION ASSETS)
+   ========================================================================== */
+
+.showcase-view-switch {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: var(--radius-full);
+  padding: 3px;
+  gap: 3px;
+}
+
+.showcase-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: #94a3b8;
+  border: none;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.showcase-tab-btn:hover {
+  color: #ffffff;
+}
+
+.showcase-tab-btn.active {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(2, 132, 199, 0.9));
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+}
+
+.showcase-banner-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Video Player Container */
+.abhivanta-video-player-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: #020817;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.8), 0 0 30px rgba(16, 185, 129, 0.15);
+}
+
+.abhivanta-video-element {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 520px;
+  display: block;
+  object-fit: cover;
+  background: #000000;
+}
+
+/* SCADA Drone Telemetry HUD Overlay */
+.video-hud-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: linear-gradient(to bottom, rgba(7, 18, 36, 0.75) 0%, transparent 25%, transparent 75%, rgba(7, 18, 36, 0.85) 100%);
+  transition: opacity 0.3s ease;
+}
+
+.video-hud-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.video-hud-rec {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.6);
+  color: #fca5a5;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.rec-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 8px #ef4444;
+  animation: hudBlink 1.2s infinite ease-in-out;
+}
+
+@keyframes hudBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+.video-hud-badge {
+  background: rgba(10, 25, 47, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+  padding: 4px 10px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.video-hud-reticle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border: 1px dashed rgba(56, 189, 248, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-hud-reticle::before,
+.video-hud-reticle::after {
+  content: '';
+  position: absolute;
+  background: rgba(56, 189, 248, 0.6);
+}
+
+.video-hud-reticle::before {
+  width: 14px;
+  height: 1px;
+}
+
+.video-hud-reticle::after {
+  height: 14px;
+  width: 1px;
+}
+
+.video-hud-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.video-hud-telemetry {
+  display: flex;
+  gap: 16px;
+  background: rgba(10, 25, 47, 0.8);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.video-hud-telemetry span strong {
+  color: #34d399;
+}
+
+/* Custom Video Controls Bar */
+.abhivanta-video-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(7, 18, 36, 0.95), rgba(7, 18, 36, 0.4) 70%, transparent);
+  padding: 12px 18px 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 5;
+  transition: opacity 0.25s ease;
+}
+
+.video-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.video-btn:hover {
+  background: rgba(16, 185, 129, 0.8);
+  border-color: #10b981;
+  transform: scale(1.08);
+}
+
+.video-progress-bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.video-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #10b981, #38bdf8);
+  border-radius: 3px;
+  transition: width 0.1s linear;
+}
+
+.video-time-display {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #cbd5e1;
+  white-space: nowrap;
+}
+
+/* Playlist Grid */
+.video-playlist-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.video-playlist-card {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 10px;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.video-playlist-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(56, 189, 248, 0.6);
+  background: rgba(15, 23, 42, 0.95);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(56, 189, 248, 0.25);
+}
+
+.video-playlist-card.active {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.12);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.35);
+}
+
+.video-playlist-thumb-wrap {
+  position: relative;
+  width: 100%;
+  height: 90px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.video-playlist-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.video-playlist-card:hover .video-playlist-thumb {
+  transform: scale(1.06);
+}
+
+.video-playlist-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: all var(--transition-fast);
+}
+
+.video-playlist-card:hover .video-playlist-play-icon,
+.video-playlist-card.active .video-playlist-play-icon {
+  background: #10b981;
+  border-color: #34d399;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.video-playlist-duration {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  background: rgba(0, 0, 0, 0.8);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.video-playlist-meta h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 2px 0;
+  line-height: 1.3;
+}
+
+.video-playlist-meta p {
+  font-size: 11px;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Lightbox Modal for Videos */
+.abhivanta-video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(2, 6, 23, 0.88);
+  backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.abhivanta-video-modal.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.abhivanta-video-modal-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  background: #0b1528;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 40px rgba(56, 189, 248, 0.3);
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.abhivanta-video-modal.open .abhivanta-video-modal-dialog {
+  transform: scale(1);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 10;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.modal-close-btn:hover {
+  background: #ef4444;
+  border-color: #ef4444;
+  transform: rotate(90deg);
+}
+
+@media (max-width: 992px) {
+  .video-playlist-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .video-playlist-grid {
+    grid-template-columns: 1fr;
+  }
+}

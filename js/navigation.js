@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ABHIVANTA - Navigation & Global Shell Controller
  * Handles active route detection, mobile menu drawer, global search,
  * and badge synchronization.
@@ -128,4 +128,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize Lucide icons on load
   AbhivantaUI.initIcons();
+
+  // Initialize Global AI Copilot Floating Widget across SCADA platform
+  if (window.AbhivantaAICopilot && document.querySelector('.app-layout')) {
+    AbhivantaAICopilot.initGlobalWidget();
+  }
 });
