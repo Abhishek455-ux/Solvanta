@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Profile & Capabilities Dossier — ABHIVANTA Energy Intelligence</title>
+  <meta name="description" content="Official Corporate Profile & Capabilities Dossier of ABHIVANTA Energy Intelligence — 1,180+ MW Renewable Portfolio, Turnkey EPC, BESS Storage, 24/7 ENOC SCADA Telemetry, and AI Diagnostics.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="assets/images/favicon.png">
+
+  <!-- Core Design System -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    .profile-page-wrapper {
+      background: #060e1d;
+      color: #f1f5f9;
+      min-height: 100vh;
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    .profile-action-bar {
+      position: sticky;
+      top: 60px;
+      z-index: 100;
+      background: rgba(10, 25, 47, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 12px 0;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    .profile-action-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .profile-dossier-card {
+      background: #0a192f;
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      border-radius: 20px;
+      padding: 50px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(16, 185, 129, 0.12);
+      max-width: 1080px;
+      margin: 40px auto 0;
+      position: relative;
+    }
+
+    .profile-header-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid rgba(56, 189, 248, 0.25);
+      padding-bottom: 28px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .profile-logo-display {
+      height: 64px;
+      width: auto;
+      max-width: 280px;
+      object-fit: contain;
+      background: #ffffff;
+      padding: 6px 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 16px rgba(16, 185, 129, 0.4);
+      border: 1px solid rgba(16, 185, 129, 0.5);
+    }
+
+    .profile-doc-meta {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    .profile-section-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 40px 0 16px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .profile-section-title i {
+      color: #34d399;
+      width: 24px;
+      height: 24px;
+    }
+
+    .profile-hero-quote {
+      background: linear-gradient(135deg, rgba(6, 28, 18, 0.9) 0%, rgba(13, 35, 66, 0.8) 100%);
+      border-left: 4px solid #10b981;
+      border-radius: 0 14px 14px 0;
+      padding: 24px 28px;
+      margin: 28px 0;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    .profile-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .profile-kpi-box {
+      background: rgba(7, 18, 36, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 14px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .profile-kpi-val {
+      font-size: 1.9rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: #38bdf8;
+      margin-bottom: 4px;
+    }
+
+    .profile-kpi-lbl {
+      font-size: 12px;
+      font-weight: 700;
+      color: #e2e8f0;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .profile-kpi-sub {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    .profile-pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin: 24px 0;
+    }
+
+    .profile-pillar-item {
+      background: rgba(7, 18, 36, 0.7);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      gap: 16px;
+    }
+
+    .profile-pillar-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .profile-project-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 13px;
+    }
+
+    .profile-project-table th {
+      background: rgba(2, 132, 199, 0.2);
+      color: #38bdf8;
+      font-weight: 700;
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 2px solid rgba(56, 189, 248, 0.35);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .profile-project-table td {
+      padding: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+    }
+
+    .profile-project-table tr:hover td {
+      background: rgba(56, 189, 248, 0.05);
+    }
+
+    .profile-founder-spotlight {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 28px;
+      background: rgba(7, 18, 36, 0.85);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 28px 0;
+      align-items: center;
+    }
+
+    .profile-founder-thumb {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 12px;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    .profile-contact-box {
+      background: linear-gradient(135deg, rgba(7, 18, 36, 0.95), rgba(6, 28, 18, 0.9));
+      border: 1.5px solid rgba(16, 185, 129, 0.5);
+      border-radius: 16px;
+      padding: 28px;
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        font-size: 10pt;
+      }
+      .landing-nav,
+      .profile-action-bar,
+      .landing-footer,
+      .btn,
+      .floating-copilot-launcher,
+      #abhivanta-copilot-root {
+        display: none !important;
+      }
+      .profile-page-wrapper {
+        padding: 0 !important;
+        background: #ffffff !important;
+      }
+      .profile-dossier-card {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        background: #ffffff !important;
+        color: #0f172a !important;
+      }
+      .profile-header-strip {
+        border-bottom: 2px solid #0f172a !important;
+        margin-bottom: 20px !important;
+        padding-bottom: 15px !important;
+      }
+      .profile-logo-display {
+        box-shadow: none !important;
+        border: 1px solid #cbd5e1 !important;
+        height: 50px !important;
+      }
+      .profile-doc-meta {
+        color: #475569 !important;
+      }
+      .profile-section-title {
+        color: #0f172a !important;
+        border-bottom: 1px solid #cbd5e1 !important;
+        margin: 20px 0 10px !important;
+        font-size: 13pt !important;
+      }
+      .profile-hero-quote {
+        background: #f8fafc !important;
+        border-left: 4px solid #059669 !important;
+        color: #0f172a !important;
+        box-shadow: none !important;
+        padding: 12px 16px !important;
+      }
+      .profile-kpi-box {
+        background: #f1f5f9 !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #0f172a !important;
+      }
+      .profile-kpi-val {
+        color: #0284c7 !important;
+        font-size: 1.4rem !important;
+      }
+      .profile-pillar-item {
+        background: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        color: #0f172a !important;
+      }
+      .profile-project-table th {
+        background: #f1f5f9 !important;
+        color: #0f172a !important;
+        border-bottom: 1px solid #0f172a !important;
+      }
+      .profile-project-table td {
+        color: #1e293b !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+      }
+      .profile-founder-spotlight {
+        background: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #0f172a !important;
+      }
+      .profile-contact-box {
+        background: #f1f5f9 !important;
+        border: 1px solid #059669 !important;
+        color: #0f172a !important;
+      }
+      .page-break {
+        page-break-before: always;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .profile-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .profile-pillars-grid {
+        grid-template-columns: 1fr;
+      }
+      .profile-founder-spotlight {
+        grid-template-columns: 1fr;
+      }
+      .profile-founder-thumb {
+        height: 200px;
+        width: 160px;
+        margin: 0 auto;
+      }
+      .profile-contact-box {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="landing-body">
+
+  <!-- Main Navigation Bar -->
+  <nav class="landing-nav" aria-label="Main Navigation">
+    <div class="container landing-nav-inner">
+      <a href="index.html" class="brand-logo" style="text-decoration:none;">
+        <img src="assets/images/logo.png" alt="ABHIVANTA Energy Intelligence" class="brand-logo-img-nav">
+      </a>
+
+      <ul class="landing-links" id="landing-nav-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="founder.html">Founder's Desk</a></li>
+        <li><a href="index.html#portfolio">Mega Projects</a></li>
+        <li><a href="company-profile.html" class="active"><i data-lucide="file-text" style="width:13px;height:13px;"></i> Company Profile</a></li>
+        <li><a href="presentation.html"><i data-lucide="presentation" style="width:13px;height:13px;"></i> Slide Deck</a></li>
+        <li><a href="dashboard.html">SCADA Platform</a></li>
+      </ul>
+
+      <div class="landing-nav-actions">
+        <a href="Abhivanta_Energy_Company_Profile.pptx" download class="btn btn-emerald btn-sm" style="gap:6px;">
+          <i data-lucide="download" style="width:14px;height:14px;"></i>
+          <span>Download .PPTX</span>
+        </a>
+        <a href="dashboard.html" class="btn btn-primary nav-dashboard-btn" style="padding:6px 14px; font-size:13px;">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sticky Executive Action Bar -->
+  <div class="profile-action-bar">
+    <div class="container profile-action-inner">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span class="badge badge-success" style="background:rgba(16,185,129,0.2); border-color:#10b981; color:#34d399;">
+          <i data-lucide="shield-check" style="width:13px;height:13px;"></i> VERIFIED CORPORATE PROFILE
+        </span>
+        <span style="font-size:13px; color:#cbd5e1; font-weight:600;">
+          ABHIVANTA &bull; Executive Capabilities Dossier &amp; Presentation (2026 Edition)
+        </span>
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a href="Abhivanta_Energy_Company_Profile.pptx" download class="btn btn-primary btn-sm" style="box-shadow:0 0 15px rgba(2,132,199,0.4);">
+          <i data-lucide="presentation" style="width:14px;height:14px;"></i>
+          <span>Download PowerPoint (.PPTX)</span>
+        </a>
+        <a href="presentation.html" class="btn btn-outline btn-sm" style="color:#ffffff; border-color:rgba(56,189,248,0.4);">
+          <i data-lucide="play" style="width:14px;height:14px;"></i>
+          <span>View Slides Online</span>
+        </a>
+        <button class="btn btn-outline btn-sm" onclick="copyShareableLink()" id="btnCopyLink" style="color:#ffffff; border-color:rgba(56,189,248,0.4);">
+          <i data-lucide="share-2" style="width:14px;height:14px;"></i>
+          <span>Share Link</span>
+        </button>
+        <button class="btn btn-emerald btn-sm" onclick="window.print()">
+          <i data-lucide="printer" style="width:14px;height:14px;"></i>
+          <span>Print / Save PDF</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Content Container -->
+  <main class="profile-page-wrapper">
+    <div class="container">
+      <div class="profile-dossier-card" id="profilePrintArea">
+
+        <!-- Header Strip: Logo & Registration Metadata -->
+        <header class="profile-header-strip">
+          <div>
+            <img src="assets/images/logo.png" alt="ABHIVANTA Energy Intelligence Logo" class="profile-logo-display">
+            <div style="color:#34d399; font-weight:700; font-size:13px; margin-top:8px; letter-spacing:0.04em;">
+              "Powering Decisions. Accelerating Clean Energy."
+            </div>
+          </div>
+          <div class="profile-doc-meta">
+            <div><strong>DOCUMENT ID:</strong> ABH-CORP-PRF-2026</div>
+            <div><strong>PORTFOLIO SCALE:</strong> 1,180+ MW OPERATING ASSETS</div>
+            <div><strong>POWERPOINT FILE:</strong> Abhivanta_Energy_Company_Profile.pptx</div>
+            <div><strong>STANDARDS:</strong> IEC 61724-1 &bull; IEC 61850 &bull; NFPA 855</div>
+            <div><strong>HEADQUARTERS:</strong> PUNE, MAHARASHTRA, INDIA</div>
+          </div>
+        </header>
+
+        <!-- Executive Summary Banner -->
+        <section>
+          <div class="profile-hero-quote">
+            <h1 style="color:#ffffff; font-size:1.85rem; font-weight:800; line-height:1.3; margin:0 0 10px;">
+              ABHIVANTA: Next-Generation Clean Energy Intelligence &amp; Turnkey EPC Infrastructure
+            </h1>
+            <p style="color:#cbd5e1; font-size:1.02rem; line-height:1.7; margin:0;">
+              <strong>ABHIVANTA</strong> is an integrated clean energy engineering and industrial SaaS company delivering turnkey EPC construction, utility-scale Battery Energy Storage Systems (BESS), 24/7 ENOC SCADA telemetry, and automated AI generation analytics for solar PV and wind operators across India.
+            </p>
+          </div>
+
+          <!-- Key Quantitative Metrics Grid -->
+          <div class="profile-kpi-grid">
+            <div class="profile-kpi-box">
+              <div class="profile-kpi-val">1,180 MW</div>
+              <div class="profile-kpi-lbl">Managed Assets</div>
+              <div class="profile-kpi-sub">Solar PV &bull; Wind &bull; BESS</div>
+            </div>
+            <div class="profile-kpi-box">
+              <div class="profile-kpi-val" style="color:#34d399;">99.2%</div>
+              <div class="profile-kpi-lbl">Fleet Availability</div>
+              <div class="profile-kpi-sub">Guaranteed by 24/7 ENOC</div>
+            </div>
+            <div class="profile-kpi-box">
+              <div class="profile-kpi-val" style="color:#00d2ff;">325 MWh</div>
+              <div class="profile-kpi-lbl">BESS Storage</div>
+              <div class="profile-kpi-sub">4-Hr Peak Arbitrage</div>
+            </div>
+            <div class="profile-kpi-box">
+              <div class="profile-kpi-val" style="color:#a7f3d0;">4,765 T</div>
+              <div class="profile-kpi-lbl">CO₂ Offset / Day</div>
+              <div class="profile-kpi-sub">0.82 t/MWh Grid Factor</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 1: Corporate Overview & Mission -->
+        <section>
+          <h2 class="profile-section-title">
+            <i data-lucide="building-2"></i>
+            <span>1. Corporate Identity &amp; Strategic Mission</span>
+          </h2>
+          <div style="font-size:0.95rem; color:#cbd5e1; line-height:1.8;">
+            <p>
+              Founded to support India's national mandate of <strong>500 Gigawatts of renewable energy capacity by 2030</strong>, ABHIVANTA bridges the critical gap between physical electrical power engineering and high-frequency digital control-room automation.
+            </p>
+            <p>
+              ABHIVANTA eliminates operational leakages that erode independent power producer (IPP) returns:
+            </p>
+            <ul style="padding-left:20px; margin:12px 0; color:#e2e8f0; display:flex; flex-direction:column; gap:8px;">
+              <li><strong>Soiling &amp; Dust Losses in Arid Corridors:</strong> Overcome via automated waterless robotic cleaning fleets, conserving over 42 million liters of water annually while restoring 18%–24% of lost generation.</li>
+              <li><strong>Sub-Millimeter Cell Degradation &amp; Hotspots:</strong> Addressed by Abhivanta AI™ optical computer vision algorithms that detect micro-cracks, diode shunts, and inverter isolation trips in real-time.</li>
+              <li><strong>Intermittent Generation &amp; Grid Curtailment:</strong> Stabilized through grid-forming containerized Lithium Iron Phosphate (LFP) Battery Energy Storage Systems (BESS) delivering sub-second synthetic inertia and 4-hour peak tariff arbitrage.</li>
+              <li><strong>Regulatory Reporting Overhead:</strong> Fully automated one-click PDF generation compliance reporting aligned with CEA, CERC, SERC, and IEC 61724 standards.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Section 2: Six Core Engineering & Intelligence Pillars -->
+        <section class="page-break">
+          <h2 class="profile-section-title">
+            <i data-lucide="layers"></i>
+            <span>2. Six Pillars of Renewable Engineering &amp; Operations</span>
+          </h2>
+          
+          <div class="profile-pillars-grid">
+            <!-- Pillar 1 -->
+            <div class="profile-pillar-item">
+              <div class="profile-pillar-icon"><i data-lucide="sun"></i></div>
+              <div>
+                <h3 style="color:#ffffff; font-size:1.1rem; font-weight:700; margin:0 0 6px;">Pillar 01: Turnkey Solar EPC &amp; Grid Tie-In</h3>
+                <p style="color:#94a3b8; font-size:0.85rem; line-height:1.6; margin:0;">
+                  Full lifecycle engineering, procurement, and construction for gigawatt-scale tracker solar parks. Specializing in bifacial TOPCon/HJT module integration, 33kV/220kV pooling substations, and transmission bay extensions.
+                </p>
+              </div>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="profile-pillar-item">
+              <div class="profile-pillar-icon" style="color:#38bdf8; background:rgba(2,132,199,0.15); border-color:rgba(56,189,248,0.4);"><i data-lucide="wind"></i></div>
+              <div>
+                <h3 style="color:#ffffff; font-size:1.1rem; font-weight:700; margin:0 0 6px;">Pillar 02: Utility Wind Farm Development</h3>
+                <p style="color:#94a3b8; font-size:0.85rem; line-height:1.6; margin:0;">
+                  High-velocity wind corridor micrositing, LiDAR aerodynamic mapping, and civil foundation engineering for 3.X MW to 5.X MW class direct-drive turbines with active yaw and vibration telemetry.
+                </p>
+              </div>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="profile-pillar-item">
+              <div class="profile-pillar-icon" style="color:#f59e0b; background:rgba(245,158,11,0.15); border-color:rgba(245,158,11,0.4);"><i data-lucide="battery-charging"></i></div>
+              <div>
+                <h3 style="color:#ffffff; font-size:1.1rem; font-weight:700; margin:0 0 6px;">Pillar 03: 325 MWh Grid-Forming BESS Integration</h3>
+                <p style="color:#94a3b8; font-size:0.85rem; line-height:1.6; margin:0;">
+                  Tier-1 containerized Lithium Iron Phosphate (LFP) energy storage with liquid cooling, providing 4-hour evening peak shaving, frequency regulation, and automated Indian Energy Exchange (IEX) market arbitrage.
+                </p>
+              </div>
+            </div>
+
+            <!-- Pillar 4 -->
+            <div class="profile-pillar-item">
+              <div class="profile-pillar-icon" style="color:#00d2ff; background:rgba(0,210,255,0.15); border-color:rgba(0,210,255,0.4);"><i data-lucide="activity"></i></div>
+              <div>
+                <h3 style="color:#ffffff; font-size:1.1rem; font-weight:700; margin:0 0 6px;">Pillar 04: 24/7 Central ENOC SCADA Telemetry</h3>
+                <p style="color:#94a3b8; font-size:0.85rem; line-height:1.6; margin:0;">
+                  Industrial IEC 61850 &amp; Modbus TCP telemetry architecture connecting edge RTUs, inverters, and weather monitoring stations (WMS) with sub-second alert triage from our central command center in Pune.
+                </p>
+              </div>
+            </div>
+
+            <!-- Pillar 5 -->
+            <div class="profile-pillar-item">
+              <div class="profile-pillar-icon" style="color:#a7f3d0; background:rgba(16,185,129,0.15); border-color:rgba(16,185,129,0.4);"><i data-lucide="wrench"></i></div>
+              <div>
+                <h3 style="color:#ffffff; font-size:1.1rem; font-weight:700; margin:0 0 6px;">Pillar 05: Preventive O&amp;M &amp; Waterless Robotic Cleaning</h3>
+                <p style="color:#94a3b8; font-size:0.85rem; line-height:1.6; margin:0;">
+                  Comprehensive operations and maintenance, drone infrared thermography surveys, predictive transformer dissolved gas analysis (DGA), and 100% waterless dry cleaning robots maintaining 99.2% plant uptime.
+                </p>
+              </div>
+            </div>
+
+            <!-- Pillar 6 -->
+            <div class="profile-pillar-item">
+              <div class="profile-pillar-icon" style="color:#10b981; background:rgba(16,185,129,0.15); border-color:rgba(16,185,129,0.4);"><i data-lucide="leaf"></i></div>
+              <div>
+                <h3 style="color:#ffffff; font-size:1.1rem; font-weight:700; margin:0 0 6px;">Pillar 06: Agro-PV Dual Land Use &amp; ESG Carbon Credits</h3>
+                <p style="color:#94a3b8; font-size:0.85rem; line-height:1.6; margin:0;">
+                  Elevated tracker mounting structures enabling agricultural farming underneath solar arrays, combined with verified carbon credit issuance under Gold Standard and Verra methodologies (0.82 t/MWh factor).
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 3: Operating Portfolio Matrix -->
+        <section>
+          <h2 class="profile-section-title">
+            <i data-lucide="map-pin"></i>
+            <span>3. Flagship Operating Deployments Across India</span>
+          </h2>
+          <div style="overflow-x:auto;">
+            <table class="profile-project-table">
+              <thead>
+                <tr>
+                  <th>Plant &amp; Facility</th>
+                  <th>Location</th>
+                  <th>Asset Type</th>
+                  <th>Capacity</th>
+                  <th>Key Performance</th>
+                  <th>Highlights</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Thar Ultra-Mega Solar Park</strong></td>
+                  <td>Bhadla, Rajasthan</td>
+                  <td>Solar PV (Single-Axis Tracker)</td>
+                  <td><strong>660 MW</strong></td>
+                  <td>83.1% PR &bull; 3,420 MWh/day</td>
+                  <td>Robotic dry cleaning &bull; Bifacial TOPCon</td>
+                </tr>
+                <tr>
+                  <td><strong>Muppandal Pass Wind Corridor</strong></td>
+                  <td>Tamil Nadu / Ghats</td>
+                  <td>Utility Wind Farm</td>
+                  <td><strong>195 MW</strong></td>
+                  <td>37.4% CUF &bull; 99.1% Uptime</td>
+                  <td>120m hub height &bull; Direct-drive turbines</td>
+                </tr>
+                <tr>
+                  <td><strong>Khavda Hybrid Storage Hub</strong></td>
+                  <td>Kutch, Gujarat</td>
+                  <td>BESS (Containerized LFP)</td>
+                  <td><strong>325 MWh</strong></td>
+                  <td>92.5% RTE &bull; 4-Hr Peak</td>
+                  <td>Grid-forming inverters &bull; IEX Arbitrage</td>
+                </tr>
+                <tr>
+                  <td><strong>Deccan Agro-Photovoltaic Basin</strong></td>
+                  <td>Pune-Satara, Maharashtra</td>
+                  <td>Agro-PV Dual Land</td>
+                  <td><strong>280 MW</strong></td>
+                  <td>82.6% PR &bull; +14% Crop Yield</td>
+                  <td>Elevated racking &bull; Rainwater retention</td>
+                </tr>
+                <tr>
+                  <td><strong>Aravalli Mountain Terrace Array</strong></td>
+                  <td>Rajasthan Ridge</td>
+                  <td>Slope-Adaptive Solar</td>
+                  <td><strong>150 MW</strong></td>
+                  <td>99.4% String Uptime</td>
+                  <td>Terraced mounting &bull; String MPPT</td>
+                </tr>
+                <tr>
+                  <td><strong>Malwa Dawn Hybrid Facility</strong></td>
+                  <td>Madhya Pradesh</td>
+                  <td>Solar + Wind Hybrid</td>
+                  <td><strong>310 MW</strong></td>
+                  <td>52.1% Composite CUF</td>
+                  <td>Shared 220kV pooling &bull; 24/7 Base Power</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Section 4: Abhivanta AI™ Engine & SCADA Innovation -->
+        <section class="page-break">
+          <h2 class="profile-section-title">
+            <i data-lucide="cpu"></i>
+            <span>4. Proprietary Technology: Abhivanta AI™ &amp; Vision Engine</span>
+          </h2>
+          <div style="font-size:0.95rem; color:#cbd5e1; line-height:1.8;">
+            <p>
+              Unlike legacy monitoring systems that merely display raw numbers, ABHIVANTA's software stack utilizes physics-informed neural networks to forecast generation, triage faults, and prescribe corrective work orders:
+            </p>
+            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin:20px 0;">
+              <div style="background:rgba(7,18,36,0.85); border:1px solid rgba(56,189,248,0.25); border-radius:12px; padding:18px;">
+                <h4 style="color:#38bdf8; font-size:1.05rem; margin:0 0 6px;">Computer Vision Defect Scan</h4>
+                <p style="font-size:0.85rem; color:#94a3b8; margin:0; line-height:1.5;">
+                  Optical and thermal image neural net classifying dust soiling crust, micro-cracks, and inverter insulation error codes with 96%+ accuracy.
+                </p>
+              </div>
+              <div style="background:rgba(7,18,36,0.85); border:1px solid rgba(16,185,129,0.3); border-radius:12px; padding:18px;">
+                <h4 style="color:#34d399; font-size:1.05rem; margin:0 0 6px;">Inverter Degradation Triage</h4>
+                <p style="font-size:0.85rem; color:#94a3b8; margin:0; line-height:1.5;">
+                  Automated IEC 61724 heat-loss modeling detecting IGBT temperature spikes, DC ripple, and harmonic distortion before component failure occurs.
+                </p>
+              </div>
+              <div style="background:rgba(7,18,36,0.85); border:1px solid rgba(0,210,255,0.3); border-radius:12px; padding:18px;">
+                <h4 style="color:#00d2ff; font-size:1.05rem; margin:0 0 6px;">Reinforcement Learning BESS</h4>
+                <p style="font-size:0.85rem; color:#94a3b8; margin:0; line-height:1.5;">
+                  Dynamic storage dispatch algorithm syncing state-of-charge (SoC) with day-ahead and real-time market clearing prices for +14.6% merchant capture.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 5: Leadership & Corporate Governance -->
+        <section>
+          <h2 class="profile-section-title">
+            <i data-lucide="award"></i>
+            <span>5. Executive Leadership &amp; Engineering Governance</span>
+          </h2>
+          
+          <div class="profile-founder-spotlight">
+            <img src="assets/images/founder_abhishek_singh.jpg" alt="Abhishek Singh, Founder & Managing Director" class="profile-founder-thumb">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap;">
+                <h3 style="color:#ffffff; font-size:1.5rem; font-weight:800; margin:0;">Abhishek Singh</h3>
+                <span class="badge badge-success" style="background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.4); color:#34d399;">
+                  Founder &amp; Managing Director
+                </span>
+              </div>
+              <div style="color:#38bdf8; font-size:0.9rem; font-weight:600; margin-bottom:12px;">
+                Chief System Architect &bull; Clean Energy Technologist
+              </div>
+              <p style="color:#cbd5e1; font-size:0.9rem; line-height:1.7; margin:0 0 12px;">
+                Under Abhishek Singh's leadership, ABHIVANTA has grown from an ambitious clean energy engineering initiative into a premier national renewable asset operator supervising 1,180+ MW of capacity. With deep expertise across high-voltage electrical engineering, industrial SCADA architectures, and machine learning telemetry, Abhishek leads the firm's strategic expansion across India's clean energy corridors.
+              </p>
+              <div style="font-style:italic; font-size:0.88rem; color:#a7f3d0; border-left:2px solid #10b981; padding-left:12px;">
+                "Every kilowatt generated by the sun and wind is vital to India's self-reliance. Our mission is turning sub-second inverter telemetry and AI forecasting into guaranteed clean plant availability."
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 6: Quality, Health, Safety & Environmental Standards (QHSE) -->
+        <section>
+          <h2 class="profile-section-title">
+            <i data-lucide="check-circle-2"></i>
+            <span>6. Quality, Safety &amp; Regulatory Certifications</span>
+          </h2>
+          <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:16px; font-size:0.88rem; color:#cbd5e1;">
+            <div style="background:rgba(7,18,36,0.7); padding:16px; border-radius:10px; border:1px solid rgba(255,255,255,0.08);">
+              <strong style="color:#34d399;">IEC 61724-1 Class A Compliance:</strong> Photovoltaic system performance monitoring, irradiance sensor calibration, and uncertainty analysis.
+            </div>
+            <div style="background:rgba(7,18,36,0.7); padding:16px; border-radius:10px; border:1px solid rgba(255,255,255,0.08);">
+              <strong style="color:#38bdf8;">IEC 61850 Substation Architecture:</strong> Standardized industrial Ethernet protocols for high-voltage bay pooling and protection relays.
+            </div>
+            <div style="background:rgba(7,18,36,0.7); padding:16px; border-radius:10px; border:1px solid rgba(255,255,255,0.08);">
+              <strong style="color:#f59e0b;">NFPA 855 &amp; UL 9540 BESS Fire Safety:</strong> Multi-tier aerosol fire suppression and deflagration ventilation for lithium storage container arrays.
+            </div>
+            <div style="background:rgba(7,18,36,0.7); padding:16px; border-radius:10px; border:1px solid rgba(255,255,255,0.08);">
+              <strong style="color:#a7f3d0;">Zero LTI Safety Benchmark:</strong> Over 2.4 million safe man-hours logged across turnkey EPC project execution without a single lost-time injury.
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 7: Corporate Coordinates & Contact -->
+        <footer class="profile-contact-box">
+          <div>
+            <div style="color:#34d399; font-weight:700; font-size:0.85rem; text-transform:uppercase; margin-bottom:6px;">Corporate Headquarters</div>
+            <div style="color:#ffffff; font-weight:600; font-size:1rem; margin-bottom:4px;">Abhivanta Green Tower</div>
+            <div style="color:#94a3b8; font-size:0.88rem; line-height:1.5;">
+              High-Tech Clean Energy Corridor<br>
+              Pune, Maharashtra 411057, India
+            </div>
+          </div>
+          <div>
+            <div style="color:#38bdf8; font-weight:700; font-size:0.85rem; text-transform:uppercase; margin-bottom:6px;">Business Enquiries &amp; EPC</div>
+            <div style="color:#ffffff; font-weight:600; font-size:0.95rem; margin-bottom:4px;">contact@abhivanta-energy.in</div>
+            <div style="color:#94a3b8; font-size:0.88rem; line-height:1.5;">
+              epc.tenders@abhivanta-energy.in<br>
+              24/7 ENOC Desk: enoc@abhivanta-energy.in
+            </div>
+          </div>
+          <div>
+            <div style="color:#00d2ff; font-weight:700; font-size:0.85rem; text-transform:uppercase; margin-bottom:6px;">Digital Platform &amp; Presentation</div>
+            <div style="color:#ffffff; font-weight:600; font-size:0.95rem; margin-bottom:4px;">www.abhivanta-energy.in</div>
+            <div style="color:#94a3b8; font-size:0.85rem; margin-top:8px;">
+              * Confidential &bull; Designed for Client Review, Investor Presentations &amp; Commercial Tenders.
+            </div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Website Global Footer -->
+  <footer class="landing-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="flex items-center gap-3">
+            <img src="assets/images/logo.png" alt="ABHIVANTA Energy Intelligence Logo" class="brand-logo-img-nav" style="height:42px; width:auto; max-width:200px;">
+          </div>
+          <p>
+            "Powering Decisions. Accelerating Clean Energy."<br>
+            Next-generation clean energy intelligence, utility-scale telemetry, and automated reporting systems.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="about.html">About Abhivanta</a></li>
+            <li><a href="founder.html">Founder's Desk</a></li>
+            <li><a href="services.html">Services &amp; Solutions</a></li>
+            <li><a href="company-profile.html" class="active">Company Profile (PDF)</a></li>
+            <li><a href="presentation.html">Slide Deck Presentation</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Operations</h5>
+          <ul>
+            <li><a href="dashboard.html">Fleet Dashboard</a></li>
+            <li><a href="plants.html">Plant Management</a></li>
+            <li><a href="monitoring.html">Live SCADA Control</a></li>
+            <li><a href="reports.html">Report Center</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Corporate Office</h5>
+          <ul>
+            <li style="color:#94a3b8;">Abhivanta Green Tower, High-Tech City</li>
+            <li style="color:#94a3b8;">Pune, Maharashtra 411057</li>
+            <li style="color:#94a3b8;">contact@abhivanta-energy.in</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 ABHIVANTA &bull; Led by Abhishek Singh, Founder &amp; Managing Director
+        </div>
+        <div style="font-size:11px; color:#64748b;">
+          * Industrial-grade renewable asset monitoring &bull; Headquarters: Pune, Maharashtra, India
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/utils.js"></script>
+  <script src="js/components.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    });
+
+    function copyShareableLink() {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        const btn = document.getElementById('btnCopyLink');
+        if (btn) {
+          const original = btn.innerHTML;
+          btn.innerHTML = '<i data-lucide="check" style="width:14px;height:14px;"></i> <span>Link Copied!</span>';
+          if (window.lucide) window.lucide.createIcons();
+          setTimeout(() => {
+            btn.innerHTML = original;
+            if (window.lucide) window.lucide.createIcons();
+          }, 2500);
+        }
+      }).catch(() => {
+        alert('Company Profile URL: ' + url);
+      });
+    }
+  </script>
+</body>
+</html>

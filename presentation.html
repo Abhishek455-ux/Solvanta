@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Executive Slide Deck Presentation — ABHIVANTA Energy Intelligence</title>
+  <meta name="description" content="Official 12-Slide Pitch Deck & Corporate Presentation for ABHIVANTA Energy Intelligence. Download PowerPoint (.pptx) or present directly in browser.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="assets/images/favicon.png">
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/landing.css">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      background: #030712;
+      color: #f8fafc;
+      font-family: var(--font-sans);
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Control Bar */
+    .deck-topbar {
+      height: 60px;
+      background: rgba(10, 25, 47, 0.95);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 100;
+    }
+
+    .deck-brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .deck-logo-img {
+      height: 38px;
+      width: auto;
+      background: #ffffff;
+      padding: 3px 8px;
+      border-radius: 8px;
+    }
+
+    /* Stage / Viewport */
+    .deck-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+    }
+
+    .slide-viewport {
+      width: 100%;
+      max-width: 1180px;
+      aspect-ratio: 16 / 9;
+      background: radial-gradient(circle at 50% 10%, #0d2342 0%, #071224 85%);
+      border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 20px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 40px rgba(16, 185, 129, 0.15);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide-content-area {
+      flex: 1;
+      padding: 40px 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .slide-cat-badge {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: #00d2ff;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .slide-title {
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0;
+      line-height: 1.25;
+    }
+
+    .slide-footer-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 14px;
+      font-size: 11px;
+      color: #64748b;
+      font-family: var(--font-mono);
+    }
+
+    /* Bottom Controller Bar */
+    .deck-controller {
+      height: 68px;
+      background: rgba(10, 25, 47, 0.95);
+      border-top: 1px solid rgba(56, 189, 248, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+
+    .deck-nav-btns {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .deck-progress-bar {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.15);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .deck-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981, #00d2ff);
+      width: 8.33%;
+      transition: width 0.3s ease;
+    }
+
+    /* Thumbnail Drawer */
+    .deck-thumbs-tray {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      max-width: 500px;
+      padding: 4px 0;
+    }
+
+    .deck-thumb-btn {
+      width: 32px;
+      height: 24px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: #0f172a;
+      color: #94a3b8;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition-fast);
+      flex-shrink: 0;
+    }
+
+    .deck-thumb-btn.active {
+      border-color: #10b981;
+      background: #10b981;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    }
+
+    /* Slide specific component styling */
+    .slide-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .slide-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .slide-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .slide-card-dark {
+      background: rgba(7, 18, 36, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .slide-img-preview {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header class="deck-topbar">
+    <div class="deck-brand-wrap">
+      <a href="index.html">
+        <img src="assets/images/logo.png" alt="Abhivanta Logo" class="deck-logo-img">
+      </a>
+      <div style="font-size:12px; font-weight:700; color:#cbd5e1;">
+        Executive Pitch Deck &bull; <span style="color:#34d399;">1,180 MW Portfolio</span>
+      </div>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:12px;">
+      <a href="company-profile.html" class="btn btn-ghost btn-sm" style="color:#38bdf8;">
+        <i data-lucide="file-text" style="width:14px;height:14px;"></i>
+        <span>Full Profile Document</span>
+      </a>
+      <a href="Abhivanta_Energy_Company_Profile.pptx" download class="btn btn-emerald btn-sm" style="box-shadow:0 0 14px rgba(16,185,129,0.4);">
+        <i data-lucide="download" style="width:14px;height:14px;"></i>
+        <span>Download PPTX File (1.8 MB)</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Presentation Stage -->
+  <main class="deck-stage">
+    <div class="slide-viewport" id="slideViewport">
+
+      <!-- Dynamic Slide Container -->
+      <div class="slide-content-area" id="slideArea">
+        <!-- Injected dynamically via JavaScript -->
+      </div>
+
+      <!-- Slide Progress Bar -->
+      <div class="deck-progress-bar">
+        <div class="deck-progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Controller Bottom Bar -->
+  <footer class="deck-controller">
+    <div class="deck-nav-btns">
+      <button class="btn btn-outline btn-sm" onclick="prevSlide()" id="btnPrev">
+        <i data-lucide="chevron-left" style="width:16px;height:16px;"></i>
+        <span>Previous</span>
+      </button>
+      <span style="font-family:var(--font-mono); font-size:13px; color:#cbd5e1; font-weight:700; min-width:80px; text-align:center;">
+        <span id="curSlideNum">1</span> / <span id="totSlideNum">12</span>
+      </span>
+      <button class="btn btn-emerald btn-sm" onclick="nextSlide()" id="btnNext">
+        <span>Next</span>
+        <i data-lucide="chevron-right" style="width:16px;height:16px;"></i>
+      </button>
+    </div>
+
+    <!-- Thumbnails Switcher -->
+    <div class="deck-thumbs-tray" id="thumbTray">
+      <!-- Injected by script -->
+    </div>
+
+    <div style="display:flex; align-items:center; gap:10px;">
+      <button class="btn btn-ghost btn-sm" onclick="toggleFullscreen()" title="Fullscreen (F)" style="color:#cbd5e1;">
+        <i data-lucide="maximize" style="width:16px;height:16px;"></i>
+      </button>
+    </div>
+  </footer>
+
+  <script>
+    const SLIDES = [
+      // Slide 1
+      {
+        cat: "ABHIVANTA &bull; EXECUTIVE PRESENTATION",
+        title: "Powering Decisions. Accelerating Clean Energy.",
+        html: `
+          <div style="flex:1; display:flex; flex-direction:column; justify-content:center; max-width:840px;">
+            <div style="display:inline-flex; align-items:center; gap:6px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); padding:4px 14px; border-radius:20px; font-size:11px; color:#34d399; font-weight:700; margin-bottom:14px; width:fit-content;">
+              CORPORATE PROFILE &bull; 2026 EDITION
+            </div>
+            <h2 style="font-size:2.2rem; font-weight:800; color:#fff; line-height:1.2; margin:0 0 16px;">
+              Integrated Clean Energy Engineering, Turnkey EPC &amp; 24/7 ENOC SCADA Telemetry
+            </h2>
+            <p style="color:#cbd5e1; font-size:1.1rem; line-height:1.7; margin:0 0 24px;">
+              Supervising <strong>1,180+ MW</strong> of utility-scale solar PV, wind corridors, and 325 MWh containerized battery storage facilities across India with guaranteed 99.2% plant availability.
+            </p>
+            <div style="display:flex; gap:20px; font-family:var(--font-mono); font-size:12px; color:#00d2ff;">
+              <span>Founder &amp; MD: <strong>Abhishek Singh</strong></span>
+              <span>&bull;</span>
+              <span>HQ: <strong>Pune, Maharashtra, India</strong></span>
+            </div>
+          </div>
+        `
+      },
+      // Slide 2
+      {
+        cat: "01 / CORPORATE SNAPSHOT",
+        title: "Executive Summary: 1,180 MW Operating Footprint",
+        html: `
+          <div style="background:rgba(6,28,18,0.7); border-left:4px solid #10b981; padding:16px 20px; border-radius:0 10px 10px 0; margin-bottom:20px;">
+            <div style="color:#34d399; font-weight:700; font-size:11px; text-transform:uppercase;">Core Mission</div>
+            <div style="color:#e2e8f0; font-size:14px; line-height:1.6; margin-top:4px;">
+              To empower utility-scale renewable independent power producers (IPPs) with sub-second telemetry, predictive AI maintenance, and automated regulatory reporting, maximizing clean kWh generation and asset longevity.
+            </div>
+          </div>
+          <div class="slide-grid-4">
+            <div class="slide-card-dark" style="text-align:center;">
+              <div style="font-size:2.2rem; font-weight:800; color:#38bdf8; font-family:var(--font-mono);">1,180 MW</div>
+              <div style="font-size:12px; font-weight:700; color:#fff; text-transform:uppercase;">Operating Fleet</div>
+              <div style="font-size:11px; color:#94a3b8; margin-top:4px;">Solar, Wind &amp; BESS Portfolio</div>
+            </div>
+            <div class="slide-card-dark" style="text-align:center;">
+              <div style="font-size:2.2rem; font-weight:800; color:#34d399; font-family:var(--font-mono);">99.2%</div>
+              <div style="font-size:12px; font-weight:700; color:#fff; text-transform:uppercase;">Target Availability</div>
+              <div style="font-size:11px; color:#94a3b8; margin-top:4px;">Guaranteed by 24/7 ENOC</div>
+            </div>
+            <div class="slide-card-dark" style="text-align:center;">
+              <div style="font-size:2.2rem; font-weight:800; color:#00d2ff; font-family:var(--font-mono);">325 MWh</div>
+              <div style="font-size:12px; font-weight:700; color:#fff; text-transform:uppercase;">BESS Storage</div>
+              <div style="font-size:11px; color:#94a3b8; margin-top:4px;">4-Hr Peak Arbitrage &amp; Inertia</div>
+            </div>
+            <div class="slide-card-dark" style="text-align:center;">
+              <div style="font-size:2.2rem; font-weight:800; color:#a7f3d0; font-family:var(--font-mono);">4,765 T</div>
+              <div style="font-size:12px; font-weight:700; color:#fff; text-transform:uppercase;">CO₂ Offset / Day</div>
+              <div style="font-size:11px; color:#94a3b8; margin-top:4px;">0.82 t/MWh Grid Factor</div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 3
+      {
+        cat: "02 / PROBLEM & OPPORTUNITY",
+        title: "Closing Critical Operational Leakages for IPPs",
+        html: `
+          <div class="slide-grid-2">
+            <div class="slide-card-dark">
+              <h4 style="color:#fbbf24; font-size:1.1rem; margin:0 0 6px;">01. Soiling &amp; Dust Losses</h4>
+              <p style="color:#cbd5e1; font-size:12px; line-height:1.6; margin:0 0 8px;">Arid desert dust crust depresses generation by 18%–25%. Manual washing wastes water and risks glass micro-cracks.</p>
+              <div style="color:#34d399; font-size:12px; font-weight:700;">Abhivanta Solution: 100% waterless dry robotic cleaning fleets saving 42M liters water/yr.</div>
+            </div>
+            <div class="slide-card-dark">
+              <h4 style="color:#38bdf8; font-size:1.1rem; margin:0 0 6px;">02. Inverter Faults &amp; Isolation Trips</h4>
+              <p style="color:#cbd5e1; font-size:12px; line-height:1.6; margin:0 0 8px;">DC insulation leaks (E-24) and IGBT overheating go undetected for days, accumulating thousands in revenue deficit.</p>
+              <div style="color:#34d399; font-size:12px; font-weight:700;">Abhivanta Solution: Sub-second string telemetry &amp; predictive IEC 61724 heat-loss triage.</div>
+            </div>
+            <div class="slide-card-dark">
+              <h4 style="color:#00d2ff; font-size:1.1rem; margin:0 0 6px;">03. Grid Curtailment Friction</h4>
+              <p style="color:#cbd5e1; font-size:12px; line-height:1.6; margin:0 0 8px;">Midday solar generation peaks collide with SLDC backdown directives, forcing plants to spill zero-carbon electrons.</p>
+              <div style="color:#34d399; font-size:12px; font-weight:700;">Abhivanta Solution: 325 MWh containerized LFP BESS absorbing midday surplus for peak export.</div>
+            </div>
+            <div class="slide-card-dark">
+              <h4 style="color:#a7f3d0; font-size:1.1rem; margin:0 0 6px;">04. Regulatory Compliance Burden</h4>
+              <p style="color:#cbd5e1; font-size:12px; line-height:1.6; margin:0 0 8px;">Manual generation logging for CERC/SERC tariff billing and DSM deviation penalties wastes valuable engineer time.</p>
+              <div style="color:#34d399; font-size:12px; font-weight:700;">Abhivanta Solution: Automated 1-click audit-grade PDF &amp; Excel tariff reporting engine.</div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 4
+      {
+        cat: "03 / CAPABILITY MATRIX",
+        title: "Six Pillars of Renewable Engineering & Intelligence",
+        html: `
+          <div class="slide-grid-3">
+            <div class="slide-card-dark">
+              <div style="color:#34d399; font-size:10px; font-weight:700; text-transform:uppercase;">Pillar 01 &bull; Generation</div>
+              <h4 style="color:#fff; font-size:1.05rem; margin:4px 0 6px;">Turnkey Solar EPC &amp; Tie-In</h4>
+              <p style="color:#94a3b8; font-size:11px; line-height:1.5; margin:0;">Bifacial TOPCon tracker arrays, 33kV/220kV pooling substations, and transmission bay extensions.</p>
+            </div>
+            <div class="slide-card-dark">
+              <div style="color:#38bdf8; font-size:10px; font-weight:700; text-transform:uppercase;">Pillar 02 &bull; Aerodynamics</div>
+              <h4 style="color:#fff; font-size:1.05rem; margin:4px 0 6px;">Utility Wind Farm Development</h4>
+              <p style="color:#94a3b8; font-size:11px; line-height:1.5; margin:0;">LiDAR wind mapping, micrositing, and foundation engineering for 3.X–5.X MW direct-drive turbines.</p>
+            </div>
+            <div class="slide-card-dark">
+              <div style="color:#f59e0b; font-size:10px; font-weight:700; text-transform:uppercase;">Pillar 03 &bull; Flexibility</div>
+              <h4 style="color:#fff; font-size:1.05rem; margin:4px 0 6px;">325 MWh Grid-Forming BESS</h4>
+              <p style="color:#94a3b8; font-size:11px; line-height:1.5; margin:0;">Containerized liquid-cooled LFP storage providing 4-hr peak shaving and synthetic inertia.</p>
+            </div>
+            <div class="slide-card-dark">
+              <div style="color:#00d2ff; font-size:10px; font-weight:700; text-transform:uppercase;">Pillar 04 &bull; Intelligence</div>
+              <h4 style="color:#fff; font-size:1.05rem; margin:4px 0 6px;">24/7 Central ENOC SCADA</h4>
+              <p style="color:#94a3b8; font-size:11px; line-height:1.5; margin:0;">IEC 61850 &amp; Modbus TCP industrial protocols with sub-second alert triage from Pune command center.</p>
+            </div>
+            <div class="slide-card-dark">
+              <div style="color:#a7f3d0; font-size:10px; font-weight:700; text-transform:uppercase;">Pillar 05 &bull; Asset Care</div>
+              <h4 style="color:#fff; font-size:1.05rem; margin:4px 0 6px;">Preventive O&amp;M &amp; Robotic Wash</h4>
+              <p style="color:#94a3b8; font-size:11px; line-height:1.5; margin:0;">Drone infrared thermography, DGA transformer tests, and 100% waterless autonomous robotic cleaning.</p>
+            </div>
+            <div class="slide-card-dark">
+              <div style="color:#10b981; font-size:10px; font-weight:700; text-transform:uppercase;">Pillar 06 &bull; Markets</div>
+              <h4 style="color:#fff; font-size:1.05rem; margin:4px 0 6px;">Agro-PV &amp; Carbon Trading</h4>
+              <p style="color:#94a3b8; font-size:11px; line-height:1.5; margin:0;">Dual-use land solar farming and Gold Standard verified carbon offsets (0.82 t/MWh emission factor).</p>
+            </div>
+          </div>
+        `
+      },
+      // Slide 5
+      {
+        cat: "04 / ASSET DEPLOYMENTS",
+        title: "Flagship Portfolio: Thar Solar & Muppandal Wind",
+        html: `
+          <div class="slide-grid-2">
+            <div class="slide-card-dark">
+              <img src="assets/images/abhivanta_solar_park_aerial.jpg" alt="Thar Solar" class="slide-img-preview">
+              <h4 style="color:#fff; font-size:1.15rem; margin:0 0 4px;">Thar Ultra-Mega Solar Park (660 MW)</h4>
+              <div style="color:#34d399; font-size:11px; font-weight:700; margin-bottom:6px;">Bhadla, Rajasthan &bull; PR: 83.1% &bull; Output: 3,420 MWh/day</div>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.5; margin:0;">Single-axis trackers with bifacial TOPCon modules. Autonomous dry robotic cleaning fleet preserves 42 million liters water/yr.</p>
+            </div>
+            <div class="slide-card-dark">
+              <img src="assets/images/abhivanta_cloud_ridge_turbines.jpg" alt="Muppandal Wind" class="slide-img-preview">
+              <h4 style="color:#fff; font-size:1.15rem; margin:0 0 4px;">Muppandal Pass Wind Corridor (195 MW)</h4>
+              <div style="color:#38bdf8; font-size:11px; font-weight:700; margin-bottom:6px;">Tamil Nadu High Pass &bull; CUF: 37.4% &bull; Uptime: 99.1%</div>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.5; margin:0;">120m hub-height direct-drive turbines capturing seasonal high velocities, integrated with active pitch harmonics control.</p>
+            </div>
+          </div>
+        `
+      },
+      // Slide 6
+      {
+        cat: "05 / ASSET DEPLOYMENTS",
+        title: "Hybrid Storage, Agro-PV & Mountain Slope Assets",
+        html: `
+          <div class="slide-grid-3">
+            <div class="slide-card-dark">
+              <img src="assets/images/bess_storage.jpg" alt="BESS" class="slide-img-preview">
+              <h4 style="color:#fff; font-size:1rem; margin:0 0 4px;">Khavda 325 MWh BESS</h4>
+              <div style="color:#f59e0b; font-size:10px; font-weight:700; margin-bottom:4px;">Gujarat &bull; 92.5% RTE &bull; 4-Hr Peak</div>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.4; margin:0;">Liquid-cooled LFP storage providing peak shaving and IEX power tariff arbitrage.</p>
+            </div>
+            <div class="slide-card-dark">
+              <img src="assets/images/abhivanta_agro_solar_wetlands.jpg" alt="Agro-PV" class="slide-img-preview">
+              <h4 style="color:#fff; font-size:1rem; margin:0 0 4px;">Deccan Agro-PV (280 MW)</h4>
+              <div style="color:#34d399; font-size:10px; font-weight:700; margin-bottom:4px;">Maharashtra &bull; +14% Crop Yield</div>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.4; margin:0;">Elevated tracker mounting combining clean power with sustainable agriculture.</p>
+            </div>
+            <div class="slide-card-dark">
+              <img src="assets/images/abhivanta_mountain_slope_solar.jpg" alt="Slope Solar" class="slide-img-preview">
+              <h4 style="color:#fff; font-size:1rem; margin:0 0 4px;">Aravalli Slope PV (150 MW)</h4>
+              <div style="color:#00d2ff; font-size:10px; font-weight:700; margin-bottom:4px;">Rajasthan Ridge &bull; 99.4% String Uptime</div>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.4; margin:0;">Terrain-adaptive racking capturing optimum mountain sun angles via string MPPT.</p>
+            </div>
+          </div>
+        `
+      },
+      // Slide 7
+      {
+        cat: "06 / ARTIFICIAL INTELLIGENCE",
+        title: "Proprietary Intelligence: Abhivanta AI™ Engine",
+        html: `
+          <div class="slide-grid-3">
+            <div class="slide-card-dark" style="border-color:#00d2ff;">
+              <div style="color:#00d2ff; font-size:10px; font-weight:700;">NEURAL NET 01</div>
+              <h4 style="color:#fff; font-size:1.1rem; margin:4px 0 8px;">Computer Vision Defect Scan</h4>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.5; margin:0 0 10px;">Sub-millimeter optical &amp; thermal IR neural net analyzing drone captures for cell microcracks and hot-spots with 96%+ accuracy.</p>
+              <div style="color:#34d399; font-size:11px; font-weight:700;">Result: +4.2% generation retention.</div>
+            </div>
+            <div class="slide-card-dark" style="border-color:#10b981;">
+              <div style="color:#10b981; font-size:10px; font-weight:700;">NEURAL NET 02</div>
+              <h4 style="color:#fff; font-size:1.1rem; margin:4px 0 8px;">Inverter Heat-Loss Triage</h4>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.5; margin:0 0 10px;">Physics-informed neural net continuous modeling IEC 61724 losses, IGBT temperature spikes, and harmonic distortion.</p>
+              <div style="color:#34d399; font-size:11px; font-weight:700;">Result: 48h advance failure warning.</div>
+            </div>
+            <div class="slide-card-dark" style="border-color:#f59e0b;">
+              <div style="color:#f59e0b; font-size:10px; font-weight:700;">NEURAL NET 03</div>
+              <h4 style="color:#fff; font-size:1.1rem; margin:4px 0 8px;">RL Battery Storage Arbitrage</h4>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.5; margin:0 0 10px;">Reinforcement learning dispatch optimizer predicting Indian Energy Exchange (IEX) market clearing prices (DAM/RTM).</p>
+              <div style="color:#34d399; font-size:11px; font-weight:700;">Result: +14.6% merchant revenue.</div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 8
+      {
+        cat: "07 / SCADA ARCHITECTURE",
+        title: "24/7 ENOC SCADA Industrial Telemetry",
+        html: `
+          <div class="slide-grid-4">
+            <div class="slide-card-dark">
+              <div style="color:#38bdf8; font-weight:800; font-size:1.2rem; font-family:var(--font-mono);">STAGE 1</div>
+              <h5 style="color:#fff; margin:4px 0 6px;">Edge Acquisition</h5>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.4; margin:0;">RTU modbus gateways capturing sub-second voltages, pyranometers, and inverter telemetry.</p>
+            </div>
+            <div class="slide-card-dark">
+              <div style="color:#38bdf8; font-weight:800; font-size:1.2rem; font-family:var(--font-mono);">STAGE 2</div>
+              <h5 style="color:#fff; margin:4px 0 6px;">Encrypted VPN</h5>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.4; margin:0;">TLS 1.3 industrial VPN streaming encrypted sensor packets under IEC 61850 substation standard.</p>
+            </div>
+            <div class="slide-card-dark">
+              <div style="color:#34d399; font-weight:800; font-size:1.2rem; font-family:var(--font-mono);">STAGE 3</div>
+              <h5 style="color:#fff; margin:4px 0 6px;">Neural Engine</h5>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.4; margin:0;">AI Engine triaging alarms, computing fleet PR and CUF against weather irradiance benchmarks.</p>
+            </div>
+            <div class="slide-card-dark">
+              <div style="color:#34d399; font-weight:800; font-size:1.2rem; font-family:var(--font-mono);">STAGE 4</div>
+              <h5 style="color:#fff; margin:4px 0 6px;">Action Dispatch</h5>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.4; margin:0;">Automated work order creation, robotic dry cleaner trigger, and SLDC compliance logging.</p>
+            </div>
+          </div>
+          <div style="margin-top:16px; background:rgba(7,18,36,0.9); border:1px solid rgba(16,185,129,0.3); border-radius:10px; padding:12px 18px; display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:12px; color:#cbd5e1;"><strong>Central Command Center:</strong> High-Tech Clean Energy Corridor, Pune, Maharashtra</span>
+            <span style="font-family:var(--font-mono); font-size:11px; color:#34d399;">250ms Average Edge-to-Screen Latency</span>
+          </div>
+        `
+      },
+      // Slide 9
+      {
+        cat: "08 / STANDARDS & COMPLIANCE",
+        title: "Quality, Safety & International Certifications",
+        html: `
+          <div class="slide-grid-2">
+            <div class="slide-card-dark">
+              <h4 style="color:#fff; font-size:1.1rem; margin:0 0 4px;">IEC 61724-1 Class A Performance</h4>
+              <div style="color:#34d399; font-size:11px; font-weight:700; margin-bottom:6px;">PV System Monitoring Standard</div>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.5; margin:0;">Calibrated secondary standard pyranometers, module temperature sensors, and PR measurement uncertainty below 3%.</p>
+            </div>
+            <div class="slide-card-dark">
+              <h4 style="color:#fff; font-size:1.1rem; margin:0 0 4px;">IEC 61850 Substation Protocol</h4>
+              <div style="color:#38bdf8; font-size:11px; font-weight:700; margin-bottom:6px;">High-Voltage Substation Interconnect</div>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.5; margin:0;">Standardized Ethernet communications across 33kV/220kV protection relays, pooling breakers, and SLDC telemetry.</p>
+            </div>
+            <div class="slide-card-dark">
+              <h4 style="color:#fff; font-size:1.1rem; margin:0 0 4px;">NFPA 855 &amp; UL 9540 Storage Safety</h4>
+              <div style="color:#f59e0b; font-size:11px; font-weight:700; margin-bottom:6px;">BESS Container Fire &amp; Deflagration Protection</div>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.5; margin:0;">Aerosol gas fire extinguishing and continuous off-gas detection across all containerized lithium battery banks.</p>
+            </div>
+            <div class="slide-card-dark">
+              <h4 style="color:#fff; font-size:1.1rem; margin:0 0 4px;">Zero LTI Safety Benchmark</h4>
+              <div style="color:#a7f3d0; font-size:11px; font-weight:700; margin-bottom:6px;">2,400,000+ Safe Man-Hours</div>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.5; margin:0;">Strict adherence to ISO 45001 workplace safety guidelines with zero lost-time injuries across complex high-voltage construction.</p>
+            </div>
+          </div>
+        `
+      },
+      // Slide 10
+      {
+        cat: "09 / LEADERSHIP & GOVERNANCE",
+        title: "Executive Leadership: Abhishek Singh",
+        html: `
+          <div style="display:grid; grid-template-columns: 200px 1fr; gap:24px; align-items:center;">
+            <img src="assets/images/founder_abhishek_singh.jpg" alt="Abhishek Singh" style="width:100%; height:230px; object-fit:cover; border-radius:12px; border:1px solid rgba(16,185,129,0.4); box-shadow:0 10px 25px rgba(0,0,0,0.5);">
+            <div>
+              <h3 style="color:#fff; font-size:1.6rem; font-weight:800; margin:0 0 2px;">Abhishek Singh</h3>
+              <div style="color:#34d399; font-weight:700; font-size:13px; margin-bottom:10px;">Founder, Managing Director &amp; Chief System Architect</div>
+              <p style="color:#cbd5e1; font-size:12px; line-height:1.6; margin:0 0 12px;">
+                Leading the technological architecture of ABHIVANTA across 1,180+ MW of operating clean energy assets. Combining high-voltage electrical engineering with cutting-edge software telemetry, Abhishek has established Abhivanta as a trusted partner for India's leading renewable IPPs.
+              </p>
+              <div style="background:rgba(7,18,36,0.8); border-left:3px solid #10b981; padding:10px 14px; border-radius:0 8px 8px 0; font-style:italic; font-size:12px; color:#a7f3d0;">
+                "Data without automated action is just noise. At Abhivanta, our mission is turning sub-second inverter telemetry and AI forecasting into guaranteed clean plant availability."
+              </div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 11
+      {
+        cat: "10 / COMMERCIAL MODELS",
+        title: "Flexible Commercial Engagement Frameworks",
+        html: `
+          <div class="slide-grid-3">
+            <div class="slide-card-dark">
+              <div style="color:#38bdf8; font-size:11px; font-weight:700;">ENGAGEMENT MODEL 01</div>
+              <h4 style="color:#fff; font-size:1.15rem; margin:4px 0 8px;">Turnkey EPC Contract</h4>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.5; margin:0 0 8px;">Fixed-price lump-sum EPC delivery from groundbreaking to 220kV grid tie-in.</p>
+              <ul style="padding-left:16px; margin:0; font-size:11px; color:#94a3b8; line-height:1.6;">
+                <li>Guaranteed Commercial Operation Date</li>
+                <li>Tier-1 module &amp; inverter supply</li>
+                <li>Performance Ratio handover guarantee</li>
+              </ul>
+            </div>
+            <div class="slide-card-dark">
+              <div style="color:#34d399; font-size:11px; font-weight:700;">ENGAGEMENT MODEL 02</div>
+              <h4 style="color:#fff; font-size:1.15rem; margin:4px 0 8px;">25-Year Comprehensive O&amp;M</h4>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.5; margin:0 0 8px;">Full plant operations and asset longevity care managed 24/7 by Pune ENOC.</p>
+              <ul style="padding-left:16px; margin:0; font-size:11px; color:#94a3b8; line-height:1.6;">
+                <li>Guaranteed 99.0%+ annual availability</li>
+                <li>Waterless autonomous robotic cleaning</li>
+                <li>Sub-1 hour on-site breakdown triage</li>
+              </ul>
+            </div>
+            <div class="slide-card-dark">
+              <div style="color:#00d2ff; font-size:11px; font-weight:700;">ENGAGEMENT MODEL 03</div>
+              <h4 style="color:#fff; font-size:1.15rem; margin:4px 0 8px;">Enterprise SCADA &amp; AI SaaS</h4>
+              <p style="color:#cbd5e1; font-size:11px; line-height:1.5; margin:0 0 8px;">Cloud or on-premise software platform for existing operational assets.</p>
+              <ul style="padding-left:16px; margin:0; font-size:11px; color:#94a3b8; line-height:1.6;">
+                <li>Edge RTU gateway telemetry integration</li>
+                <li>AI computer vision &amp; inverter triage</li>
+                <li>Automated CEA/CERC regulatory reports</li>
+              </ul>
+            </div>
+          </div>
+        `
+      },
+      // Slide 12
+      {
+        cat: "11 / GET IN TOUCH",
+        title: "Partner with ABHIVANTA Energy Intelligence",
+        html: `
+          <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+            <h3 style="color:#fff; font-size:1.8rem; font-weight:800; margin:0 0 10px;">
+              Accelerating India's 500 GW Clean Energy Mandate
+            </h3>
+            <p style="color:#cbd5e1; font-size:1.05rem; line-height:1.6; margin:0 0 24px; max-width:800px;">
+              Whether constructing a utility-scale solar/wind project, optimizing fleet Performance Ratios, or deploying grid-forming BESS storage, ABHIVANTA is your trusted engineering partner.
+            </p>
+            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
+              <div class="slide-card-dark">
+                <div style="color:#34d399; font-weight:700; font-size:11px; text-transform:uppercase;">HEADQUARTERS</div>
+                <div style="color:#fff; font-weight:700; font-size:13px; margin:4px 0 2px;">Abhivanta Green Tower</div>
+                <div style="color:#94a3b8; font-size:11px;">Pune, Maharashtra 411057, India</div>
+              </div>
+              <div class="slide-card-dark">
+                <div style="color:#38bdf8; font-weight:700; font-size:11px; text-transform:uppercase;">DIRECT CONTACT</div>
+                <div style="color:#fff; font-weight:700; font-size:13px; margin:4px 0 2px;">contact@abhivanta-energy.in</div>
+                <div style="color:#94a3b8; font-size:11px;">epc.tenders@abhivanta-energy.in</div>
+              </div>
+              <div class="slide-card-dark">
+                <div style="color:#00d2ff; font-weight:700; font-size:11px; text-transform:uppercase;">DOWNLOAD PRESENTATION</div>
+                <a href="Abhivanta_Energy_Company_Profile.pptx" download style="color:#34d399; font-weight:700; font-size:13px; text-decoration:none; display:inline-block; margin-top:4px;">
+                  Download .PPTX File (1.8 MB) &rarr;
+                </a>
+                <div style="color:#94a3b8; font-size:11px; margin-top:2px;">12-Slide Widescreen Deck</div>
+              </div>
+            </div>
+          </div>
+        `
+      }
+    ];
+
+    let currentIdx = 0;
+
+    function renderSlide(idx) {
+      if (idx < 0) idx = 0;
+      if (idx >= SLIDES.length) idx = SLIDES.length - 1;
+      currentIdx = idx;
+
+      const s = SLIDES[idx];
+      const area = document.getElementById('slideArea');
+      area.innerHTML = `
+        <div class="slide-header">
+          <div>
+            <div class="slide-cat-badge">${s.cat}</div>
+            <h1 class="slide-title">${s.title}</h1>
+          </div>
+          <img src="assets/images/logo.png" alt="Logo" style="height:36px; background:#fff; padding:2px 8px; border-radius:6px;">
+        </div>
+        ${s.html}
+        <div class="slide-footer-meta">
+          <span>ABHIVANTA Energy Intelligence &bull; Confidential Corporate Deck</span>
+          <span>Slide ${idx + 1} of ${SLIDES.length}</span>
+        </div>
+      `;
+
+      // Update controllers
+      document.getElementById('curSlideNum').innerText = idx + 1;
+      document.getElementById('totSlideNum').innerText = SLIDES.length;
+      document.getElementById('btnPrev').disabled = (idx === 0);
+      document.getElementById('btnNext').disabled = (idx === SLIDES.length - 1);
+
+      // Progress bar
+      const pct = ((idx + 1) / SLIDES.length) * 100;
+      document.getElementById('progressFill').style.width = pct + '%';
+
+      // Update thumbnails
+      document.querySelectorAll('.deck-thumb-btn').forEach((b, i) => {
+        if (i === idx) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function prevSlide() {
+      if (currentIdx > 0) renderSlide(currentIdx - 1);
+    }
+
+    function nextSlide() {
+      if (currentIdx < SLIDES.length - 1) renderSlide(currentIdx + 1);
+    }
+
+    function toggleFullscreen() {
+      const el = document.getElementById('slideViewport');
+      if (!document.fullscreenElement) {
+        el.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key.toLowerCase() === 'f') {
+        toggleFullscreen();
+      }
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      // Build Thumb Tray
+      const tray = document.getElementById('thumbTray');
+      SLIDES.forEach((_, i) => {
+        const btn = document.createElement('button');
+        btn.className = `deck-thumb-btn ${i === 0 ? 'active' : ''}`;
+        btn.innerText = i + 1;
+        btn.onclick = () => renderSlide(i);
+        tray.appendChild(btn);
+      });
+
+      renderSlide(0);
+      if (window.lucide) lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
