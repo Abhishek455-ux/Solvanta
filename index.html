@@ -6,40 +6,82 @@
   <title>ABHIVANTA — Renewable Energy Plant Monitoring & Automated Reporting Platform</title>
   <meta name="description" content="Centralized enterprise platform to monitor solar and wind plants, track generation performance, triage faults, and automatically generate PDF reports.">
   <!-- Favicon -->
+
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="assets/images/favicon.png">
-
   <!-- Design System & Stylesheets -->
+
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/landing.css">
   <link rel="stylesheet" href="css/responsive.css">
-
   <!-- Lucide Icons CDN -->
+
   <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- OpenGraph & Social Sharing Meta Tags -->
+  <meta property="og:site_name" content="ABHIVANTA Energy Intelligence">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ABHIVANTA — Clean Energy Intelligence, C&I Solar EPC & AI SCADA Platform">
+  <meta property="og:description" content="Next-gen clean energy tech startup. Turnkey C&I Solar & Wind EPC, Green Open Access power procurement (up to 40% tariff savings), and AI SCADA telemetry. Led by Abhishek Singh.">
+  <meta property="og:image" content="assets/images/logo.png">
+  <meta property="og:url" content="https://abhivanta-energy.in/index.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ABHIVANTA — Clean Energy Intelligence, C&I Solar EPC & AI SCADA Platform">
+  <meta name="twitter:description" content="Next-gen clean energy tech startup. Turnkey C&I Solar & Wind EPC, Green Open Access power procurement (up to 40% tariff savings), and AI SCADA telemetry. Led by Abhishek Singh.">
+  <meta name="twitter:image" content="assets/images/logo.png">
+  <meta name="theme-color" content="#061c12">
+  <!-- Structured Data: Organization & Founder Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ABHIVANTA Energy Intelligence",
+    "url": "https://abhivanta-energy.in",
+    "logo": "https://abhivanta-energy.in/assets/images/logo.png",
+    "description": "Next-generation clean energy tech startup providing turnkey C&I Solar EPC, BESS energy storage, Power Trading & Open Access advisory, and AI SCADA telemetry.",
+    "founder": {
+      "@type": "Person",
+      "name": "Abhishek Singh",
+      "jobTitle": "Founder & Managing Director",
+      "email": "abhisheksingh060403@gmail.com",
+      "telephone": "+919503199010",
+      "image": "https://abhivanta-energy.in/assets/images/founder_abhishek_singh.jpg"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Pune",
+      "addressRegion": "Maharashtra",
+      "postalCode": "411057",
+      "addressCountry": "IN"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+919503199010",
+      "contactType": "customer service",
+      "email": "abhisheksingh060403@gmail.com",
+      "availableLanguage": ["English", "Hindi"]
+    }
+  }
+  </script>
 </head>
 <body class="landing-body">
-
   <!-- Navigation Bar -->
+
   <nav class="landing-nav" aria-label="Main Navigation">
     <div class="container landing-nav-inner">
       <a href="index.html" class="brand-logo" style="text-decoration:none;">
         <img src="assets/images/logo.png" alt="ABHIVANTA Energy Intelligence" class="brand-logo-img-nav">
       </a>
-
       <ul class="landing-links" id="landing-nav-menu">
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="about.html">About Us</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="founder.html">Founder's Desk</a></li>
-        <li><a href="company-profile.html"><i data-lucide="file-text" style="width:13px;height:13px;"></i> Profile</a></li>
-        <li><a href="presentation.html"><i data-lucide="presentation" style="width:13px;height:13px;"></i> Pitch Deck</a></li>
-        <li><a href="#portfolio">Mega Projects</a></li>
-        <li><a href="#ai-features" class="nav-ai-pill"><i data-lucide="sparkles" style="width:13px;height:13px;"></i> Abhivanta AI&trade;</a></li>
+        <li><a href="#client-investor-hub" style="color:#38bdf8; font-weight:700;"><i data-lucide="briefcase" style="width:13px;height:13px;"></i> Clients &amp; Investors</a></li>
+        <li><a href="ai-assistant.html" class="nav-ai-pill"><i data-lucide="sparkles" style="width:13px;height:13px;"></i> AI Diagnostics</a></li>
         <li><a href="dashboard.html">SCADA Platform</a></li>
       </ul>
-
       <div class="landing-nav-actions">
         <a href="login.html" class="btn btn-ghost nav-login-btn" style="color:#c8daf1; padding:5px 12px; font-size:13px;">Operator Login</a>
         <a href="dashboard.html" class="btn btn-primary nav-dashboard-btn" style="padding:6px 14px; font-size:13px;">
@@ -50,70 +92,81 @@
           <i data-lucide="menu" id="nav-toggle-icon"></i>
         </button>
       </div>
+
     </div>
 
     <!-- Mobile Slideout Navigation Drawer -->
-    <div class="mobile-nav-drawer" id="mobile-nav-drawer">
+
+        <div class="mobile-nav-drawer" id="mobile-nav-drawer">
       <ul class="mobile-nav-links">
-        <li><a href="index.html" class="active"><i data-lucide="home"></i> Home</a></li>
+        <li><a href="index.html"><i data-lucide="home"></i> Home</a></li>
         <li><a href="about.html"><i data-lucide="info"></i> About Us</a></li>
+        <li><a href="services.html"><i data-lucide="layers"></i> 8 Service Verticals</a></li>
         <li><a href="founder.html"><i data-lucide="user"></i> Founder's Desk</a></li>
-        <li><a href="services.html"><i data-lucide="layers"></i> Services &amp; Solutions</a></li>
-        <li><a href="#what-we-do"><i data-lucide="zap"></i> What We Do</a></li>
-        <li><a href="#ai-features"><i data-lucide="sparkles"></i> Abhivanta AI&trade; Engine</a></li>
-        <li><a href="#portfolio"><i data-lucide="sun"></i> Mega Projects</a></li>
-        <li><a href="dashboard.html"><i data-lucide="layout-dashboard"></i> SCADA Platform</a></li>
+        <li><a href="index.html#client-investor-hub" style="color:#38bdf8; font-weight:700;"><i data-lucide="briefcase"></i> Clients &amp; Investors</a></li>
+        <li><a href="ai-assistant.html" style="color:#34d399; font-weight:700;"><i data-lucide="sparkles"></i> AI Diagnostics</a></li>
+        <li><a href="company-profile.html"><i data-lucide="file-text"></i> Company Profile</a></li>
+        <li><a href="presentation.html"><i data-lucide="presentation"></i> Pitch Deck</a></li>
+        <li><a href="dashboard.html"><i data-lucide="layout-dashboard"></i> Live SCADA Platform</a></li>
       </ul>
-      <div class="mobile-nav-actions">
-        <a href="login.html" class="btn btn-ghost w-full">Operator Login</a>
-        <a href="dashboard.html" class="btn btn-primary w-full">
+      <div class="mobile-nav-actions" style="margin-top:1rem; display:flex; flex-direction:column; gap:0.5rem;">
+        <a href="https://wa.me/919503199010?text=Hi%20Abhishek%2C%20I%20am%20interested%20in%20connecting%20regarding%20Abhivanta%20Energy" target="_blank" rel="noopener noreferrer" class="btn btn-outline w-full" style="color:#10b981; border-color:rgba(16,185,129,0.5); justify-content:center;">
+          <i data-lucide="message-circle"></i>
+          <span>WhatsApp Founder (+91 95031 99010)</span>
+        </a>
+        <a href="dashboard.html" class="btn btn-primary w-full" style="justify-content:center;">
           <i data-lucide="layout-dashboard"></i>
-          <span>Explore Dashboard</span>
+          <span>Explore SCADA Engine</span>
         </a>
       </div>
     </div>
   </nav>
 
   <!-- Hero Section -->
+
   <header class="hero-section">
+
     <div class="container hero-content">
       <div class="hero-pill">
         <span class="dot"></span>
-        <span>Enterprise Clean Energy SaaS</span>
+        <span>DPIIT-Recognized CleanTech Startup &bull; Pune, Maharashtra</span>
       </div>
 
       <h1 class="hero-title">
-        Monitor Every Watt.<br>
-        <span class="gradient-text">Optimize Every Plant.</span>
+        Accelerating Enterprise Decarbonization.<br>
+        <span class="gradient-text">Engineered by Abhivanta.</span>
       </h1>
-
       <p class="hero-desc">
-        A centralized intelligence platform for solar and wind energy operators. 
-        Track real-time generation, calculate performance ratios (PR) and capacity utilization (CUF), 
-        triage inverter faults, and generate automated plant performance PDF reports with one click.
+        Abhivanta is an engineering-driven clean energy tech startup. We deliver turnkey C&amp;I Solar &amp; Wind EPC, Green Open Access power contracts that cut enterprise electricity bills by up to 40%, and proprietary AI SCADA telemetry that eliminates plant generation downtime.
       </p>
-
       <div class="hero-actions">
         <a href="dashboard.html" class="btn btn-emerald btn-lg">
           <i data-lucide="gauge"></i>
-          <span>Enter Live Dashboard</span>
+          <span>Enter Live SCADA Platform</span>
         </a>
-        <a href="reports.html" class="btn btn-outline btn-lg" style="color:#ffffff; border-color:rgba(16,185,129,0.5);">
-          <i data-lucide="file-text"></i>
-          <span>Generate Sample PDF Report</span>
+        <a href="#client-investor-hub" class="btn btn-outline btn-lg" style="color:#ffffff; border-color:rgba(56,189,248,0.5);">
+          <i data-lucide="briefcase"></i>
+          <span>Clients &amp; Investors Hub</span>
+        </a>
+        <a href="ai-assistant.html" class="btn btn-ghost btn-lg" style="color:#a7f3d0; border:1px solid rgba(16,185,129,0.35);">
+          <i data-lucide="sparkles"></i>
+          <span>Try AI Fault Diagnostic</span>
         </a>
       </div>
 
       <!-- Showcase Frame -->
+
       <div class="showcase-frame">
         <div class="showcase-topbar">
           <div class="showcase-dots">
             <span></span><span></span><span></span>
           </div>
+
           <div class="simulated-data-banner">
             <span class="dot"></span>
             <span>Simulated Telemetry Engine Active &bull; Fleet Overview</span>
           </div>
+
           <div style="display:flex; align-items:center; gap:10px;">
             <div class="showcase-view-switch">
               <button class="showcase-tab-btn active" id="heroTabVideo" onclick="switchHeroMedia('video')">
@@ -125,19 +178,20 @@
                 <span>Hybrid Asset</span>
               </button>
             </div>
+
             <div style="font-size:11px; color:#64748b; font-family:var(--font-mono);">abhivanta.fleet.scada:v1.0</div>
           </div>
+
         </div>
 
         <!-- Generated Hybrid Renewable Asset Banner with 4K Drone Video & Photo Toggle -->
+
         <div class="showcase-banner-img-wrap" id="heroMediaContainer">
           <video id="heroShowcaseVideo" class="showcase-banner-video" autoplay muted loop playsinline poster="assets/images/abhivanta_solar_park_aerial.jpg" src="assets/videos/abhivanta_showcase_flagship.mp4"></video>
           <img id="heroShowcasePhoto" src="assets/images/abhivanta_hybrid_sunset_farm.jpg" alt="Abhivanta Hybrid Renewable Facility - Solar PV, Wind Turbines, and BESS Storage" class="showcase-banner-img" style="display:none;">
-
           <button class="video-btn" id="heroAudioBtn" onclick="toggleHeroVideoAudio()" title="Toggle Sound" style="position:absolute; top:14px; right:14px; z-index:10; background:rgba(10,25,47,0.8); backdrop-filter:blur(6px); border:1px solid rgba(56,189,248,0.4);">
             <i data-lucide="volume-x" id="heroAudioIcon" style="width:16px;height:16px;"></i>
           </button>
-
           <div class="showcase-banner-overlay">
             <div class="banner-badge-group">
               <span class="badge badge-solar"><i data-lucide="sun"></i> Solar PV 660 MW</span>
@@ -149,40 +203,58 @@
                 <span class="rec-pulse-dot" style="margin-right:4px;"></span> 4K Drone Aerial Stream
               </span>
             </div>
-            <div class="banner-location-tag">
-              <i data-lucide="map-pin"></i> Rajasthan &bull; Gujarat &bull; Maharashtra Clean Energy Corridors &bull; Bhadla &bull; Khavda
+
+            <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap; width:100%;">
+              <div class="banner-location-tag">
+                <i data-lucide="map-pin"></i> Rajasthan &bull; Gujarat &bull; Maharashtra Clean Energy Corridors &bull; Bhadla &bull; Khavda
+              </div>
+              <div class="video-brand-watermark" style="display:inline-flex; align-items:center; gap:8px; background:rgba(6,28,18,0.92); border:1px solid rgba(16,185,129,0.5); border-radius:8px; padding:5px 12px; backdrop-filter:blur(8px); box-shadow:0 4px 15px rgba(0,0,0,0.6);">
+                <img src="assets/images/logo_icon.png" alt="Abhivanta Logo" style="height:16px; width:16px; object-fit:contain;">
+                <span style="color:#ffffff; font-weight:800; font-size:11px; letter-spacing:0.5px;">ABHIVANTA &bull; <span style="color:#34d399;">FLEET 4K</span></span>
+              </div>
             </div>
+
           </div>
+
         </div>
 
         <div class="showcase-preview-body">
           <div class="showcase-metric-card">
-            <div class="label">Total Fleet Capacity</div>
-            <div class="val">1,180 MW</div>
-            <div class="trend"><i data-lucide="trending-up" style="display:inline;width:12px;height:12px;"></i> 9 Managed Plants</div>
+            <div class="label">Leadership Pedigree</div>
+            <div class="val">1,180+ MW</div>
+            <div class="trend"><i data-lucide="award" style="display:inline;width:12px;height:12px;"></i> Proven Career Track Record</div>
           </div>
+
           <div class="showcase-metric-card">
-            <div class="label">Today's Generation</div>
-            <div class="val">5,810.9 MWh</div>
-            <div class="trend"><i data-lucide="arrow-up-right" style="display:inline;width:12px;height:12px;"></i> +4.8% vs Expected</div>
+            <div class="label">Monitored on SCADA</div>
+            <div class="val">120+ MW</div>
+            <div class="trend"><i data-lucide="activity" style="display:inline;width:12px;height:12px;"></i> Active Live Telemetry</div>
           </div>
+
           <div class="showcase-metric-card">
-            <div class="label">Fleet Performance Ratio</div>
-            <div class="val">81.8%</div>
-            <div class="trend" style="color:#a7f3d0;"><i data-lucide="check" style="display:inline;width:12px;height:12px;"></i> Healthy Benchmark</div>
+            <div class="label">C&amp;I Open Access Savings</div>
+            <div class="val">25%–40%</div>
+            <div class="trend" style="color:#a7f3d0;"><i data-lucide="trending-down" style="display:inline;width:12px;height:12px;"></i> vs State DISCOM Baseline</div>
           </div>
+
           <div class="showcase-metric-card">
-            <div class="label">CO₂ Offset Today</div>
-            <div class="val">4,765 T</div>
-            <div class="trend" style="color:#34d399;"><i data-lucide="leaf" style="display:inline;width:12px;height:12px;"></i> Factor 0.82 t/MWh</div>
+            <div class="label">AI Defect Scans</div>
+            <div class="val">2,500+</div>
+            <div class="trend" style="color:#34d399;"><i data-lucide="sparkles" style="display:inline;width:12px;height:12px;"></i> Vision AI Rooftop Diagnostics</div>
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   </header>
 
   <!-- Leadership Spotlight: Founder & MD Abhishek Singh -->
+
   <section class="founder-spotlight-section">
+
     <div class="container">
       <div class="founder-spotlight-card">
         <div class="founder-img-col">
@@ -190,39 +262,62 @@
             <div class="founder-portrait-frame">
               <img src="assets/images/founder_abhishek_singh.jpg" alt="Abhishek Singh — Founder & Managing Director, Abhivanta Energy Intelligence">
             </div>
+
             <div class="founder-img-badge">
               <div style="font-weight:700; color:#fff; font-size:1.05rem;">Abhishek Singh</div>
               <div style="color:#38bdf8; font-size:0.85rem; font-weight:600;">Founder &amp; Managing Director</div>
             </div>
+
           </div>
+
         </div>
+
         <div class="founder-info-col">
-          <div class="section-tag" style="margin-bottom:0.5rem;">Leadership Vision</div>
+          <div style="display:inline-flex; align-items:center; gap:6px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); padding:3px 12px; border-radius:20px; font-size:0.75rem; color:#a7f3d0; font-weight:700; text-transform:uppercase; margin-bottom:0.75rem;">
+            <span class="dot"></span> Founder &amp; Managing Director
+          </div>
+
           <h2 style="font-size:2.2rem; font-weight:800; color:#ffffff; line-height:1.2; margin-bottom:1rem;">
             "Architecting the Intelligence Behind India's 500 GW Mission"
           </h2>
           <div class="founder-quote-text">
-            "Commissioning multi-gigawatt solar arrays and wind farms is only half the battle. True energy security requires high-frequency SCADA telemetry, automated robotic maintenance, and battery storage orchestration to eliminate generation leakages."
+            "Commissioning solar arrays and wind farms is only half the battle. True energy security requires high-frequency SCADA telemetry, automated robotic maintenance, and battery storage orchestration to eliminate generation leakages."
           </div>
-          <p style="color:#94a3b8; font-size:0.95rem; line-height:1.6; margin-bottom:1.5rem;">
-            Under the visionary leadership of <strong>Abhishek Singh</strong>, Abhivanta was conceived to deliver world-class clean energy intelligence. By combining industrial IoT telemetry with cloud-grade browser analytics, Abhivanta brings enterprise-grade renewable control to plant managers and grid operators.
+
+          <p style="color:#cbd5e1; font-size:0.95rem; line-height:1.6; margin-bottom:1.5rem;">
+            Founded by <strong>Abhishek Singh</strong>, an experienced clean energy technologist with a 1,000+ MW executed engineering pedigree, Abhivanta was built to solve the real operational headaches of Indian renewable assets. We bridge physical heavy electrical engineering with modern, cloud-native AI intelligence.
           </p>
-          <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
             <a href="founder.html" class="btn btn-emerald">
-              <span>Read Founder's Full Note</span>
-              <i data-lucide="arrow-right"></i>
+              <i data-lucide="user"></i>
+              <span>Founder's Desk &amp; Bio</span>
             </a>
-            <a href="about.html" class="btn btn-ghost" style="color:#cbd5e1;">
-              <span>Corporate Profile &bull; About Us &rarr;</span>
+            <a href="mailto:abhisheksingh060403@gmail.com?subject=Inquiry%20regarding%20Abhivanta%20Energy" class="btn btn-outline" style="color:#38bdf8; border-color:rgba(56,189,248,0.4);">
+              <i data-lucide="mail"></i>
+              <span>Email: abhisheksingh060403@gmail.com</span>
+            </a>
+            <a href="https://wa.me/919503199010?text=Hi%20Abhishek%2C%20I%20am%20interested%20in%20connecting%20regarding%20Abhivanta%20Energy" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="color:#10b981; border-color:rgba(16,185,129,0.5);">
+              <i data-lucide="message-circle"></i>
+              <span>WhatsApp: +91 95031 99010</span>
+            </a>
+            <a href="presentation.html" class="btn btn-ghost" style="color:#a7f3d0;">
+              <i data-lucide="presentation"></i>
+              <span>Pitch Deck &rarr;</span>
             </a>
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   </section>
 
   <!-- What Abhivanta Does Section -->
+
   <section id="what-we-do" style="padding:90px 0; background:#0a192f; border-top:1px solid rgba(56,189,248,0.15); border-bottom:1px solid rgba(56,189,248,0.15);">
+
     <div class="container">
       <div class="grid grid-2 gap-8 items-center">
         <div>
@@ -230,6 +325,7 @@
             <img src="assets/images/logo_icon.png" alt="Abhivanta Logo" style="height:36px; width:36px; object-fit:contain; background:#ffffff; padding:3px; border-radius:8px; box-shadow:0 0 15px rgba(2,132,199,0.3); border:1px solid rgba(16,185,129,0.4);">
             <span class="section-tag" style="margin:0; background:rgba(2,132,199,0.15); color:#38bdf8; border:1px solid rgba(56,189,248,0.3);">What Abhivanta Does</span>
           </div>
+
           <h2 style="font-size:2.3rem; font-weight:800; color:#fff; line-height:1.25; margin-bottom:1.25rem;">
             Empowering Clean Energy Assets with Next-Gen Telemetry &amp; Automation
           </h2>
@@ -239,19 +335,21 @@
           <p style="color:#94a3b8; font-size:0.95rem; line-height:1.7; margin-bottom:1.75rem;">
             We solve the core challenges faced by renewable independent power producers (IPPs): eliminating generation downtime, preventing clipping losses, orchestrating battery storage dispatch during peak power tariffs, and automating monthly regulatory reporting compliant with CERC/SERC and IEC 61724 standards.
           </p>
-
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
             <div style="background:rgba(7,18,36,0.9); border:1px solid rgba(56,189,248,0.25); border-radius:12px; padding:1.2rem;">
               <div style="color:#38bdf8; font-weight:800; font-size:1.6rem; font-family:var(--font-mono);">1,180 MW</div>
               <div style="color:#e2e8f0; font-size:0.85rem; font-weight:600; margin-top:2px;">Operating Portfolio</div>
               <div style="color:#94a3b8; font-size:0.75rem;">Solar, Wind &amp; Storage</div>
             </div>
+
             <div style="background:rgba(7,18,36,0.9); border:1px solid rgba(56,189,248,0.25); border-radius:12px; padding:1.2rem;">
               <div style="color:#00d2ff; font-weight:800; font-size:1.6rem; font-family:var(--font-mono);">99.2%</div>
               <div style="color:#e2e8f0; font-size:0.85rem; font-weight:600; margin-top:2px;">Target Availability</div>
               <div style="color:#94a3b8; font-size:0.75rem;">Guaranteed by ENOC O&amp;M</div>
             </div>
+
           </div>
+
         </div>
 
         <div>
@@ -262,21 +360,30 @@
                 <i data-lucide="sun"></i> Mountain Slope Solar &bull; 150 MW
               </span>
             </div>
+
             <div style="background:#0d2342; padding:1.25rem; border-top:1px solid rgba(56,189,248,0.2); display:flex; justify-content:space-between; align-items:center;">
               <div>
                 <div style="color:#38bdf8; font-weight:700; font-size:0.95rem;">Integrated Clean Energy Fleet</div>
                 <div style="color:#94a3b8; font-size:0.8rem;">Solar Arrays &bull; Wind Turbines &bull; Containerized BESS</div>
               </div>
+
               <a href="about.html" class="btn btn-ghost btn-sm" style="color:#38bdf8;">About Abhivanta &rarr;</a>
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   </section>
 
   <!-- Abhivanta In Action: 4K Drone & Operations Video Theater -->
+
   <section id="fleet-video-theater" style="padding:85px 0; background:linear-gradient(180deg, #071224 0%, #0b1a30 50%, #061c12 100%); border-top:1px solid rgba(56,189,248,0.2); border-bottom:1px solid rgba(16,185,129,0.25);">
+
     <div class="container">
       <div class="section-title-wrap text-center" style="max-width:820px; margin:0 auto 2.5rem;">
         <div class="flex items-center justify-center gap-2" style="margin-bottom:0.75rem;">
@@ -284,7 +391,9 @@
           <div class="section-tag" style="background:rgba(16,185,129,0.15); color:#34d399; border:1px solid rgba(16,185,129,0.3); margin:0;">
             4K Drone Telemetry &bull; Field Operations
           </div>
+
         </div>
+
         <h2 class="section-title" style="font-size:2.4rem;">
           Abhivanta In Motion: <span class="gradient-text">Fleet Operations Theater</span>
         </h2>
@@ -294,28 +403,31 @@
       </div>
 
       <!-- Main Video Theater Player Wrap -->
+
       <div class="abhivanta-video-player-wrap" id="mainTheaterWrap">
         <video id="theaterVideo" class="abhivanta-video-element" autoplay muted loop playsinline poster="assets/images/abhivanta_solar_park_aerial.jpg" src="assets/videos/abhivanta_showcase_flagship.mp4"></video>
-
         <!-- SCADA Drone Telemetry HUD Overlay -->
+
         <div class="video-hud-overlay" id="theaterHud">
           <div class="video-hud-top">
             <div class="video-hud-rec">
               <span class="rec-pulse-dot"></span>
               <span>LIVE DRONE REC &bull; 4K UHD</span>
             </div>
+
             <div class="video-hud-badge">
               <i data-lucide="satellite" style="width:13px;height:13px;"></i>
               <span id="theaterVideoTitle">Fleet Reel 01 &bull; Thar Ultra-Mega Solar Park</span>
             </div>
+
             <div class="video-hud-badge" style="color:#a7f3d0; border-color:rgba(16,185,129,0.4);">
               <i data-lucide="shield-check" style="width:13px;height:13px;"></i>
               <span>TELEMETRY ENCRYPTED</span>
             </div>
+
           </div>
 
           <div class="video-hud-reticle"></div>
-
           <div class="video-hud-bottom">
             <div class="video-hud-telemetry">
               <span>ALT: <strong>94.2 M</strong></span>
@@ -323,13 +435,18 @@
               <span>GPS: <strong>27.5387° N, 71.9126° E</strong></span>
               <span>BAT: <strong>96%</strong></span>
             </div>
-            <div style="background:rgba(10,25,47,0.85); padding:6px 12px; border-radius:6px; border:1px solid rgba(56,189,248,0.25);">
-              <span style="color:#38bdf8;">Abhivanta Central ENOC Telemetry</span>
+
+            <div style="display:flex; align-items:center; gap:8px; background:rgba(6,28,18,0.92); padding:6px 14px; border-radius:6px; border:1px solid rgba(16,185,129,0.45); backdrop-filter:blur(8px); box-shadow:0 4px 12px rgba(0,0,0,0.5);">
+              <img src="assets/images/logo_icon.png" alt="Abhivanta Logo" style="height:15px; width:15px; object-fit:contain;">
+              <span style="color:#ffffff; font-weight:700; font-size:11px; letter-spacing:0.4px;">ABHIVANTA <span style="color:#34d399;">ENOC 4K</span></span>
             </div>
+
           </div>
+
         </div>
 
         <!-- Custom Video Controls Bar -->
+
         <div class="abhivanta-video-controls">
           <button class="video-btn" id="theaterPlayBtn" onclick="toggleTheaterPlay()" title="Play/Pause">
             <i data-lucide="pause" id="theaterPlayIcon" style="width:16px;height:16px;"></i>
@@ -337,7 +454,6 @@
           <button class="video-btn" id="theaterMuteBtn" onclick="toggleTheaterAudio()" title="Toggle Sound">
             <i data-lucide="volume-x" id="theaterMuteIcon" style="width:16px;height:16px;"></i>
           </button>
-
           <div class="video-progress-bar-wrap" id="theaterProgressWrap" onclick="seekTheaterVideo(event)">
             <div class="video-progress-fill" id="theaterProgressFill"></div>
           </div>
@@ -350,87 +466,112 @@
             <i data-lucide="maximize" style="width:16px;height:16px;"></i>
           </button>
         </div>
+
       </div>
 
       <!-- Video Playlist Selector Grid -->
+
       <div class="video-playlist-grid">
         <!-- Clip 1 -->
+
         <div class="video-playlist-card active" onclick="loadTheaterVideo('assets/videos/abhivanta_showcase_flagship.mp4', 'assets/images/abhivanta_solar_park_aerial.jpg', 'Fleet Reel 01 &bull; Thar Ultra-Mega Solar Park (660 MW)', this)">
           <div class="video-playlist-thumb-wrap">
             <img src="assets/images/abhivanta_solar_park_aerial.jpg" alt="Thar Solar Park Flyover" class="video-playlist-thumb">
             <div class="video-playlist-play-icon">
               <i data-lucide="play" style="width:14px;height:14px;margin-left:2px;"></i>
             </div>
+
             <span class="video-playlist-duration">0:25 &bull; 4K</span>
           </div>
+
           <div class="video-playlist-meta">
             <h4>01. Flagship Desert Solar Park</h4>
             <p>Bhadla tracker rows, inverter skids &amp; robotic cleaning fleet</p>
           </div>
+
         </div>
 
         <!-- Clip 2 -->
+
         <div class="video-playlist-card" onclick="loadTheaterVideo('assets/videos/abhivanta_epc_field_operations.mp4', 'assets/images/abhivanta_solar_cells_macro.jpg', 'Fleet Reel 02 &bull; Turnkey EPC Assembly &amp; Substation Tie-In', this)">
           <div class="video-playlist-thumb-wrap">
             <img src="assets/images/abhivanta_solar_cells_macro.jpg" alt="EPC Field Operations" class="video-playlist-thumb">
             <div class="video-playlist-play-icon">
               <i data-lucide="play" style="width:14px;height:14px;margin-left:2px;"></i>
             </div>
+
             <span class="video-playlist-duration">0:18 &bull; 4K</span>
           </div>
+
           <div class="video-playlist-meta">
             <h4>02. Turnkey EPC Operations</h4>
             <p>Module mounting, single-axis drive tests &amp; cable laying</p>
           </div>
+
         </div>
 
         <!-- Clip 3 -->
+
         <div class="video-playlist-card" onclick="loadTheaterVideo('assets/videos/abhivanta_wind_solar_hybrid.mp4', 'assets/images/abhivanta_cloud_ridge_turbines.jpg', 'Fleet Reel 03 &bull; Western Ghats Hybrid Wind-Solar Corridor', this)">
           <div class="video-playlist-thumb-wrap">
             <img src="assets/images/abhivanta_cloud_ridge_turbines.jpg" alt="Hybrid Wind & Solar" class="video-playlist-thumb">
             <div class="video-playlist-play-icon">
               <i data-lucide="play" style="width:14px;height:14px;margin-left:2px;"></i>
             </div>
+
             <span class="video-playlist-duration">0:15 &bull; 4K</span>
           </div>
+
           <div class="video-playlist-meta">
             <h4>03. Ridge Wind &amp; Solar Hybrid</h4>
             <p>High-altitude 140m turbines above cloud layer &amp; PV arrays</p>
           </div>
+
         </div>
 
         <!-- Clip 4 -->
+
         <div class="video-playlist-card" onclick="loadTheaterVideo('assets/videos/abhivanta_bess_substation.mp4', 'assets/images/abhivanta_hybrid_sunset_farm.jpg', 'Fleet Reel 04 &bull; Khavda 325 MWh BESS Substation Interconnect', this)">
           <div class="video-playlist-thumb-wrap">
             <img src="assets/images/abhivanta_hybrid_sunset_farm.jpg" alt="BESS Substation Interconnect" class="video-playlist-thumb">
             <div class="video-playlist-play-icon">
               <i data-lucide="play" style="width:14px;height:14px;margin-left:2px;"></i>
             </div>
+
             <span class="video-playlist-duration">0:15 &bull; 4K</span>
           </div>
+
           <div class="video-playlist-meta">
             <h4>04. Substation &amp; BESS Storage</h4>
             <p>220kV bay pooling, liquid-cooled battery banks &amp; STATCOM</p>
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   </section>
 
   <!-- Services We Provide Section -->
+
   <section id="services-overview" style="padding:90px 0; background:#0a192f; border-top:1px solid rgba(56,189,248,0.15); border-bottom:1px solid rgba(56,189,248,0.15);">
+
     <div class="container">
       <div class="section-title-wrap text-center" style="max-width:760px; margin:0 auto 3rem;">
         <div class="flex items-center justify-center gap-2" style="margin-bottom:0.75rem;">
           <img src="assets/images/logo_icon.png" alt="Abhivanta" style="height:26px; width:26px; object-fit:contain; background:#ffffff; padding:2px; border-radius:6px; border:1px solid rgba(16,185,129,0.4);">
           <div class="section-tag" style="margin:0;">Services We Provide</div>
         </div>
+
         <h2 class="section-title">Comprehensive Clean Energy Solutions</h2>
         <p class="section-desc">From initial site resource assessments and turnkey EPC build to 24/7 ENOC SCADA control and automated compliance reporting.</p>
       </div>
 
       <div class="grid grid-3 gap-6">
         <!-- Service 1 -->
+
         <div class="service-card-pro">
           <img src="assets/images/service_epc.jpg" alt="Turnkey Solar EPC Services" class="service-card-img">
           <div class="service-card-content">
@@ -446,10 +587,13 @@
             <div style="margin-top:auto; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.08);">
               <a href="services.html" class="btn btn-ghost btn-sm" style="color:#34d399; padding-left:0;">Learn More &rarr;</a>
             </div>
+
           </div>
+
         </div>
 
         <!-- Service 2 -->
+
         <div class="service-card-pro">
           <img src="assets/images/wind_farm.jpg" alt="Wind Farm Project Development" class="service-card-img">
           <div class="service-card-content">
@@ -465,10 +609,13 @@
             <div style="margin-top:auto; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.08);">
               <a href="services.html" class="btn btn-ghost btn-sm" style="color:#34d399; padding-left:0;">Learn More &rarr;</a>
             </div>
+
           </div>
+
         </div>
 
         <!-- Service 3 -->
+
         <div class="service-card-pro">
           <img src="assets/images/bess_storage.jpg" alt="Utility BESS Energy Storage Solutions" class="service-card-img">
           <div class="service-card-content">
@@ -484,10 +631,13 @@
             <div style="margin-top:auto; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.08);">
               <a href="services.html" class="btn btn-ghost btn-sm" style="color:#34d399; padding-left:0;">Learn More &rarr;</a>
             </div>
+
           </div>
+
         </div>
 
         <!-- Service 4 -->
+
         <div class="service-card-pro">
           <img src="assets/images/enoc_center.jpg" alt="24/7 ENOC SCADA Operations" class="service-card-img">
           <div class="service-card-content">
@@ -503,10 +653,13 @@
             <div style="margin-top:auto; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.08);">
               <a href="dashboard.html" class="btn btn-ghost btn-sm" style="color:#34d399; padding-left:0;">Launch SCADA &rarr;</a>
             </div>
+
           </div>
+
         </div>
 
         <!-- Service 5 -->
+
         <div class="service-card-pro">
           <img src="assets/images/service_om.jpg" alt="Waterless Robotic Cleaning & Preventive O&M" class="service-card-img">
           <div class="service-card-content">
@@ -522,10 +675,13 @@
             <div style="margin-top:auto; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.08);">
               <a href="maintenance.html" class="btn btn-ghost btn-sm" style="color:#34d399; padding-left:0;">View Work Orders &rarr;</a>
             </div>
+
           </div>
+
         </div>
 
         <!-- Service 6 -->
+
         <div class="service-card-pro">
           <img src="assets/images/solar_park.jpg" alt="Automated Generation & ESG Audit Reports" class="service-card-img">
           <div class="service-card-content">
@@ -541,8 +697,11 @@
             <div style="margin-top:auto; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.08);">
               <a href="reports.html" class="btn btn-ghost btn-sm" style="color:#34d399; padding-left:0;">Generate Reports &rarr;</a>
             </div>
+
           </div>
+
         </div>
+
       </div>
 
       <div style="text-align:center; margin-top:3rem;">
@@ -551,11 +710,15 @@
           <i data-lucide="arrow-right"></i>
         </a>
       </div>
+
     </div>
+
   </section>
 
   <!-- Abhivanta AI&trade; Renewable Intelligence Suite Section -->
+
   <section id="ai-features" style="padding:90px 0; background:linear-gradient(180deg, #071224 0%, #0d2342 50%, #071224 100%); border-top:1px solid rgba(56,189,248,0.2); border-bottom:1px solid rgba(56,189,248,0.2);">
+
     <div class="container">
       <div class="section-title-wrap text-center" style="max-width:800px; margin:0 auto 3.5rem;">
         <div class="flex items-center justify-center gap-2" style="margin-bottom:0.75rem;">
@@ -563,16 +726,19 @@
             <i data-lucide="cpu"></i> AI-Powered Operations
           </span>
         </div>
+
         <h2 class="section-title">Abhivanta AI&trade; Renewable Intelligence Engine</h2>
         <p class="section-desc">Machine learning telemetry, predictive soiling detection, and autonomous battery storage arbitrage engineered for modern clean energy IPPs.</p>
       </div>
 
       <div class="grid grid-3 gap-6">
         <!-- AI Card 1: Generation & Curtailment Forecast -->
+
         <div style="background:rgba(10,25,47,0.85); border:1px solid rgba(56,189,248,0.3); border-radius:20px; padding:2rem; box-shadow:0 15px 35px rgba(0,0,0,0.5); transition:transform 0.3s ease;">
           <div style="width:52px; height:52px; border-radius:14px; background:linear-gradient(135deg, rgba(2,132,199,0.3) 0%, rgba(0,210,255,0.2) 100%); border:1px solid #38bdf8; display:flex; align-items:center; justify-content:center; margin-bottom:1.25rem;">
             <i data-lucide="trending-up" style="color:#00d2ff; width:26px; height:26px;"></i>
           </div>
+
           <span style="font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:#38bdf8; font-weight:700;">Predictive ML Model</span>
           <h3 style="color:#ffffff; font-size:1.3rem; font-weight:700; margin:0.4rem 0 0.75rem;">Day-Ahead Generation Forecasting</h3>
           <p style="color:#94a3b8; font-size:0.9rem; line-height:1.6; margin-bottom:1.25rem;">
@@ -582,13 +748,16 @@
             <span style="font-size:0.8rem; color:#cbd5e1;">DSM Penalty Avoidance</span>
             <span style="font-size:0.85rem; font-weight:700; color:#00d2ff;">98.4% Accuracy</span>
           </div>
+
         </div>
 
         <!-- AI Card 2: Smart Soiling & Drone Vision -->
+
         <div style="background:rgba(10,25,47,0.85); border:1px solid rgba(56,189,248,0.3); border-radius:20px; padding:2rem; box-shadow:0 15px 35px rgba(0,0,0,0.5); transition:transform 0.3s ease;">
           <div style="width:52px; height:52px; border-radius:14px; background:linear-gradient(135deg, rgba(2,132,199,0.3) 0%, rgba(0,210,255,0.2) 100%); border:1px solid #38bdf8; display:flex; align-items:center; justify-content:center; margin-bottom:1.25rem;">
             <i data-lucide="scan" style="color:#00d2ff; width:26px; height:26px;"></i>
           </div>
+
           <span style="font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:#38bdf8; font-weight:700;">Computer Vision AI</span>
           <h3 style="color:#ffffff; font-size:1.3rem; font-weight:700; margin:0.4rem 0 0.75rem;">AI Soiling Loss &amp; Hotspot Vision</h3>
           <p style="color:#94a3b8; font-size:0.9rem; line-height:1.6; margin-bottom:1.25rem;">
@@ -598,13 +767,16 @@
             <span style="font-size:0.8rem; color:#cbd5e1;">Autonomous Dispatch</span>
             <span style="font-size:0.85rem; font-weight:700; color:#10b981;">Waterless Cleaning</span>
           </div>
+
         </div>
 
         <!-- AI Card 3: Autonomous BESS Arbitrage -->
+
         <div style="background:rgba(10,25,47,0.85); border:1px solid rgba(56,189,248,0.3); border-radius:20px; padding:2rem; box-shadow:0 15px 35px rgba(0,0,0,0.5); transition:transform 0.3s ease;">
           <div style="width:52px; height:52px; border-radius:14px; background:linear-gradient(135deg, rgba(2,132,199,0.3) 0%, rgba(0,210,255,0.2) 100%); border:1px solid #38bdf8; display:flex; align-items:center; justify-content:center; margin-bottom:1.25rem;">
             <i data-lucide="zap" style="color:#00d2ff; width:26px; height:26px;"></i>
           </div>
+
           <span style="font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:#38bdf8; font-weight:700;">Reinforcement Learning</span>
           <h3 style="color:#ffffff; font-size:1.3rem; font-weight:700; margin:0.4rem 0 0.75rem;">Autonomous BESS Arbitrage</h3>
           <p style="color:#94a3b8; font-size:0.9rem; line-height:1.6; margin-bottom:1.25rem;">
@@ -614,19 +786,24 @@
             <span style="font-size:0.8rem; color:#cbd5e1;">Peak Merchant Capture</span>
             <span style="font-size:0.85rem; font-weight:700; color:#38bdf8;">+14.6% Revenue</span>
           </div>
+
         </div>
+
       </div>
 
       <!-- Live AI Telemetry Diagnostics Interactive Terminal Preview -->
+
       <div style="margin-top:3rem; background:rgba(7,18,36,0.95); border:1px solid rgba(56,189,248,0.35); border-radius:20px; padding:2rem; box-shadow:0 25px 60px rgba(0,0,0,0.6);">
         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:1rem; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
           <div class="flex items-center gap-3">
             <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#00d2ff; box-shadow:0 0 10px #00d2ff;"></span>
             <strong style="color:#ffffff; font-size:0.95rem;">Abhivanta AI&trade; Live Telemetry Diagnostic Feed</strong>
           </div>
+
           <div style="font-family:var(--font-mono); font-size:12px; color:#38bdf8;">
             AI Engine: v2.6.4 &bull; Status: OPTIMIZED
           </div>
+
         </div>
 
         <div class="grid grid-3 gap-4" style="font-family:var(--font-mono); font-size:12px;">
@@ -635,56 +812,70 @@
             <div style="font-size:1.4rem; font-weight:800; color:#00d2ff;">0.12% <span style="font-size:11px; color:#10b981;">(NORMAL)</span></div>
             <div style="color:#64748b; font-size:11px; margin-top:4px;">9/9 Plants In Optimal Band</div>
           </div>
+
           <div style="background:rgba(13,31,58,0.7); border:1px solid rgba(56,189,248,0.2); padding:1rem; border-radius:10px;">
             <div style="color:#94a3b8; margin-bottom:4px;">AI CURTAILMENT RECOVERY</div>
             <div style="font-size:1.4rem; font-weight:800; color:#38bdf8;">+184.2 MWh</div>
             <div style="color:#64748b; font-size:11px; margin-top:4px;">Rerouted to Khavda BESS</div>
           </div>
+
           <div style="background:rgba(13,31,58,0.7); border:1px solid rgba(56,189,248,0.2); padding:1rem; border-radius:10px;">
             <div style="color:#94a3b8; margin-bottom:4px;">NEXT AI WORK ORDER</div>
             <div style="font-size:1.4rem; font-weight:800; color:#10b981;">AUTO-DISPATCH</div>
             <div style="color:#64748b; font-size:11px; margin-top:4px;">Robotic Cleaning at 22:00 IST</div>
           </div>
+
         </div>
 
         <!-- Interactive AI Copilot & Vision Inspector Callout -->
+
         <div style="margin-top:2rem; background:linear-gradient(135deg, rgba(6,28,18,0.95) 0%, rgba(13,56,36,0.9) 100%); border:1.5px solid rgba(16,185,129,0.5); border-radius:16px; padding:1.5rem 2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.25rem;">
           <div>
             <div style="display:inline-flex; align-items:center; gap:6px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.4); color:#a7f3d0; padding:2px 10px; border-radius:9999px; font-size:11px; font-weight:700; text-transform:uppercase; margin-bottom:6px;">
               <span class="dot"></span> New Household &amp; Commercial AI Feature
             </div>
+
             <h3 style="color:#ffffff; font-size:1.35rem; font-weight:800; margin:0 0 4px;">Rooftop Solar Photo Issue Detector &amp; Customer Copilot</h3>
             <p style="color:#cbd5e1; font-size:0.92rem; margin:0; max-width:640px;">
               Upload any photo of your household solar panels or inverter display. Our vision neural network instantly scans for dust soiling, thermal hotspots, micro-cracks, and isolation errors with estimated kWh loss.
             </p>
           </div>
+
           <div style="display:flex; gap:10px; flex-wrap:wrap;">
             <a href="ai-assistant.html" class="btn btn-emerald btn-lg" style="box-shadow:0 0 25px rgba(16,185,129,0.4);">
               <i data-lucide="camera"></i>
               <span>Try AI Vision Diagnostics</span>
             </a>
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   </section>
 
   <!-- Mega-Projects Portfolio Showcase -->
+
   <section id="portfolio" class="projects-showcase-section">
+
     <div class="container">
       <div class="section-title-wrap text-center" style="max-width:760px; margin:0 auto 3rem;">
-        <div class="section-tag">Flagship Deployments</div>
-        <h2 class="section-title">Utility-Scale Project Showcase</h2>
-        <p class="section-desc">Operating across premier high-irradiance and coastal wind corridors with integrated BESS storage systems.</p>
+        <div class="section-tag">Leadership Pedigree</div>
+        <h2 class="section-title">Landmark Clean Energy Deployments</h2>
+        <p class="section-desc">1,180+ MW of utility-scale solar parks, coastal wind corridors, and containerized BESS storage facilities engineered and operated across our leadership's career heritage.</p>
       </div>
 
       <div class="grid grid-3 gap-6">
         <!-- Project 1: Solar -->
+
         <div class="project-preview-card">
           <div class="project-img-wrap">
             <img src="assets/images/abhivanta_solar_park_aerial.jpg" alt="Bhadla & Thar Ultra-Mega Solar Array">
             <span class="project-tag"><i data-lucide="sun"></i> Solar PV 660 MW</span>
           </div>
+
           <div class="project-body">
             <h3 class="project-title">Thar Ultra-Mega Solar Park</h3>
             <div class="project-meta">
@@ -692,6 +883,7 @@
               <span>&bull;</span>
               <span>Commissioned 2024</span>
             </div>
+
             <p class="project-desc">
               Utility tracker field featuring bifacial modules, decentralized inverter skids, and automated robotic dry-cleaning fleets preserving 42 million liters of water annually.
             </p>
@@ -699,6 +891,7 @@
               <div><strong style="color:#34d399;">83.1%</strong> Annual PR</div>
               <div><strong style="color:#34d399;">3,420 MWh</strong> Daily Output</div>
             </div>
+
             <div style="margin-top:1rem; padding-top:0.75rem; border-top:1px solid rgba(255,255,255,0.08); display:flex; justify-content:space-between; align-items:center;">
               <a href="plants.html" class="btn btn-ghost btn-sm" style="color:#34d399; padding-left:0;">
                 <span>View Telemetry &rarr;</span>
@@ -707,15 +900,19 @@
                 <i data-lucide="play-circle" style="width:14px;height:14px;"></i> 4K Drone
               </button>
             </div>
+
           </div>
+
         </div>
 
         <!-- Project 2: Wind Ridge -->
+
         <div class="project-preview-card">
           <div class="project-img-wrap">
             <img src="assets/images/abhivanta_cloud_ridge_turbines.jpg" alt="Muppandal & Sahyadri Ridge Wind Corridor">
             <span class="project-tag"><i data-lucide="wind"></i> Wind Farm 195 MW</span>
           </div>
+
           <div class="project-body">
             <h3 class="project-title">Muppandal Pass Wind Corridor</h3>
             <div class="project-meta">
@@ -723,6 +920,7 @@
               <span>&bull;</span>
               <span>120m Hub Height</span>
             </div>
+
             <p class="project-desc">
               Direct-drive wind turbines capturing high seasonal velocity winds, integrated with active pitch controllers and condition-based vibration harmonics monitoring.
             </p>
@@ -730,6 +928,7 @@
               <div><strong style="color:#34d399;">37.4%</strong> Fleet CUF</div>
               <div><strong style="color:#34d399;">99.1%</strong> Grid Availability</div>
             </div>
+
             <div style="margin-top:1rem; padding-top:0.75rem; border-top:1px solid rgba(255,255,255,0.08); display:flex; justify-content:space-between; align-items:center;">
               <a href="monitoring.html" class="btn btn-ghost btn-sm" style="color:#34d399; padding-left:0;">
                 <span>SCADA Live Stream &rarr;</span>
@@ -738,15 +937,19 @@
                 <i data-lucide="play-circle" style="width:14px;height:14px;"></i> 4K Drone
               </button>
             </div>
+
           </div>
+
         </div>
 
         <!-- Project 3: BESS & Hybrid Sunset -->
+
         <div class="project-preview-card">
           <div class="project-img-wrap">
             <img src="assets/images/abhivanta_hybrid_sunset_farm.jpg" alt="Khavda Grid-Forming BESS Storage Facility">
             <span class="project-tag"><i data-lucide="battery-charging"></i> BESS 325 MWh</span>
           </div>
+
           <div class="project-body">
             <h3 class="project-title">Khavda Hybrid Storage Hub</h3>
             <div class="project-meta">
@@ -754,6 +957,7 @@
               <span>&bull;</span>
               <span>Grid-Forming Inverter</span>
             </div>
+
             <p class="project-desc">
               Lithium iron phosphate (LFP) containerized storage for peak shaving and synthetic inertia, providing 4-hour evening ramp dispatch into the western grid corridor.
             </p>
@@ -761,6 +965,7 @@
               <div><strong style="color:#34d399;">92.5%</strong> RTE Efficiency</div>
               <div><strong style="color:#34d399;">4-Hour</strong> Peak Shaving</div>
             </div>
+
             <div style="margin-top:1rem; padding-top:0.75rem; border-top:1px solid rgba(255,255,255,0.08); display:flex; justify-content:space-between; align-items:center;">
               <a href="analytics.html" class="btn btn-ghost btn-sm" style="color:#34d399; padding-left:0;">
                 <span>Analyze Yield &rarr;</span>
@@ -769,15 +974,19 @@
                 <i data-lucide="play-circle" style="width:14px;height:14px;"></i> 4K Drone
               </button>
             </div>
+
           </div>
+
         </div>
 
         <!-- Project 4: Agro-Solar Wetlands -->
+
         <div class="project-preview-card">
           <div class="project-img-wrap">
             <img src="assets/images/abhivanta_agro_solar_wetlands.jpg" alt="Deccan Agro-Photovoltaic and Wetlands Solar Park">
             <span class="project-tag"><i data-lucide="leaf"></i> Agro-PV 280 MW</span>
           </div>
+
           <div class="project-body">
             <h3 class="project-title">Deccan Agro-Photovoltaic Basin</h3>
             <div class="project-meta">
@@ -785,6 +994,7 @@
               <span>&bull;</span>
               <span>Eco-Dual Use</span>
             </div>
+
             <p class="project-desc">
               Elevated tracker superstructure allowing agricultural cultivation underneath solar arrays with integrated rainwater retention and zero microclimate disruption.
             </p>
@@ -792,20 +1002,25 @@
               <div><strong style="color:#34d399;">+14%</strong> Crop Microclimate</div>
               <div><strong style="color:#34d399;">82.6%</strong> Operating PR</div>
             </div>
+
             <div style="margin-top:1rem; padding-top:0.75rem; border-top:1px solid rgba(255,255,255,0.08);">
               <a href="plants.html" class="btn btn-ghost btn-sm" style="color:#34d399; padding-left:0;">
                 <span>View Plant Telemetry &rarr;</span>
               </a>
             </div>
+
           </div>
+
         </div>
 
         <!-- Project 5: Mountain Slope Solar -->
+
         <div class="project-preview-card">
           <div class="project-img-wrap">
             <img src="assets/images/abhivanta_mountain_slope_solar.jpg" alt="Aravalli Mountain Slope Solar Generation Park">
             <span class="project-tag"><i data-lucide="mountain"></i> Slope Solar 150 MW</span>
           </div>
+
           <div class="project-body">
             <h3 class="project-title">Aravalli Mountain Terrace Array</h3>
             <div class="project-meta">
@@ -813,6 +1028,7 @@
               <span>&bull;</span>
               <span>Terrain-Adaptive</span>
             </div>
+
             <p class="project-desc">
               Custom terraced module racking engineered for steep angular terrain, capturing optimum high-altitude sun angles with string-level MPPT optimization.
             </p>
@@ -820,20 +1036,25 @@
               <div><strong style="color:#34d399;">99.4%</strong> String Uptime</div>
               <div><strong style="color:#34d399;">1,780 kWh/kWp</strong> Annual Yield</div>
             </div>
+
             <div style="margin-top:1rem; padding-top:0.75rem; border-top:1px solid rgba(255,255,255,0.08);">
               <a href="plants.html" class="btn btn-ghost btn-sm" style="color:#34d399; padding-left:0;">
                 <span>View Plant Telemetry &rarr;</span>
               </a>
             </div>
+
           </div>
+
         </div>
 
         <!-- Project 6: Dawn Twin Turbines & Solar -->
+
         <div class="project-preview-card">
           <div class="project-img-wrap">
             <img src="assets/images/abhivanta_dawn_twin_turbines.jpg" alt="Malwa Dawn Hybrid Wind and Solar Park">
             <span class="project-tag"><i data-lucide="sun-medium"></i> Hybrid 310 MW</span>
           </div>
+
           <div class="project-body">
             <h3 class="project-title">Malwa Dawn Hybrid Corridor</h3>
             <div class="project-meta">
@@ -841,6 +1062,7 @@
               <span>&bull;</span>
               <span>Co-Located Substation</span>
             </div>
+
             <p class="project-desc">
               Co-located high-yield bifacial solar panels and 3.3 MW wind turbines sharing common 220kV grid transmission bay for steady 24-hour green power export.
             </p>
@@ -848,19 +1070,27 @@
               <div><strong style="color:#34d399;">52.1%</strong> Composite CUF</div>
               <div><strong style="color:#34d399;">24/7</strong> Base Delivery</div>
             </div>
+
             <div style="margin-top:1rem; padding-top:0.75rem; border-top:1px solid rgba(255,255,255,0.08);">
               <a href="monitoring.html" class="btn btn-ghost btn-sm" style="color:#34d399; padding-left:0;">
                 <span>SCADA Live Stream &rarr;</span>
               </a>
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   </section>
 
   <!-- Key Capabilities Grid -->
+
   <section id="features" class="features-section">
+
     <div class="container">
       <div class="section-title-wrap">
         <div class="section-tag">Enterprise Architecture</div>
@@ -910,12 +1140,17 @@
           <p>Powered by structured localStorage with schema migrations, JSON data export/import, and instant factory reset for seamless enterprise deployments and sandbox testing.</p>
           <a href="settings.html" class="btn btn-ghost btn-sm" style="color:var(--accent-400); padding-left:0;">System Settings &rarr;</a>
         </div>
+
       </div>
+
     </div>
+
   </section>
 
   <!-- Workflow Section -->
+
   <section class="workflow-section">
+
     <div class="container">
       <div class="section-title-wrap">
         <div class="section-tag">How Abhivanta Operates</div>
@@ -929,16 +1164,19 @@
           <h4>Plant Simulation Engine</h4>
           <p>Generates realistic hourly bell-curve solar irradiance and fluctuating wind telemetry for 9 plants across Maharashtra, Gujarat, and Rajasthan.</p>
         </div>
+
         <div class="step-card">
           <div class="step-num">02</div>
           <h4>Performance Analytics Engine</h4>
           <p>Computes technical losses, CUF, PR %, grid compliance, and commercial metrics including INR tariff revenue and CO₂ tonnes avoided.</p>
         </div>
+
         <div class="step-card">
           <div class="step-num">03</div>
           <h4>Client-Side PDF Generator</h4>
           <p>Formats executive-ready reports with jsPDF & AutoTable, attaching observation notes and audit timestamps ready for immediate distribution.</p>
         </div>
+
       </div>
 
       <div class="workflow-visual">
@@ -947,12 +1185,17 @@
           <span><i data-lucide="sun"></i> Renewable Portfolio Overview</span>
           <small>9 Plants • 1,180 MW</small>
         </div>
+
       </div>
+
     </div>
+
   </section>
 
   <!-- Renewable Portfolio Visual Section -->
+
   <section class="renewable-portfolio-section">
+
     <div class="container">
       <div class="section-title-wrap">
         <div class="section-tag">Portfolio Visibility</div>
@@ -967,11 +1210,14 @@
               <span><i data-lucide="wind"></i> Wind Asset Network</span>
               <small>195 MW</small>
             </div>
+
           </div>
+
           <div class="portfolio-copy">
             <h3>Wind Fleet Operations</h3>
             <p>Monitor wake losses, turbine availability, and wind-speed variability across distributed sites to maintain stable output and optimize maintenance planning.</p>
           </div>
+
         </div>
 
         <div class="portfolio-visual-card">
@@ -981,18 +1227,26 @@
               <span><i data-lucide="monitor-smartphone"></i> ENOC Control Center</span>
               <small>24/7</small>
             </div>
+
           </div>
+
           <div class="portfolio-copy">
             <h3>Operational Command Desk</h3>
             <p>Track real-time generation, alarm status, dispatch decisions, and plant health from one centralized operations view designed for rapid response.</p>
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   </section>
 
   <!-- BESS & Hybrid Energy Storage Spotlight Section -->
+
   <section id="storage" class="features-section" style="background:#0a192f; padding:70px 0; border-top:1px solid rgba(56,189,248,0.15); border-bottom:1px solid rgba(56,189,248,0.15);">
+
     <div class="container">
       <div class="spotlight-box">
         <div style="border-radius:14px; overflow:hidden; position:relative; box-shadow:0 15px 35px rgba(0,0,0,0.5);">
@@ -1003,6 +1257,7 @@
             </span>
             <span style="font-size:11px; color:#cbd5e1; font-family:var(--font-mono);">325 MWh &bull; 4h Duration</span>
           </div>
+
         </div>
 
         <div>
@@ -1014,7 +1269,6 @@
             Abhivanta integrates continuous State of Charge (SoC), C-rate degradation cycles, and peak-shaving dispatch modeling.
             Store excess mid-day solar generation and discharge during high-tariff evening grid peaks, maximizing plant revenue and grid stability.
           </p>
-
           <div class="report-formats-pill">
             <span class="format-chip"><i data-lucide="battery-full"></i> SoC Telemetry</span>
             <span class="format-chip"><i data-lucide="trending-up"></i> Peak Tariff Arbitrage</span>
@@ -1026,12 +1280,17 @@
             <span>Monitor BESS Telemetry &rarr;</span>
           </a>
         </div>
+
       </div>
+
     </div>
+
   </section>
 
   <!-- Report Center Spotlight -->
+
   <section id="reports" class="report-spotlight">
+
     <div class="container">
       <div class="spotlight-box">
         <div>
@@ -1041,7 +1300,6 @@
             The standout capability of Abhivanta is its fully automated client-side reporting system.
             Select any plant or date range, preview computed KPI matrices, and download professional PDF or Excel spreadsheets formatted for management review and CERC compliance.
           </p>
-
           <div class="report-formats-pill">
             <span class="format-chip"><i data-lucide="file-text"></i> PDF Export (jsPDF)</span>
             <span class="format-chip"><i data-lucide="table"></i> Excel Export (SheetJS)</span>
@@ -1060,6 +1318,7 @@
             <span style="font-weight:700; color:#ffffff; font-size:14px;">Available Report Templates</span>
             <span class="badge badge-success">6 Standards + Custom</span>
           </div>
+
           <ul style="list-style:none; display:flex; flex-direction:column; gap:10px; font-size:13px; color:#cbd5e1;">
             <li style="display:flex; align-items:center; gap:8px;"><i data-lucide="check" style="color:#10b981; width:16px;height:16px;"></i> <strong>BESS System Storage &amp; Arbitrage Report</strong> (New: SoC, RTE &amp; TOD Gain)</li>
             <li style="display:flex; align-items:center; gap:8px;"><i data-lucide="check" style="color:#10b981; width:16px;height:16px;"></i> <strong>Daily Generation Report</strong> (Hourly curve &amp; peak)</li>
@@ -1069,35 +1328,47 @@
             <li style="display:flex; align-items:center; gap:8px;"><i data-lucide="check" style="color:#10b981; width:16px;height:16px;"></i> <strong>Multi-Plant Portfolio Summary</strong> (Fleet comparisons)</li>
           </ul>
         </div>
+
       </div>
+
     </div>
+
   </section>
 
   <!-- Enterprise Operational Scale Section -->
+
   <section id="credentials" class="credentials-section">
+
     <div class="container">
       <div class="credentials-grid">
         <div class="cred-card">
           <div class="cred-num">9</div>
           <div class="cred-label">Operating Plants (Solar, Wind &amp; BESS)</div>
         </div>
+
         <div class="cred-card">
           <div class="cred-num">1,180 MW</div>
           <div class="cred-label">Total Installed Capacity</div>
         </div>
+
         <div class="cred-card">
           <div class="cred-num">99.2%</div>
           <div class="cred-label">Guaranteed Plant Availability</div>
         </div>
+
         <div class="cred-card">
           <div class="cred-num">IEC 61724</div>
           <div class="cred-label">PR &amp; CUF Technical Compliance</div>
         </div>
+
       </div>
+
     </div>
+
   </section>
 
   <!-- Footer -->
+
   <footer class="landing-footer">
     <div class="container">
       <div class="footer-top">
@@ -1105,6 +1376,7 @@
           <div class="flex items-center gap-3">
             <img src="assets/images/logo.png" alt="ABHIVANTA Energy Intelligence Logo" class="brand-logo-img-nav" style="height:42px; width:auto; max-width:200px;">
           </div>
+
           <p>
             "Powering Decisions. Accelerating Clean Energy."<br>
             Next-generation clean energy intelligence, utility-scale telemetry, and automated reporting systems.
@@ -1131,27 +1403,32 @@
           </ul>
         </div>
 
-        <div class="footer-col">
-          <h5>Corporate Office</h5>
+                <div class="footer-col">
+          <h5>Direct Contact</h5>
           <ul>
-            <li style="color:#94a3b8;">Abhivanta Green Tower, High-Tech City</li>
-            <li style="color:#94a3b8;">Pune, Maharashtra 411057</li>
-            <li style="color:#94a3b8;">contact@abhivanta-energy.in</li>
+            <li style="color:#cbd5e1; font-weight:600;">Abhishek Singh (Founder &amp; MD)</li>
+            <li><a href="mailto:abhisheksingh060403@gmail.com?subject=Inquiry%20regarding%20Abhivanta%20Energy" style="color:#38bdf8; text-decoration:none; font-size:12px;"><i data-lucide="mail" style="width:13px;height:13px;display:inline;"></i> abhisheksingh060403@gmail.com</a></li>
+            <li><a href="https://wa.me/919503199010?text=Hi%20Abhishek%2C%20I%20am%20interested%20in%20connecting%20regarding%20Abhivanta%20Energy" target="_blank" rel="noopener noreferrer" style="color:#10b981; text-decoration:none; font-size:12px;"><i data-lucide="message-circle" style="width:13px;height:13px;display:inline;"></i> WhatsApp: +91 95031 99010</a></li>
+            <li style="color:#94a3b8; font-size:12px;">Hinjewadi &bull; Baner CleanTech Hub, Pune, India</li>
           </ul>
         </div>
+
       </div>
 
       <div class="footer-bottom">
         <div>
           &copy; 2026 ABHIVANTA &bull; Led by Abhishek Singh, Founder &amp; Managing Director
         </div>
+
         <div style="font-size:11px; color:#64748b;">
           * Industrial-grade renewable asset monitoring &bull; Headquarters: Pune, Maharashtra, India
         </div>
-      </div>
-    </div>
-  </footer>
 
+      </div>
+
+    </div>
+
+  </footer>
   <script src="js/utils.js"></script>
   <script src="js/demo-data.js"></script>
   <script src="js/storage.js"></script>
@@ -1162,7 +1439,6 @@
     document.addEventListener('DOMContentLoaded', () => {
       AbhivantaStorage.initStore();
       AbhivantaUI.initIcons();
-
       const theaterVid = document.getElementById('theaterVideo');
       if (theaterVid) {
         theaterVid.addEventListener('timeupdate', () => {
@@ -1171,7 +1447,6 @@
           const pct = (cur / dur) * 100;
           const fill = document.getElementById('theaterProgressFill');
           if (fill) fill.style.width = pct + '%';
-
           const fmt = (t) => {
             const m = Math.floor(t / 60);
             const s = Math.floor(t % 60);
@@ -1184,7 +1459,6 @@
         });
       }
     });
-
     function switchHeroMedia(type) {
       const vid = document.getElementById('heroShowcaseVideo');
       const img = document.getElementById('heroShowcasePhoto');
@@ -1192,7 +1466,6 @@
       const btnImg = document.getElementById('heroTabPhoto');
       const streamBadge = document.getElementById('heroStreamStatus');
       const audioBtn = document.getElementById('heroAudioBtn');
-
       if (type === 'video') {
         if (vid) vid.style.display = 'block';
         if (img) img.style.display = 'none';
@@ -1210,7 +1483,6 @@
         if (streamBadge) streamBadge.style.display = 'none';
       }
     }
-
     function toggleHeroVideoAudio() {
       const vid = document.getElementById('heroShowcaseVideo');
       const icon = document.getElementById('heroAudioIcon');
@@ -1221,7 +1493,6 @@
         if (window.lucide) lucide.createIcons();
       }
     }
-
     function toggleTheaterPlay() {
       const vid = document.getElementById('theaterVideo');
       const icon = document.getElementById('theaterPlayIcon');
@@ -1235,7 +1506,6 @@
       }
       if (window.lucide) lucide.createIcons();
     }
-
     function toggleTheaterAudio() {
       const vid = document.getElementById('theaterVideo');
       const icon = document.getElementById('theaterMuteIcon');
@@ -1246,7 +1516,6 @@
         if (window.lucide) lucide.createIcons();
       }
     }
-
     function toggleTheaterFullscreen() {
       const wrap = document.getElementById('mainTheaterWrap');
       if (!wrap) return;
@@ -1256,12 +1525,10 @@
         document.exitFullscreen().catch(() => {});
       }
     }
-
     function loadTheaterVideo(src, poster, title, cardElem) {
       const vid = document.getElementById('theaterVideo');
       const titleElem = document.getElementById('theaterVideoTitle');
       const playIcon = document.getElementById('theaterPlayIcon');
-
       if (vid) {
         vid.src = src;
         vid.poster = poster;
@@ -1277,13 +1544,11 @@
       document.querySelectorAll('.video-playlist-card').forEach(c => c.classList.remove('active'));
       if (cardElem) cardElem.classList.add('active');
     }
-
     function scrollToVideoTheater(src, poster, title) {
       loadTheaterVideo(src, poster, title, null);
       const el = document.getElementById('fleet-video-theater');
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
-
     function seekTheaterVideo(e) {
       const wrap = document.getElementById('theaterProgressWrap');
       const vid = document.getElementById('theaterVideo');
@@ -1293,5 +1558,13 @@
       vid.currentTime = pos * vid.duration;
     }
   </script>
+  <!-- Floating Quick WhatsApp Connect with Founder Abhishek Singh -->
+  <div id="founder-floating-contact" style="position:fixed; bottom:22px; right:22px; z-index:9999; display:flex; flex-direction:column; align-items:flex-end; gap:8px;">
+    <a href="https://wa.me/919503199010?text=Hi%20Abhishek%2C%20I%20am%20interested%20in%20connecting%20regarding%20Abhivanta%20Energy" target="_blank" rel="noopener noreferrer" style="display:flex; align-items:center; gap:9px; background:linear-gradient(135deg, #059669 0%, #10b981 100%); color:#ffffff; padding:10px 18px; border-radius:9999px; font-weight:700; font-size:13px; text-decoration:none; box-shadow:0 10px 25px rgba(16,185,129,0.45); border:1px solid rgba(255,255,255,0.25); transition:transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 14px 30px rgba(16,185,129,0.7)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 10px 25px rgba(16,185,129,0.45)';">
+      <i data-lucide="message-circle" style="width:18px;height:18px;"></i>
+      <span>WhatsApp Abhishek Singh</span>
+    </a>
+  </div>
+
 </body>
 </html>

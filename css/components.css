@@ -810,6 +810,8 @@
   object-fit: cover;
   object-position: center;
   display: block;
+  transform: scale(1.08);
+  transform-origin: center center;
 }
 
 /* Video Player Container */
@@ -830,6 +832,8 @@
   display: block;
   object-fit: cover;
   background: #000000;
+  transform: scale(1.08);
+  transform-origin: center center;
 }
 
 /* SCADA Drone Telemetry HUD Overlay */

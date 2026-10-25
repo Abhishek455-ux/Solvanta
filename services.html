@@ -82,6 +82,18 @@
       box-shadow: 0 12px 30px rgba(0,0,0,0.5);
     }
   </style>
+  <!-- OpenGraph & Social Sharing Meta Tags -->
+  <meta property="og:site_name" content="ABHIVANTA Energy Intelligence">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Renewable Asset Management, Power Trading & EPC Services | ABHIVANTA">
+  <meta property="og:description" content="Explore 8 enterprise service verticals: Renewable Asset Management, IEX/PXIL Power Trading, C&I Green Open Access, Turnkey Solar EPC, 325 MWh BESS, and 24/7 ENOC SCADA.">
+  <meta property="og:image" content="assets/images/logo.png">
+  <meta property="og:url" content="https://abhivanta-energy.in/services.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Renewable Asset Management, Power Trading & EPC Services | ABHIVANTA">
+  <meta name="twitter:description" content="Explore 8 enterprise service verticals: Renewable Asset Management, IEX/PXIL Power Trading, C&I Green Open Access, Turnkey Solar EPC, 325 MWh BESS, and 24/7 ENOC SCADA.">
+  <meta name="twitter:image" content="assets/images/logo.png">
+  <meta name="theme-color" content="#061c12">
 </head>
 <body class="landing-body">
 
@@ -97,10 +109,10 @@
         <li><a href="about.html">About Us</a></li>
         <li><a href="services.html" class="active">Services</a></li>
         <li><a href="founder.html">Founder's Desk</a></li>
-        <li><a href="company-profile.html"><i data-lucide="file-text" style="width:13px;height:13px;"></i> Profile</a></li>
-        <li><a href="presentation.html"><i data-lucide="presentation" style="width:13px;height:13px;"></i> Pitch Deck</a></li>
-        <li><a href="index.html#portfolio">Mega Projects</a></li>
-        <li><a href="index.html#ai-features" class="nav-ai-pill"><i data-lucide="sparkles" style="width:13px;height:13px;"></i> Abhivanta AI&trade;</a></li>
+
+
+
+        <li><a href="ai-assistant.html" class="nav-ai-pill"><i data-lucide="sparkles" style="width:13px;height:13px;"></i> AI Diagnostics</a></li>
         <li><a href="dashboard.html">SCADA Platform</a></li>
       </ul>
 
@@ -109,6 +121,32 @@
         <a href="dashboard.html" class="btn btn-primary nav-dashboard-btn" style="padding:6px 14px; font-size:13px;">
           <i data-lucide="layout-dashboard"></i>
           <span>Explore Dashboard</span>
+        </a>
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation menu">
+          <i data-lucide="menu" id="nav-toggle-icon"></i>
+        </button>
+      </div>
+    </div>
+      <div class="mobile-nav-drawer" id="mobile-nav-drawer">
+      <ul class="mobile-nav-links">
+        <li><a href="index.html"><i data-lucide="home"></i> Home</a></li>
+        <li><a href="about.html"><i data-lucide="info"></i> About Us</a></li>
+        <li><a href="services.html"><i data-lucide="layers"></i> 8 Service Verticals</a></li>
+        <li><a href="founder.html"><i data-lucide="user"></i> Founder's Desk</a></li>
+        <li><a href="index.html#client-investor-hub" style="color:#38bdf8; font-weight:700;"><i data-lucide="briefcase"></i> Clients &amp; Investors</a></li>
+        <li><a href="ai-assistant.html" style="color:#34d399; font-weight:700;"><i data-lucide="sparkles"></i> AI Diagnostics</a></li>
+        <li><a href="company-profile.html"><i data-lucide="file-text"></i> Company Profile</a></li>
+        <li><a href="presentation.html"><i data-lucide="presentation"></i> Pitch Deck</a></li>
+        <li><a href="dashboard.html"><i data-lucide="layout-dashboard"></i> Live SCADA Platform</a></li>
+      </ul>
+      <div class="mobile-nav-actions" style="margin-top:1rem; display:flex; flex-direction:column; gap:0.5rem;">
+        <a href="https://wa.me/919503199010?text=Hi%20Abhishek%2C%20I%20am%20interested%20in%20connecting%20regarding%20Abhivanta%20Energy" target="_blank" rel="noopener noreferrer" class="btn btn-outline w-full" style="color:#10b981; border-color:rgba(16,185,129,0.5); justify-content:center;">
+          <i data-lucide="message-circle"></i>
+          <span>WhatsApp Founder (+91 95031 99010)</span>
+        </a>
+        <a href="dashboard.html" class="btn btn-primary w-full" style="justify-content:center;">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Explore SCADA Engine</span>
         </a>
       </div>
     </div>
@@ -147,7 +185,7 @@
       <div style="background:rgba(7,18,36,0.95); border:1px solid rgba(16,185,129,0.35); border-radius:18px; overflow:hidden; box-shadow:0 20px 45px rgba(0,0,0,0.6);">
         <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; align-items:center;">
           <div style="position:relative; aspect-ratio:16/9; background:#000; overflow:hidden;">
-            <video id="servicesEpcVideo" autoplay muted loop playsinline poster="assets/images/abhivanta_solar_cells_macro.jpg" src="assets/videos/abhivanta_epc_field_operations.mp4" style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+            <video id="servicesEpcVideo" autoplay muted loop playsinline poster="assets/images/abhivanta_solar_cells_macro.jpg" src="assets/videos/abhivanta_epc_field_operations.mp4" style="width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.08); transform-origin:center center;"></video>
             <div style="position:absolute; top:12px; left:12px; display:flex; gap:8px;">
               <span class="video-hud-rec" style="font-size:10px; padding:2px 8px;">
                 <span class="rec-pulse-dot"></span> LIVE EPC SITE
@@ -617,12 +655,13 @@
           </ul>
         </div>
 
-        <div class="footer-col">
-          <h5>Corporate Office</h5>
+                <div class="footer-col">
+          <h5>Direct Contact</h5>
           <ul>
-            <li style="color:#94a3b8;">Abhivanta Green Tower, High-Tech City</li>
-            <li style="color:#94a3b8;">Pune, Maharashtra 411057</li>
-            <li style="color:#94a3b8;">contact@abhivanta-energy.in</li>
+            <li style="color:#cbd5e1; font-weight:600;">Abhishek Singh (Founder &amp; MD)</li>
+            <li><a href="mailto:abhisheksingh060403@gmail.com?subject=Inquiry%20regarding%20Abhivanta%20Energy" style="color:#38bdf8; text-decoration:none; font-size:12px;"><i data-lucide="mail" style="width:13px;height:13px;display:inline;"></i> abhisheksingh060403@gmail.com</a></li>
+            <li><a href="https://wa.me/919503199010?text=Hi%20Abhishek%2C%20I%20am%20interested%20in%20connecting%20regarding%20Abhivanta%20Energy" target="_blank" rel="noopener noreferrer" style="color:#10b981; text-decoration:none; font-size:12px;"><i data-lucide="message-circle" style="width:13px;height:13px;display:inline;"></i> WhatsApp: +91 95031 99010</a></li>
+            <li style="color:#94a3b8; font-size:12px;">Hinjewadi &bull; Baner CleanTech Hub, Pune, India</li>
           </ul>
         </div>
       </div>
@@ -649,5 +688,14 @@
       }
     });
   </script>
+
+  <!-- Floating Quick WhatsApp Connect with Founder Abhishek Singh -->
+  <div id="founder-floating-contact" style="position:fixed; bottom:22px; right:22px; z-index:9999; display:flex; flex-direction:column; align-items:flex-end; gap:8px;">
+    <a href="https://wa.me/919503199010?text=Hi%20Abhishek%2C%20I%20am%20interested%20in%20connecting%20regarding%20Abhivanta%20Energy" target="_blank" rel="noopener noreferrer" style="display:flex; align-items:center; gap:9px; background:linear-gradient(135deg, #059669 0%, #10b981 100%); color:#ffffff; padding:10px 18px; border-radius:9999px; font-weight:700; font-size:13px; text-decoration:none; box-shadow:0 10px 25px rgba(16,185,129,0.45); border:1px solid rgba(255,255,255,0.25); transition:transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 14px 30px rgba(16,185,129,0.7)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 10px 25px rgba(16,185,129,0.45)';">
+      <i data-lucide="message-circle" style="width:18px;height:18px;"></i>
+      <span>WhatsApp Abhishek Singh</span>
+    </a>
+  </div>
+
 </body>
 </html>
