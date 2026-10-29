@@ -323,5 +323,191 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  
+  // ==========================================
+  // PREDICTIVE AI ASSET HEALTH & APM MODULES
+  // ==========================================
+
+  function initInverterHealthGrid() {
+    const grid = document.getElementById('inverter-health-grid');
+    if (!grid) return;
+
+    const inverters = [
+      { id: 'INV-01', temp: 58.2, status: 'Nominal', color: '#10b981' },
+      { id: 'INV-02', temp: 61.5, status: 'Nominal', color: '#10b981' },
+      { id: 'INV-03', temp: 59.8, status: 'Nominal', color: '#10b981' },
+      { id: 'INV-04', temp: 92.4, status: 'Thermal Stress', color: '#f59e0b', alert: true },
+      { id: 'INV-05', temp: 63.0, status: 'Nominal', color: '#10b981' },
+      { id: 'INV-06', temp: 60.4, status: 'Nominal', color: '#10b981' },
+      { id: 'INV-07', temp: 57.9, status: 'Nominal', color: '#10b981' },
+      { id: 'INV-08', temp: 62.1, status: 'Nominal', color: '#10b981' },
+    ];
+
+    grid.innerHTML = inverters.map(inv => `
+      <div style="background:${inv.alert ? '#fffbeb' : '#f8fafc'}; border:1px solid ${inv.alert ? '#fde68a' : 'var(--border-light)'}; border-radius:6px; padding:8px; text-align:center;">
+        <div style="font-size:11px; font-weight:700; color:#0f172a;">${inv.id}</div>
+        <div style="font-size:14px; font-weight:800; color:${inv.color}; font-family:var(--font-mono); margin:2px 0;">${inv.temp}&deg;C</div>
+        <div style="font-size:9px; color:${inv.color}; font-weight:600;">${inv.status}</div>
+      </div>
+    `).join('');
+
+    const fixBtn = document.getElementById('btn-fix-inv4');
+    if (fixBtn) {
+      fixBtn.addEventListener('click', () => {
+        fixBtn.innerHTML = '<i data-lucide="check"></i> Work Order #WO-8941 Dispatched';
+        fixBtn.classList.remove('btn-warning');
+        fixBtn.classList.add('btn-emerald');
+        alert('Dispatched Automated Work Order #WO-8941 to O&M Field Lead: "Clear heatsink intake & inspect IGBT fan unit on INV-04"');
+        if (window.lucide) lucide.createIcons();
+      });
+    }
+  }
+
+  let ivChartInstance = null;
+  function initIVCurveChart() {
+    const canvas = document.getElementById('ivCurveChart');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    const select = document.getElementById('iv-string-select');
+    const diagStatus = document.getElementById('iv-diag-status');
+    const diagMeta = document.getElementById('iv-diag-meta');
+
+    // Generate I-V Curves
+    function generateIVData(type) {
+      const voltages = [];
+      const currents = [];
+
+      for (let v = 0; v <= 840; v += 35) {
+        voltages.push(v);
+        let i = 13.8;
+        if (type === 'nominal') {
+          // Healthy curve: flat until near Voc
+          if (v < 700) {
+            i = 13.8 - (v * 0.001);
+          } else {
+            i = Math.max(0, 13.8 * (1 - Math.exp((v - 840) / 32)));
+          }
+        } else if (type === 'pid') {
+          // PID degradation: heavy slope & lower knee
+          i = Math.max(0, (13.8 - (v * 0.005)) * (1 - Math.exp((v - 790) / 45)));
+        } else if (type === 'diode') {
+          // Bypassed diode: double knee step
+          if (v < 540) {
+            i = 13.8 - (v * 0.001);
+          } else if (v < 580) {
+            i = 8.5; // step drop
+          } else {
+            i = Math.max(0, 8.5 * (1 - Math.exp((v - 810) / 35)));
+          }
+        } else if (type === 'soiled') {
+          // Dust soiling: uniformly lowered current
+          if (v < 700) {
+            i = 10.4 - (v * 0.001);
+          } else {
+            i = Math.max(0, 10.4 * (1 - Math.exp((v - 835) / 32)));
+          }
+        }
+        currents.push(+i.toFixed(2));
+      }
+      return { voltages, currents };
+    }
+
+    const initial = generateIVData('nominal');
+
+    ivChartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: initial.voltages,
+        datasets: [{
+          label: 'Current (A)',
+          data: initial.currents,
+          borderColor: '#10b981',
+          backgroundColor: 'rgba(16, 185, 129, 0.1)',
+          fill: true,
+          tension: 0.25,
+          borderWidth: 2.5,
+          pointRadius: 2,
+          pointHoverRadius: 5
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              title: function(items) { return 'Voltage: ' + items[0].label + ' V'; },
+              label: function(item) { return 'Current: ' + item.parsed.y + ' A'; }
+            }
+          }
+        },
+        scales: {
+          x: {
+            title: { display: true, text: 'Voltage (V)', font: { size: 10, family: 'monospace' } },
+            grid: { color: 'rgba(226, 232, 240, 0.6)' },
+            ticks: { font: { size: 9, family: 'monospace' } }
+          },
+          y: {
+            title: { display: true, text: 'Current (A)', font: { size: 10, family: 'monospace' } },
+            grid: { color: 'rgba(226, 232, 240, 0.6)' },
+            ticks: { font: { size: 9, family: 'monospace' } },
+            suggestedMin: 0,
+            suggestedMax: 16
+          }
+        }
+      }
+    });
+
+    if (select) {
+      select.addEventListener('change', (e) => {
+        const val = e.target.value;
+        const res = generateIVData(val);
+        ivChartInstance.data.labels = res.voltages;
+        ivChartInstance.data.datasets[0].data = res.currents;
+
+        if (val === 'nominal') {
+          ivChartInstance.data.datasets[0].borderColor = '#10b981';
+          ivChartInstance.data.datasets[0].backgroundColor = 'rgba(16, 185, 129, 0.1)';
+          if (diagStatus) { diagStatus.textContent = 'Nominal Curve (FF: 81.2%)'; diagStatus.style.color = '#059669'; }
+          if (diagMeta) diagMeta.textContent = 'Voc: 840V • Isc: 13.8A • Pmax: 9.4 kW';
+        } else if (val === 'pid') {
+          ivChartInstance.data.datasets[0].borderColor = '#ef4444';
+          ivChartInstance.data.datasets[0].backgroundColor = 'rgba(239, 68, 68, 0.1)';
+          if (diagStatus) { diagStatus.textContent = 'Potential Induced Degradation (PID Alert)'; diagStatus.style.color = '#dc2626'; }
+          if (diagMeta) diagMeta.textContent = 'Voc: 790V (-6.0%) • Shunt Resistor Leakage • Loss: -18.4%';
+        } else if (val === 'diode') {
+          ivChartInstance.data.datasets[0].borderColor = '#f59e0b';
+          ivChartInstance.data.datasets[0].backgroundColor = 'rgba(245, 158, 11, 0.1)';
+          if (diagStatus) { diagStatus.textContent = 'Bypass Diode Step Conductance Drop'; diagStatus.style.color = '#d97706'; }
+          if (diagMeta) diagMeta.textContent = 'Sub-string bypassed • Mismatch Loss: -38.4%';
+        } else if (val === 'soiled') {
+          ivChartInstance.data.datasets[0].borderColor = '#d97706';
+          ivChartInstance.data.datasets[0].backgroundColor = 'rgba(217, 119, 6, 0.1)';
+          if (diagStatus) { diagStatus.textContent = 'Uniform Dust Soiling Attenuation'; diagStatus.style.color = '#b45309'; }
+          if (diagMeta) diagMeta.textContent = 'Isc: 10.4A (-24.6%) • Recommended: Wash Cycle';
+        }
+        ivChartInstance.update();
+      });
+    }
+  }
+
+  function initSoilingScheduler() {
+    const dispatchBtn = document.getElementById('btn-dispatch-robots');
+    if (!dispatchBtn) return;
+
+    dispatchBtn.addEventListener('click', () => {
+      dispatchBtn.innerHTML = '<i data-lucide="check-circle-2"></i> Robotic Fleet Dispatched to Block C';
+      dispatchBtn.classList.remove('btn-emerald');
+      dispatchBtn.classList.add('btn-primary');
+      alert('Success: Dispatched 4 Ecoppia T4 waterless robotic cleaning crawlers to Block C (Khavda). Estimated recovery: +3.8 MW generation yield.');
+      if (window.lucide) lucide.createIcons();
+    });
+  }
+
+  initInverterHealthGrid();
+  initIVCurveChart();
+  initSoilingScheduler();
   initAnalytics();
 });

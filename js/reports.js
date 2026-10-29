@@ -57,7 +57,43 @@ document.addEventListener('DOMContentLoaded', () => {
     let observations = [];
 
     // Template specific generation logic
-    if (template === 'bess') {
+    if (template === 'trading') {
+      kpis = [
+        { label: 'Merchant Power Traded', value: '3,840.0 MWh' },
+        { label: 'Average RTM Realized', value: '₹6.42 / kWh' },
+        { label: 'Merchant Gross Yield', value: '₹2.46 Crores' },
+        { label: 'DSM Frequency Compliance', value: '100% CERC Band' },
+        { label: 'DSM Penalties Avoided', value: '₹14.85 Lakhs' },
+        { label: 'Arbitrage Margin vs PPA', value: '+₹3.62 / kWh (+129%)' }
+      ];
+
+      tableHeaders = ['Time Block (15-Min)', 'Market Segment', 'Dispatched (MW)', 'Clearing Price (₹/kWh)', 'QCA Schedule', 'DSM Status', 'Net Revenue (₹)'];
+      tableRows = [
+        ['Block 74 (18:15-18:30)', 'IEX RTM Spot', '15.0 MW', '₹6.42', '112.5 MW', 'Compliant (+1.5%)', '₹24,075'],
+        ['Block 73 (18:00-18:15)', 'IEX RTM Spot', '15.0 MW', '₹6.38', '112.5 MW', 'Compliant (+1.4%)', '₹23,925'],
+        ['Block 72 (17:45-18:00)', 'IEX G-DAM (Green)', '12.0 MW', '₹5.85', '110.0 MW', 'Compliant (+0.8%)', '₹17,550'],
+        ['Block 71 (17:30-17:45)', 'IEX G-DAM (Green)', '12.0 MW', '₹5.70', '110.0 MW', 'Compliant (+0.6%)', '₹17,100'],
+        ['Block 70 (17:15-17:30)', 'IEX DAM Clearing', '10.0 MW', '₹5.18', '108.0 MW', 'Compliant (+0.2%)', '₹12,950'],
+        ['Block 69 (17:00-17:15)', 'IEX DAM Clearing', '10.0 MW', '₹5.12', '108.0 MW', 'Compliant (+0.1%)', '₹12,800']
+      ];
+    } else if (template === 'esg') {
+      kpis = [
+        { label: 'Clean Energy Generated', value: '2,584.3 MWh' },
+        { label: 'Displaced Grid CO2 Today', value: '1,842.6 Tonnes' },
+        { label: 'Monthly CO2 Abatement', value: '48,250 Tonnes' },
+        { label: 'Thermal Coal Avoided', value: '735.8 kTonnes' },
+        { label: 'DISCOM Banked Units', value: '485,200 kWh' },
+        { label: 'Audit Standard', value: 'CEA Baseline v19 / BRSR' }
+      ];
+
+      tableHeaders = ['Operating Asset / Plant', 'Technology', 'Clean MWh Generated', 'Grid Emission Factor', 'CO2 Offset (Tonnes)', 'Offtaker / Beneficiary', 'Audit Hash'];
+      tableRows = [
+        ['Thar Ultra-Mega Solar (RAJ-01)', 'Bifacial Solar PV + Trackers', '895.4 MWh', '0.713 tCO2/MWh', '638.4 MT', 'C&I Open Access Steel Plant', 'SHA256: 7f8a91b...'],
+        ['Bhadla Phase IV (RAJ-02)', 'Single-Axis Tracking Solar', '640.2 MWh', '0.713 tCO2/MWh', '456.5 MT', 'Automotive Manufacturing Hub', 'SHA256: 3c94d2e...'],
+        ['Khavda Hybrid Renewable (GUJ-01)', 'Solar PV + Wind 4.2MW', '720.5 MWh', '0.713 tCO2/MWh', '513.7 MT', 'Data Center Campus (MUM)', 'SHA256: 9b201cf...'],
+        ['Solapur Agro-PV EcoPark (MAH-01)', 'Agro-Photovoltaic Arrays', '328.2 MWh', '0.713 tCO2/MWh', '234.0 MT', 'Chemical Processing Facility', 'SHA256: 4e815aa...']
+      ];
+    } else if (template === 'bess') {
       const bessFleet = AbhivantaStorage.getBessFleet ? AbhivantaStorage.getBessFleet() : (AbhivantaDemoData.bessFleet || []);
       const matchedBess = targetPlant
         ? (bessFleet.find(b => b.plantId === targetPlant.id) || bessFleet[0])
@@ -365,7 +401,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (templateSelect) {
       templateSelect.addEventListener('change', (e) => {
         const val = e.target.value;
-        if (val === 'bess') {
+        if (val === 'trading') {
+          titleInput.value = 'RENEWABLE POWER TRADING & DSM SETTLEMENT DOSSIER';
+          periodInput.value = 'October 2026 (Daily 96-Block Settlement)';
+        } else if (val === 'esg') {
+          titleInput.value = 'ENTERPRISE SCOPE 2 NET-ZERO CARBON AUDIT CERTIFICATE';
+          periodInput.value = 'October 2026 (Monthly BRSR Audit)';
+        } else if (val === 'bess') {
           titleInput.value = 'BESS BATTERY STORAGE & ARBITRAGE DISPATCH AUDIT';
           periodInput.value = 'October 2026 (Daily Dispatch)';
         } else if (val === 'daily') {

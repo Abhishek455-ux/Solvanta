@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Renewable Power Trading &amp; DSM Cockpit - ABHIVANTA Energy Intelligence</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="assets/images/favicon.png">
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/ai-assistant.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" class="brand-logo">
+          <img src="assets/images/logo_icon.png" alt="ABHIVANTA Energy Intelligence" class="brand-logo-img">
+          <div class="brand-text-wrap">
+            <span class="brand-name">ABHIVANTA</span>
+            <span class="brand-tagline">Energy Intelligence</span>
+          </div>
+        </a>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" aria-label="Toggle Sidebar">
+          <i data-lucide="chevrons-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav-wrap" aria-label="Sidebar Navigation">
+        <div class="nav-section-title">Operations</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="dashboard.html" class="nav-link">
+              <i data-lucide="layout-dashboard"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="plants.html" class="nav-link">
+              <i data-lucide="cpu"></i>
+              <span>Plant Management</span>
+            </a>
+          </li>
+          <li>
+            <a href="monitoring.html" class="nav-link">
+              <i data-lucide="activity"></i>
+              <span>Live Monitoring</span>
+            </a>
+          </li>
+          <li>
+            <a href="trading.html" class="nav-link active">
+              <i data-lucide="trending-up"></i>
+              <span>Power Trading &amp; DSM</span>
+              <span class="badge badge-emerald" style="font-size:9px; margin-left:auto; padding:1px 5px;">IEX</span>
+            </a>
+          </li>
+          <li>
+            <a href="analytics.html" class="nav-link">
+              <i data-lucide="bar-chart-2"></i>
+              <span>Analytics &amp; APM</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title" style="margin-top:4px;">Automation &amp; Assets</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="ai-assistant.html" class="nav-link">
+              <i data-lucide="bot" style="color:var(--primary-400);"></i>
+              <span>AI Diagnostics</span>
+              <span class="badge badge-emerald" style="font-size:9px; margin-left:auto; padding:1px 5px;">AI</span>
+            </a>
+          </li>
+          <li>
+            <a href="reports.html" class="nav-link">
+              <i data-lucide="file-text"></i>
+              <span>Report Center</span>
+            </a>
+          </li>
+          <li>
+            <a href="alerts.html" class="nav-link">
+              <i data-lucide="alert-triangle"></i>
+              <span>Alerts &amp; Faults</span>
+              <span class="badge-counter" id="sidebar-alert-badge" style="display:none;">0</span>
+            </a>
+          </li>
+          <li>
+            <a href="maintenance.html" class="nav-link">
+              <i data-lucide="wrench"></i>
+              <span>Maintenance</span>
+            </a>
+          </li>
+          <li>
+            <a href="settings.html" class="nav-link">
+              <i data-lucide="sliders"></i>
+              <span>Settings &amp; Backup</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title" style="margin-top:4px;">Public Portal</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="index.html" class="nav-link">
+              <i data-lucide="globe"></i>
+              <span>Public Landing</span>
+            </a>
+          </li>
+          <li>
+            <a href="login.html" class="nav-link">
+              <i data-lucide="log-out"></i>
+              <span>Exit to Login</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="user-avatar">AS</div>
+          <div class="user-info">
+            <span class="user-name">Abhishek Singh</span>
+            <span class="user-role">Founder &amp; Executive Director</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Shell -->
+    <div class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open Navigation">
+            <i data-lucide="menu"></i>
+          </button>
+          <div class="breadcrumb-trail">
+            <a href="dashboard.html" class="breadcrumb-item">Abhivanta Fleet</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Power Trading &amp; DSM Cockpit</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="simulated-data-banner">
+            <span class="dot"></span>
+            <span>IEX &bull; PXIL 15-Min Live Feeds</span>
+          </div>
+          <div class="topbar-search">
+            <i data-lucide="search"></i>
+            <input type="text" id="topbar-search-input" placeholder="Search market clearing, bids, banking...">
+          </div>
+          <a href="alerts.html" class="topbar-action-icon" title="View Alerts">
+            <i data-lucide="bell"></i>
+            <span class="notif-badge" id="topbar-alert-dot"></span>
+          </a>
+          <a href="reports.html?template=trading" class="btn btn-primary btn-sm">
+            <i data-lucide="file-text"></i>
+            <span>Trading Audit Report</span>
+          </a>
+        </div>
+      </header>
+
+      <main class="app-content">
+        <!-- Page Header -->
+        <div class="page-header">
+          <div class="page-title-wrap">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <h1>Renewable Power Trading &amp; DSM Cockpit</h1>
+              <span class="badge badge-emerald" style="font-size:11px; padding:3px 8px; font-weight:700;">CERC 2024 COMPLIANT</span>
+            </div>
+            <p class="page-subtitle">Indian Energy Exchange (IEX) Day-Ahead &amp; Real-Time Market arbitrage, CERC Deviation Settlement Mechanism (DSM), and C&amp;I Open Access energy banking.</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-outline btn-sm" id="open-esg-cert-btn">
+              <i data-lucide="award" style="color:#059669;"></i>
+              <span>ESG Carbon Certificate</span>
+            </button>
+            <button class="btn btn-emerald btn-sm" id="simulate-bid-btn">
+              <i data-lucide="arrow-up-right"></i>
+              <span>Simulate IEX Spot Bid</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Power Market Ticker Ribbon -->
+        <div style="background:#061c12; border:1px solid rgba(16,185,129,0.3); border-radius:12px; padding:12px 18px; margin-bottom:var(--space-6); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; box-shadow:0 4px 20px rgba(0,0,0,0.35);">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="rec-pulse-dot" style="background:#10b981; box-shadow:0 0 8px #10b981;"></span>
+            <strong style="color:#ffffff; font-size:12px; font-family:var(--font-mono); letter-spacing:0.5px;">IEX SPOT TICKER:</strong>
+          </div>
+          <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap; font-family:var(--font-mono); font-size:12px;">
+            <div>
+              <span style="color:#94a3b8;">DAM Clearing:</span>
+              <strong style="color:#38bdf8; margin-left:4px;" id="ticker-dam">&#8377;5.18 / kWh</strong>
+              <span style="color:#34d399; font-size:10px; margin-left:2px;">(+8.4%)</span>
+            </div>
+            <div>
+              <span style="color:#94a3b8;">RTM Spot:</span>
+              <strong style="color:#34d399; margin-left:4px;" id="ticker-rtm">&#8377;6.42 / kWh</strong>
+              <span style="color:#f59e0b; font-size:10px; margin-left:2px;">(Evening Peak)</span>
+            </div>
+            <div>
+              <span style="color:#94a3b8;">G-DAM (Green):</span>
+              <strong style="color:#a7f3d0; margin-left:4px;" id="ticker-gdam">&#8377;5.70 / kWh</strong>
+              <span style="color:#34d399; font-size:10px; margin-left:2px;">(+&#8377;0.52 Premium)</span>
+            </div>
+            <div>
+              <span style="color:#94a3b8;">Grid Freq:</span>
+              <strong style="color:#ffffff; margin-left:4px;" id="ticker-freq">50.02 Hz</strong>
+              <span style="color:#34d399; font-size:10px; margin-left:2px;">(Nominal)</span>
+            </div>
+            <div>
+              <span style="color:#94a3b8;">Block:</span>
+              <strong style="color:#38bdf8; margin-left:4px;" id="ticker-block">74 / 96</strong>
+              <span style="color:#cbd5e1; font-size:10px; margin-left:2px;">(18:30 IST)</span>
+            </div>
+          </div>
+          <div style="font-size:11px; color:#a7f3d0; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); padding:3px 10px; border-radius:6px; font-weight:700;">
+            MERIT ORDER: DISPATCH PRIORITY 1
+          </div>
+        </div>
+
+        <!-- 4 Top KPI Metric Cards -->
+        <div class="kpi-grid">
+          <!-- Card 1 -->
+          <div class="kpi-card" style="border-left:4px solid #10b981;">
+            <div class="kpi-top">
+              <span class="kpi-label">Today's Merchant Revenue</span>
+              <div class="kpi-icon-wrap" style="background:rgba(16,185,129,0.12); color:#059669;">
+                <i data-lucide="indian-rupee"></i>
+              </div>
+            </div>
+            <div class="kpi-value" id="kpi-merchant-rev" style="color:#059669;">&#8377;8,42,650</div>
+            <div class="kpi-meta">
+              <span class="kpi-badge up">+18.5%</span>
+              <span>vs Long-Term PPA Baseline</span>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="kpi-card" style="border-left:4px solid #0284c7;">
+            <div class="kpi-top">
+              <span class="kpi-label">DSM Penalty Avoidance</span>
+              <div class="kpi-icon-wrap" style="background:rgba(2,132,199,0.12); color:#0284c7;">
+                <i data-lucide="shield-check"></i>
+              </div>
+            </div>
+            <div class="kpi-value" id="kpi-dsm-avoid">&#8377;1,84,200</div>
+            <div class="kpi-meta">
+              <span class="kpi-badge up">100% Compliant</span>
+              <span>Within &plusmn;10% CERC Band</span>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="kpi-card" style="border-left:4px solid #f59e0b;">
+            <div class="kpi-top">
+              <span class="kpi-label">C&amp;I Open Access Banked Units</span>
+              <div class="kpi-icon-wrap" style="background:rgba(245,158,11,0.12); color:#d97706;">
+                <i data-lucide="battery-charging"></i>
+              </div>
+            </div>
+            <div class="kpi-value" id="kpi-banked-units">485,200 kWh</div>
+            <div class="kpi-meta">
+              <span class="kpi-badge up">&#8377;14.8 L Savings</span>
+              <span>MSEDCL / GUVNL Banking</span>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="kpi-card" style="border-left:4px solid #059669;">
+            <div class="kpi-top">
+              <span class="kpi-label">Live Scope 2 Carbon Offset</span>
+              <div class="kpi-icon-wrap" style="background:rgba(16,185,129,0.15); color:#059669;">
+                <i data-lucide="leaf"></i>
+              </div>
+            </div>
+            <div class="kpi-value" id="kpi-co2-offset">1,842.6 T</div>
+            <div class="kpi-meta">
+              <span class="kpi-badge up">BRSR &bull; GHG</span>
+              <span>Downloadable Verified ESG Cert</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Split Grid: 24h 96 Time-Block Price Curve & Deviation Settlement Gauge -->
+        <div class="dashboard-split-grid" style="grid-template-columns:1.55fr 1fr; margin-bottom:var(--space-6);">
+          <!-- Card 1: 96 Time-Block IEX Pricing Curve -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title" style="display:flex; align-items:center; gap:8px;">
+                  <i data-lucide="line-chart" style="color:var(--primary-600);"></i>
+                  <span>IEX 96-Block Market Clearing Prices vs PPA Baseline</span>
+                </div>
+                <div class="card-subtitle">15-Minute Day-Ahead (DAM), Real-Time (RTM), and Green DAM Clearing (&#8377;/kWh)</div>
+              </div>
+              <div class="flex items-center gap-2">
+                <select id="market-curve-select" class="form-select form-select-sm" style="font-size:12px; font-weight:600; padding:4px 8px;">
+                  <option value="ALL">All Markets (DAM + RTM + PPA)</option>
+                  <option value="RTM">Real-Time Market (RTM) Only</option>
+                  <option value="DAM">Day-Ahead Market (DAM) Only</option>
+                </select>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper" style="height:280px;">
+                <canvas id="iexPriceChart"></canvas>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:10px; border-top:1px solid var(--border-light); font-size:11px; color:var(--text-muted); flex-wrap:wrap; gap:8px;">
+                <div style="display:flex; align-items:center; gap:16px;">
+                  <span style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; background:#10b981; border-radius:2px;"></span> RTM Spot Clearing</span>
+                  <span style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; background:#0284c7; border-radius:2px;"></span> DAM Clearing</span>
+                  <span style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; background:#94a3b8; border-radius:2px;"></span> Fixed PPA Baseline (&#8377;2.80)</span>
+                </div>
+                <span style="color:#059669; font-weight:700;"><i data-lucide="trending-up" style="width:12px;height:12px;display:inline;"></i> Evening Peak Spread: +&#8377;3.62 / kWh</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Deviation Settlement Mechanism (DSM / CERC 2024 Compliance) -->
+          <div class="card" style="display:flex; flex-direction:column; justify-content:space-between;">
+            <div class="card-header">
+              <div>
+                <div class="card-title" style="display:flex; align-items:center; gap:8px;">
+                  <i data-lucide="gauge" style="color:#0284c7;"></i>
+                  <span>CERC DSM Deviation Band</span>
+                </div>
+                <div class="card-subtitle">Qualified Coordinating Agency (QCA) Schedule vs Injection</div>
+              </div>
+              <span class="badge badge-success" id="dsm-status-pill" style="font-size:10px;">
+                &plusmn;1.51% (Green Zone)
+              </span>
+            </div>
+            <div class="card-body" style="padding-top:0;">
+              <!-- QCA vs Actual Stats -->
+              <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:10px; padding:12px; margin-bottom:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <span style="font-size:12px; color:var(--text-muted);">Declared QCA Schedule:</span>
+                  <strong style="font-size:13px; font-family:var(--font-mono); color:#0f172a;" id="dsm-declared-val">112.50 MW</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <span style="font-size:12px; color:var(--text-muted);">Actual Grid Injection:</span>
+                  <strong style="font-size:13px; font-family:var(--font-mono); color:#059669;" id="dsm-actual-val">114.20 MW</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <span style="font-size:12px; color:var(--text-muted);">Instantaneous Deviation:</span>
+                  <strong style="font-size:13px; font-family:var(--font-mono); color:#0284c7;" id="dsm-diff-val">+1.70 MW (+1.51%)</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span style="font-size:12px; color:var(--text-muted);">Current Grid Frequency:</span>
+                  <strong style="font-size:13px; font-family:var(--font-mono); color:#0f172a;" id="dsm-freq-val">50.02 Hz</strong>
+                </div>
+              </div>
+
+              <!-- Visual Deviation Gauge Bar -->
+              <div style="margin-bottom:14px;">
+                <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:4px;">
+                  <span>-10% (Under-inj)</span>
+                  <span style="color:#059669;">0% Nominal</span>
+                  <span>+10% (Over-inj)</span>
+                </div>
+                <div style="position:relative; height:18px; background:#e2e8f0; border-radius:9px; overflow:hidden; border:1px solid var(--border-light);">
+                  <!-- Green Safe Zone -->
+                  <div style="position:absolute; left:20%; width:60%; height:100%; background:rgba(16,185,129,0.25);"></div>
+                  <!-- Center Zero Line -->
+                  <div style="position:absolute; left:50%; width:2px; height:100%; background:#0f172a; transform:translateX(-50%);"></div>
+                  <!-- Active Indicator Dot -->
+                  <div id="dsm-indicator-pin" style="position:absolute; left:57.5%; top:2px; width:14px; height:14px; background:#10b981; border:2px solid #ffffff; border-radius:50%; box-shadow:0 0 8px rgba(16,185,129,0.8); transition:left 0.5s ease;"></div>
+                </div>
+                <div style="text-align:center; font-size:11px; color:#059669; font-weight:700; margin-top:6px;">
+                  Safe Operating Band &bull; Zero Regulatory Penalty Triggered
+                </div>
+              </div>
+
+              <!-- Settlement Details Strip -->
+              <div style="background:#04130c; border:1px solid rgba(16,185,129,0.3); border-radius:8px; padding:10px; font-family:var(--font-mono); font-size:11px; color:#cbd5e1;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                  <span>DSM SETTLEMENT RATE:</span>
+                  <strong style="color:#38bdf8;">&#8377;0.00 / kWh</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                  <span>NEXT 15-MIN CLEARING:</span>
+                  <strong style="color:#34d399;" id="dsm-timer">04m 18s</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Split Grid: PPA vs Merchant Arbitrage Optimizer & C&I Open Access Banking Ledger -->
+        <div class="dashboard-split-grid" style="grid-template-columns:1fr 1fr; margin-bottom:var(--space-6);">
+
+          <!-- Card 3: PPA vs Merchant Market Arbitrage Optimizer -->
+          <div class="card" style="border:1px solid rgba(16,185,129,0.3);">
+            <div class="card-header" style="background:linear-gradient(135deg, rgba(16,185,129,0.06), rgba(6,182,212,0.04));">
+              <div>
+                <div class="card-title" style="display:flex; align-items:center; gap:8px;">
+                  <i data-lucide="sparkles" style="color:#059669;"></i>
+                  <span>AI Merchant vs PPA Arbitrage Optimizer</span>
+                </div>
+                <div class="card-subtitle">Real-time revenue maximization across Long-Term PPA, IEX DAM &amp; RTM</div>
+              </div>
+              <span class="badge badge-emerald" style="font-size:10px;">AI Dispatch Armed</span>
+            </div>
+            <div class="card-body">
+              <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:14px; margin-bottom:14px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                  <i data-lucide="check-circle-2" style="width:16px;height:16px;color:#059669;"></i>
+                  <strong style="color:#166534; font-size:13px;">Optimal Dispatch Recommendation:</strong>
+                </div>
+                <p style="color:#15803d; font-size:12px; margin:0; line-height:1.5;">
+                  Evening RTM clearing price at <strong>&#8377;6.42 / kWh</strong> exceeds the baseline PPA rate (&#8377;2.80) by <strong>+129%</strong>. Dispatching 15 MW merchant surplus and initiating 42.5 MW BESS discharge generates an additional <strong>&#8377;1,85,400 daily margin</strong>.
+                </p>
+              </div>
+
+              <!-- Interactive Spot Trade Simulator Form -->
+              <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:10px; padding:14px;">
+                <div style="font-size:12px; font-weight:700; color:#0f172a; margin-bottom:10px; text-transform:uppercase;">
+                  Simulate IEX Merchant Spot Order
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+                  <div>
+                    <label style="font-size:11px; font-weight:600; color:var(--text-muted); display:block; margin-bottom:4px;">Bid Volume (MW):</label>
+                    <input type="number" id="sim-mw-input" class="form-control form-control-sm" value="15" min="1" max="50">
+                  </div>
+                  <div>
+                    <label style="font-size:11px; font-weight:600; color:var(--text-muted); display:block; margin-bottom:4px;">Target Market:</label>
+                    <select id="sim-market-select" class="form-select form-select-sm">
+                      <option value="RTM">Real-Time Market (RTM)</option>
+                      <option value="GDAM">Green DAM (G-DAM)</option>
+                      <option value="DAM">Day-Ahead Market (DAM)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; font-size:12px;">
+                  <span style="color:var(--text-muted);">Estimated Gross Yield:</span>
+                  <strong style="color:#059669; font-size:14px; font-family:var(--font-mono);" id="sim-est-yield">&#8377;1,92,600 / Block</strong>
+                </div>
+
+                <button class="btn btn-emerald btn-sm" id="btn-submit-spot-trade" style="width:100%; justify-content:center;">
+                  <i data-lucide="zap"></i>
+                  <span>Execute Simulated Spot Trade</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: C&I Green Energy Open Access 15-Minute Banking Ledger -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title" style="display:flex; align-items:center; gap:8px;">
+                  <i data-lucide="table" style="color:var(--primary-600);"></i>
+                  <span>15-Minute DISCOM Banking Ledger</span>
+                </div>
+                <div class="card-subtitle">Captive &amp; Third-Party Open Access wheeling settlement (MSEDCL / GUVNL)</div>
+              </div>
+              <span class="badge badge-info" style="font-size:10px;">Monthly Banking Cycle</span>
+            </div>
+            <div class="card-body" style="padding:0;">
+              <div class="table-responsive" style="max-height:310px; overflow-y:auto;">
+                <table class="data-table" style="font-size:11px;">
+                  <thead>
+                    <tr>
+                      <th>Time Block</th>
+                      <th>Gross Export</th>
+                      <th>Wheeling Loss (4.2%)</th>
+                      <th>Net Banked</th>
+                      <th>Captive Drawal</th>
+                      <th>Net Savings</th>
+                    </tr>
+                  </thead>
+                  <tbody id="banking-ledger-tbody">
+                    <!-- Populated dynamically by trading.js -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Full-Width Card: Scope 2 ESG Carbon Certificate & Audit Verification Hub -->
+        <div class="card" style="border:1px solid rgba(16,185,129,0.35); overflow:hidden;">
+          <div class="card-header" style="background:#04130c; border-bottom:1px solid rgba(16,185,129,0.25);">
+            <div>
+              <div class="card-title" style="display:flex; align-items:center; gap:8px; color:#ffffff;">
+                <i data-lucide="award" style="color:#34d399;"></i>
+                <span>Enterprise ESG Scope 2 Net-Zero Carbon Certification Hub</span>
+              </div>
+              <div class="card-subtitle" style="color:#94a3b8;">SEBI BRSR Core &bull; GHG Protocol Scope 2 &bull; Central Electricity Authority (CEA) Baseline 0.713 tCO&#8322;/MWh</div>
+            </div>
+            <button class="btn btn-emerald btn-sm" id="btn-print-esg-cert">
+              <i data-lucide="download"></i>
+              <span>Download Official ESG Certificate (PDF)</span>
+            </button>
+          </div>
+          <div class="card-body" style="background:#061c12; color:#e2e8f0;">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; align-items:center;" class="esg-cert-grid">
+              
+              <!-- Left Certificate Info & Metadata -->
+              <div>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+                  <span class="badge badge-success" style="font-size:10px;">VERIFIED GREEN ASSET</span>
+                  <span style="font-family:var(--font-mono); font-size:11px; color:#38bdf8;">CERT ID: ABHI-ESG-2026-9842</span>
+                </div>
+                <h3 style="color:#ffffff; font-size:1.3rem; font-weight:800; margin:0 0 8px;">
+                  1,842.6 Metric Tonnes CO&#8322; Avoided Today
+                </h3>
+                <p style="color:#94a3b8; font-size:12px; line-height:1.6; margin-bottom:14px;">
+                  Officially credited against thermal grid emissions for commercial &amp; industrial offtakers under Indian Open Access Regulations. Valid for ESG disclosures, CDP reporting, and Net-Zero sustainability audits.
+                </p>
+                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; font-family:var(--font-mono);">
+                  <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); padding:8px 10px; border-radius:6px;">
+                    <div style="color:#94a3b8; font-size:10px;">THIS MONTH:</div>
+                    <div style="color:#34d399; font-size:13px; font-weight:700;">48,250 tCO&#8322;</div>
+                  </div>
+                  <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); padding:8px 10px; border-radius:6px;">
+                    <div style="color:#94a3b8; font-size:10px;">CUMULATIVE YTD:</div>
+                    <div style="color:#38bdf8; font-size:13px; font-weight:700;">584,200 tCO&#8322;</div>
+                  </div>
+                  <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); padding:8px 10px; border-radius:6px;">
+                    <div style="color:#94a3b8; font-size:10px;">COAL AVOIDED:</div>
+                    <div style="color:#f59e0b; font-size:13px; font-weight:700;">735.8 kTonnes</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Official Certificate Printable Preview Card -->
+              <div id="printable-esg-cert" style="background:#ffffff; color:#0f172a; border-radius:10px; padding:20px; border:2px solid #10b981; box-shadow:0 10px 30px rgba(0,0,0,0.5); position:relative;">
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #059669; padding-bottom:10px; margin-bottom:12px;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <img src="assets/images/logo_icon.png" alt="Abhivanta" style="height:28px; width:28px; object-fit:contain;">
+                    <div>
+                      <div style="font-weight:900; font-size:13px; color:#062817; letter-spacing:0.5px;">ABHIVANTA ENERGY INTELLIGENCE</div>
+                      <div style="font-size:9px; color:#059669; font-weight:700; text-transform:uppercase;">Green Energy Verification Authority</div>
+                    </div>
+                  </div>
+                  <div style="text-align:right;">
+                    <div style="font-size:9px; color:#64748b;">CERTIFICATE NO.</div>
+                    <div style="font-family:var(--font-mono); font-size:11px; font-weight:700; color:#0f172a;">AEI-REC-2026-OCT</div>
+                  </div>
+                </div>
+
+                <div style="text-align:center; margin-bottom:12px;">
+                  <div style="font-size:10px; font-weight:800; color:#059669; text-transform:uppercase; letter-spacing:1px;">Certificate of Clean Energy Generation</div>
+                  <div style="font-size:15px; font-weight:800; color:#0f172a; margin-top:2px;">1,842.60 MT CO&#8322; Scope 2 Abatement</div>
+                </div>
+
+                <div style="font-size:10px; color:#334155; line-height:1.5; margin-bottom:12px; border-left:3px solid #10b981; padding-left:10px;">
+                  This certifies that <strong>2,584.3 MWh</strong> of solar &amp; wind electricity was generated and injected into the Indian grid on <strong>October 29, 2026</strong>, displacing equivalent thermal baseload pursuant to CEA CO&#8322; Baseline Database v19.
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:flex-end; border-top:1px dashed #cbd5e1; padding-top:10px;">
+                  <div>
+                    <div style="font-size:9px; color:#64748b;">AUTHORIZED SIGNATORY</div>
+                    <div style="font-size:11px; font-weight:800; color:#062817;">Abhishek Singh</div>
+                    <div style="font-size:9px; color:#059669; font-weight:600;">Founder &amp; Executive Director</div>
+                  </div>
+                  <div style="text-align:right;">
+                    <div style="font-size:8px; font-family:var(--font-mono); color:#64748b;">DIGITAL ENCRYPTED STAMP</div>
+                    <span class="badge badge-success" style="font-size:9px;">SHA-256 VERIFIED &bull; ISO 14064</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Spot Trade Execution Confirmation Modal -->
+  <div id="spotTradeModal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.7); backdrop-filter:blur(4px); align-items:center; justify-content:center;">
+    <div style="background:#ffffff; border-radius:12px; width:90%; max-width:440px; padding:24px; box-shadow:0 20px 50px rgba(0,0,0,0.6); position:relative;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid #e2e8f0; padding-bottom:10px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div style="background:#dcfce7; color:#15803d; width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+            <i data-lucide="check" style="width:18px;height:18px;"></i>
+          </div>
+          <div>
+            <strong style="color:#0f172a; font-size:14px;">IEX Spot Order Submitted</strong>
+            <div style="font-size:11px; color:#64748b;">Order Ref: IEX-RTM-2026-98124</div>
+          </div>
+        </div>
+        <button onclick="document.getElementById('spotTradeModal').style.display='none';" style="border:none; background:transparent; cursor:pointer; color:#94a3b8;">
+          <i data-lucide="x" style="width:18px;height:18px;"></i>
+        </button>
+      </div>
+      <div style="font-size:12px; color:#334155; line-height:1.6; margin-bottom:16px;">
+        <div><strong>Dispatched Volume:</strong> <span id="modal-mw">15 MW</span></div>
+        <div><strong>Target Market:</strong> <span id="modal-market">Real-Time Market (RTM)</span></div>
+        <div><strong>Clearing Price:</strong> <span id="modal-rate">&#8377;6.42 / kWh</span></div>
+        <div><strong>Estimated Margin:</strong> <strong style="color:#059669;" id="modal-margin">&#8377;1,85,400</strong></div>
+        <div style="margin-top:10px; padding:8px; background:#f0fdf4; border-radius:6px; font-size:11px; color:#166534;">
+          Order cleared with SLDC dispatch priority. Telemetry locked for 15-minute time block.
+        </div>
+      </div>
+      <button class="btn btn-emerald" onclick="document.getElementById('spotTradeModal').style.display='none';" style="width:100%; justify-content:center;">
+        Done &bull; Return to Cockpit
+      </button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/utils.js"></script>
+  <script src="js/demo-data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/ai-assistant.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/trading.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
