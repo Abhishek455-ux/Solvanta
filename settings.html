@@ -306,7 +306,153 @@
           </div>
         </div>
 
-        <!-- System Architecture Documentation Note -->
+        <!-- SCADA Telemetry & CSV Data Ingestion Hub -->
+        <div class="card" id="csv-upload-section" style="margin-top:var(--space-6); border:1px solid rgba(16,185,129,0.35); box-shadow:0 10px 30px rgba(0,0,0,0.06);">
+          <div class="card-header" style="background:linear-gradient(135deg, rgba(16,185,129,0.08), rgba(6,182,212,0.05)); border-bottom:1px solid var(--border-light);">
+            <div>
+              <div class="card-title" style="display:flex; align-items:center; gap:8px;">
+                <i data-lucide="file-spreadsheet" style="color:var(--primary-600);"></i>
+                <span>SCADA Telemetry &amp; CSV Data Ingestion Hub</span>
+              </div>
+              <div class="card-subtitle">
+                Upload historical pyranometer logs, daily plant generation records, C&amp;I meter banking spreadsheets, or inverter diagnostics.
+              </div>
+            </div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="badge badge-success" style="font-size:10px;">
+                <i data-lucide="check-circle-2"></i> RFC 4180 CSV Engine
+              </span>
+              <span class="badge badge-info" style="font-size:10px;">
+                <i data-lucide="cpu"></i> Instant Browser Parser
+              </span>
+            </div>
+          </div>
+          <div class="card-body">
+            <!-- Top Controls Row -->
+            <div style="display:grid; grid-template-columns: 1.4fr 1fr 1fr; gap:16px; margin-bottom:18px;" class="csv-controls-grid">
+              <!-- Category Selector -->
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label" for="csv-category-select" style="font-weight:700;">
+                  <i data-lucide="layers" style="width:13px;height:13px;display:inline;"></i> Select Ingestion Telemetry Category
+                </label>
+                <select id="csv-category-select" class="form-select" style="font-weight:600;">
+                  <option value="daily-gen" selected>Daily Generation &amp; Weather Telemetry (MWh, POA, PR, Temp)</option>
+                  <option value="ci-banking">C&amp;I Open Access ABT Meter Settlement (15-Min Export/Banked)</option>
+                  <option value="inverter-health">Inverter String Health &amp; Fault Logs (IGBT Temp, DC Voc/Isc)</option>
+                  <option value="trading-bids">IEX Power Trading Market &amp; Bids (96-Block DAM/RTM)</option>
+                </select>
+              </div>
+
+              <!-- Ingestion Strategy Mode -->
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label" for="csv-mode-select" style="font-weight:700;">
+                  <i data-lucide="git-merge" style="width:13px;height:13px;display:inline;"></i> Ingestion Strategy
+                </label>
+                <select id="csv-mode-select" class="form-select">
+                  <option value="merge" selected>Merge &amp; Update Matching Records (Recommended)</option>
+                  <option value="append">Append as New Records</option>
+                </select>
+              </div>
+
+              <!-- Download Sample Template Button -->
+              <div class="form-group" style="margin-bottom:0; display:flex; flex-direction:column; justify-content:flex-end;">
+                <button type="button" class="btn btn-outline" id="btn-download-csv-template" style="color:var(--primary-700); border-color:rgba(16,185,129,0.4); font-weight:700;">
+                  <i data-lucide="download"></i>
+                  <span>Download Sample CSV Template</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Upload Dropzone Area -->
+            <div id="csv-dropzone" style="border:2px dashed rgba(16,185,129,0.4); border-radius:12px; padding:28px 20px; text-align:center; background:#f0fdf4; cursor:pointer; transition:all 0.2s ease; margin-bottom:18px;">
+              <input type="file" id="csv-file-input" accept=".csv,text/csv" style="display:none;">
+              <div style="background:rgba(16,185,129,0.15); width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; color:#059669;">
+                <i data-lucide="upload-cloud" style="width:28px;height:28px;"></i>
+              </div>
+              <div style="font-size:14px; font-weight:700; color:#0f172a; margin-bottom:4px;">
+                Drag &amp; drop your SCADA .CSV file here, or <span style="color:var(--primary-600); text-decoration:underline;">browse files</span>
+              </div>
+              <div style="font-size:12px; color:var(--text-muted);">
+                Supports comma-delimited (.csv) files up to 50 MB. UTF-8 format recommended.
+              </div>
+              <div id="csv-file-badge" style="display:none; margin-top:12px; align-items:center; gap:8px; background:#ffffff; border:1px solid #bbf7d0; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:600; color:#166534;">
+                <i data-lucide="file-text" style="width:14px;height:14px;"></i>
+                <span id="csv-file-name">filename.csv</span> &bull; <span id="csv-file-size">0 KB</span>
+              </div>
+            </div>
+
+            <!-- Validation & Preview Section (Hidden until file selected) -->
+            <div id="csv-preview-container" style="display:none; margin-bottom:18px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <strong style="font-size:13px; color:#0f172a;">Parsed Telemetry Preview</strong>
+                  <span class="badge badge-emerald" id="csv-rows-count" style="font-size:10px;">0 Records Detected</span>
+                  <span class="badge badge-info" id="csv-valid-badge" style="font-size:10px;">Headers Validated</span>
+                </div>
+                <div style="font-size:11px; color:var(--text-muted);">
+                  Previewing top 5 parsed rows
+                </div>
+              </div>
+
+              <!-- Preview Table -->
+              <div class="table-responsive" style="max-height:220px; overflow-y:auto; border:1px solid var(--border-light); border-radius:8px;">
+                <table class="data-table" style="font-size:11px;" id="csv-preview-table">
+                  <thead id="csv-preview-thead">
+                    <!-- Populated dynamically -->
+                  </thead>
+                  <tbody id="csv-preview-tbody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Ingestion Action Buttons -->
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+              <div style="font-size:12px; color:var(--text-muted); display:flex; align-items:center; gap:6px;">
+                <i data-lucide="shield-check" style="width:14px;height:14px;color:#059669;"></i>
+                <span>Client data parsed client-side with 100% privacy and local storage persistence.</span>
+              </div>
+              <div style="display:flex; gap:10px;">
+                <button type="button" class="btn btn-secondary btn-sm" id="btn-clear-csv" style="display:none;">
+                  <i data-lucide="x"></i>
+                  <span>Clear File</span>
+                </button>
+                <button type="button" class="btn btn-emerald" id="btn-commit-csv-data" disabled style="opacity:0.6; cursor:not-allowed;">
+                  <i data-lucide="database"></i>
+                  <span>Commit &amp; Ingest Data to SCADA</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Ingested Success Feedback Alert Banner -->
+            <div id="csv-success-banner" style="display:none; margin-top:16px; background:#ecfdf5; border:1px solid #a7f3d0; border-radius:10px; padding:14px; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:36px; height:36px; border-radius:50%; background:#10b981; color:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                  <i data-lucide="check" style="width:20px;height:20px;"></i>
+                </div>
+                <div>
+                  <strong style="color:#065f46; font-size:13px;" id="csv-success-title">Data Ingestion Complete!</strong>
+                  <div style="font-size:11px; color:#047857;" id="csv-success-desc">
+                    Telemetry records successfully synchronized with the SCADA database.
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <a href="analytics.html" class="btn btn-sm btn-outline" style="border-color:#10b981; color:#065f46; font-weight:700;">
+                  <i data-lucide="bar-chart-2"></i> View Analytics
+                </a>
+                <a href="dashboard.html" class="btn btn-sm btn-emerald">
+                  <i data-lucide="layout-dashboard"></i> View Dashboard
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+                <!-- System Architecture Documentation Note -->
         <div class="card" style="margin-top:var(--space-6); background:var(--slate-50);">
           <div class="card-body">
             <h4 style="font-size:14px; margin-bottom:8px; display:flex; align-items:center; gap:8px;">

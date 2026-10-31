@@ -305,10 +305,295 @@ const AbhivantaStorage = (() => {
       }
       // Save and return
       saveStore(parsed);
-      return { success: true, message: `Successfully restored ${parsed.plants.length} plants and data records.` };
-    } catch (e) {
-      return { success: false, message: e.message || 'JSON parse error.' };
+    
+  // ==================== CSV DATA INGESTION ====================
+  function importCSVData(category, rows, mode = 'merge') {
+    const store = getStore();
+    let recordsCount = 0;
+
+    if (category === 'daily-gen') {
+      if (!store.history30Days) store.history30Days = [];
+      
+      rows.forEach(r => {
+        const gen = parseFloat(r.generationMWh || r.actualMWh || r.Generation_MWh || r.generation || 0);
+        const dateStr = r.date || r.Date || new Date().toISOString().split('T')[0];
+        const pr = parseFloat(r.prPercent || r.PR_Percent || r.pr || 82.0);
+        const plantId = r.plantId || r.Plant_ID || 'ALL';
+
+        const existingIdx = store.history30Days.findIndex(h => h.date === dateStr);
+        const entry = {
+          date: dateStr,
+          dayName: new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+          solarMWh: +(gen * 0.75).toFixed(1),
+          windMWh: +(gen * 0.25).toFixed(1),
+          totalMWh: +gen.toFixed(1),
+          prPercent: +pr.toFixed(1),
+          irradiance: parseFloat(r.irradiancePOA || r.Irradiance_W_m2 || 850)
+        };
+
+        if (existingIdx >= 0 && mode === 'merge') {
+          store.history30Days[existingIdx] = { ...store.history30Days[existingIdx], ...entry };
+        } else {
+          store.history30Days.push(entry);
+        }
+
+        if (plantId !== 'ALL' && store.plants) {
+          const targetPlant = store.plants.find(p => p.id === plantId);
+          if (targetPlant) {
+            targetPlant.todayMWh = +gen.toFixed(1);
+            targetPlant.performanceRatio = +pr.toFixed(1);
+          }
+        }
+        recordsCount++;
+      });
+
+      store.history30Days.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    } else if (category === 'ci-banking') {
+      if (!store.ciBankingLogs) store.ciBankingLogs = [];
+      rows.forEach(r => {
+        store.ciBankingLogs.push({
+          timeBlock: r.timeBlock || r.TimeBlock || 'Block 74',
+          exportKWh: r.exportKWh || r.Export_kWh || '28,500',
+          wheelingLossKWh: r.wheelingLossKWh || r.Wheeling_Loss_kWh || '1,197',
+          netBankedKWh: r.netBankedKWh || r.Net_Banked_kWh || '27,303',
+          captiveDrawalKWh: r.captiveDrawalKWh || r.Captive_Drawal_kWh || '22,000',
+          savingsINR: r.savingsINR || r.Savings_INR || '1,95,000'
+        });
+        recordsCount++;
+      });
+
+    } else if (category === 'inverter-health') {
+      if (!store.inverterAudits) store.inverterAudits = [];
+      rows.forEach(r => {
+        store.inverterAudits.push({
+          inverterId: r.inverterId || r.Inverter_ID || 'INV-01',
+          plantId: r.plantId || r.Plant_ID || 'RAJ-01',
+          igbtTemp: parseFloat(r.igbtTemp || r.IGBT_Temp_C || 60),
+          status: r.status || r.Status || 'Nominal',
+          efficiency: parseFloat(r.efficiency || r.Efficiency_Percent || 98.8),
+          faultCode: r.faultCode || r.Fault_Code || 'NORMAL'
+        });
+        recordsCount++;
+      });
+
+    } else if (category === 'trading-bids') {
+      if (!store.tradingBids) store.tradingBids = [];
+      rows.forEach(r => {
+        store.tradingBids.push({
+          timeBlock: r.timeBlock || r.TimeBlock || 'Block 74',
+          market: r.market || r.Market_Type || 'RTM',
+          bidMW: parseFloat(r.bidMW || r.Bid_MW || 15),
+          priceINR: parseFloat(r.priceINR || r.Clearing_Price_INR || 6.42),
+          declaredMW: parseFloat(r.declaredMW || r.Declared_MW || 112.5),
+          actualMW: parseFloat(r.actualMW || r.Actual_MW || 114.2)
+        });
+        recordsCount++;
+      });
     }
+
+    saveStore(store);
+    return {
+      success: true,
+      recordsCount: recordsCount,
+      message: `Successfully ingested and synchronized ${recordsCount} records into SCADA storage.`
+    };
+  }
+
+  return { success: true, message: `Successfully restored ${parsed.plants.length} plants and data records.` };
+    } catch (e) {
+    
+  // ==================== CSV DATA INGESTION ====================
+  function importCSVData(category, rows, mode = 'merge') {
+    const store = getStore();
+    let recordsCount = 0;
+
+    if (category === 'daily-gen') {
+      if (!store.history30Days) store.history30Days = [];
+      
+      rows.forEach(r => {
+        const gen = parseFloat(r.generationMWh || r.actualMWh || r.Generation_MWh || r.generation || 0);
+        const dateStr = r.date || r.Date || new Date().toISOString().split('T')[0];
+        const pr = parseFloat(r.prPercent || r.PR_Percent || r.pr || 82.0);
+        const plantId = r.plantId || r.Plant_ID || 'ALL';
+
+        const existingIdx = store.history30Days.findIndex(h => h.date === dateStr);
+        const entry = {
+          date: dateStr,
+          dayName: new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+          solarMWh: +(gen * 0.75).toFixed(1),
+          windMWh: +(gen * 0.25).toFixed(1),
+          totalMWh: +gen.toFixed(1),
+          prPercent: +pr.toFixed(1),
+          irradiance: parseFloat(r.irradiancePOA || r.Irradiance_W_m2 || 850)
+        };
+
+        if (existingIdx >= 0 && mode === 'merge') {
+          store.history30Days[existingIdx] = { ...store.history30Days[existingIdx], ...entry };
+        } else {
+          store.history30Days.push(entry);
+        }
+
+        if (plantId !== 'ALL' && store.plants) {
+          const targetPlant = store.plants.find(p => p.id === plantId);
+          if (targetPlant) {
+            targetPlant.todayMWh = +gen.toFixed(1);
+            targetPlant.performanceRatio = +pr.toFixed(1);
+          }
+        }
+        recordsCount++;
+      });
+
+      store.history30Days.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    } else if (category === 'ci-banking') {
+      if (!store.ciBankingLogs) store.ciBankingLogs = [];
+      rows.forEach(r => {
+        store.ciBankingLogs.push({
+          timeBlock: r.timeBlock || r.TimeBlock || 'Block 74',
+          exportKWh: r.exportKWh || r.Export_kWh || '28,500',
+          wheelingLossKWh: r.wheelingLossKWh || r.Wheeling_Loss_kWh || '1,197',
+          netBankedKWh: r.netBankedKWh || r.Net_Banked_kWh || '27,303',
+          captiveDrawalKWh: r.captiveDrawalKWh || r.Captive_Drawal_kWh || '22,000',
+          savingsINR: r.savingsINR || r.Savings_INR || '1,95,000'
+        });
+        recordsCount++;
+      });
+
+    } else if (category === 'inverter-health') {
+      if (!store.inverterAudits) store.inverterAudits = [];
+      rows.forEach(r => {
+        store.inverterAudits.push({
+          inverterId: r.inverterId || r.Inverter_ID || 'INV-01',
+          plantId: r.plantId || r.Plant_ID || 'RAJ-01',
+          igbtTemp: parseFloat(r.igbtTemp || r.IGBT_Temp_C || 60),
+          status: r.status || r.Status || 'Nominal',
+          efficiency: parseFloat(r.efficiency || r.Efficiency_Percent || 98.8),
+          faultCode: r.faultCode || r.Fault_Code || 'NORMAL'
+        });
+        recordsCount++;
+      });
+
+    } else if (category === 'trading-bids') {
+      if (!store.tradingBids) store.tradingBids = [];
+      rows.forEach(r => {
+        store.tradingBids.push({
+          timeBlock: r.timeBlock || r.TimeBlock || 'Block 74',
+          market: r.market || r.Market_Type || 'RTM',
+          bidMW: parseFloat(r.bidMW || r.Bid_MW || 15),
+          priceINR: parseFloat(r.priceINR || r.Clearing_Price_INR || 6.42),
+          declaredMW: parseFloat(r.declaredMW || r.Declared_MW || 112.5),
+          actualMW: parseFloat(r.actualMW || r.Actual_MW || 114.2)
+        });
+        recordsCount++;
+      });
+    }
+
+    saveStore(store);
+    return {
+      success: true,
+      recordsCount: recordsCount,
+      message: `Successfully ingested and synchronized ${recordsCount} records into SCADA storage.`
+    };
+  }
+
+  return { success: false, message: e.message || 'JSON parse error.' };
+    }
+  }
+
+
+  // ==================== CSV DATA INGESTION ====================
+  function importCSVData(category, rows, mode = 'merge') {
+    const store = getStore();
+    let recordsCount = 0;
+
+    if (category === 'daily-gen') {
+      if (!store.history30Days) store.history30Days = [];
+      
+      rows.forEach(r => {
+        const gen = parseFloat(r.generationMWh || r.actualMWh || r.Generation_MWh || r.generation || 0);
+        const dateStr = r.date || r.Date || new Date().toISOString().split('T')[0];
+        const pr = parseFloat(r.prPercent || r.PR_Percent || r.pr || 82.0);
+        const plantId = r.plantId || r.Plant_ID || 'ALL';
+
+        const existingIdx = store.history30Days.findIndex(h => h.date === dateStr);
+        const entry = {
+          date: dateStr,
+          dayName: new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+          solarMWh: +(gen * 0.75).toFixed(1),
+          windMWh: +(gen * 0.25).toFixed(1),
+          totalMWh: +gen.toFixed(1),
+          prPercent: +pr.toFixed(1),
+          irradiance: parseFloat(r.irradiancePOA || r.Irradiance_W_m2 || 850)
+        };
+
+        if (existingIdx >= 0 && mode === 'merge') {
+          store.history30Days[existingIdx] = { ...store.history30Days[existingIdx], ...entry };
+        } else {
+          store.history30Days.push(entry);
+        }
+
+        if (plantId !== 'ALL' && store.plants) {
+          const targetPlant = store.plants.find(p => p.id === plantId);
+          if (targetPlant) {
+            targetPlant.todayMWh = +gen.toFixed(1);
+            targetPlant.performanceRatio = +pr.toFixed(1);
+          }
+        }
+        recordsCount++;
+      });
+
+      store.history30Days.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    } else if (category === 'ci-banking') {
+      if (!store.ciBankingLogs) store.ciBankingLogs = [];
+      rows.forEach(r => {
+        store.ciBankingLogs.push({
+          timeBlock: r.timeBlock || r.TimeBlock || 'Block 74',
+          exportKWh: r.exportKWh || r.Export_kWh || '28,500',
+          wheelingLossKWh: r.wheelingLossKWh || r.Wheeling_Loss_kWh || '1,197',
+          netBankedKWh: r.netBankedKWh || r.Net_Banked_kWh || '27,303',
+          captiveDrawalKWh: r.captiveDrawalKWh || r.Captive_Drawal_kWh || '22,000',
+          savingsINR: r.savingsINR || r.Savings_INR || '1,95,000'
+        });
+        recordsCount++;
+      });
+
+    } else if (category === 'inverter-health') {
+      if (!store.inverterAudits) store.inverterAudits = [];
+      rows.forEach(r => {
+        store.inverterAudits.push({
+          inverterId: r.inverterId || r.Inverter_ID || 'INV-01',
+          plantId: r.plantId || r.Plant_ID || 'RAJ-01',
+          igbtTemp: parseFloat(r.igbtTemp || r.IGBT_Temp_C || 60),
+          status: r.status || r.Status || 'Nominal',
+          efficiency: parseFloat(r.efficiency || r.Efficiency_Percent || 98.8),
+          faultCode: r.faultCode || r.Fault_Code || 'NORMAL'
+        });
+        recordsCount++;
+      });
+
+    } else if (category === 'trading-bids') {
+      if (!store.tradingBids) store.tradingBids = [];
+      rows.forEach(r => {
+        store.tradingBids.push({
+          timeBlock: r.timeBlock || r.TimeBlock || 'Block 74',
+          market: r.market || r.Market_Type || 'RTM',
+          bidMW: parseFloat(r.bidMW || r.Bid_MW || 15),
+          priceINR: parseFloat(r.priceINR || r.Clearing_Price_INR || 6.42),
+          declaredMW: parseFloat(r.declaredMW || r.Declared_MW || 112.5),
+          actualMW: parseFloat(r.actualMW || r.Actual_MW || 114.2)
+        });
+        recordsCount++;
+      });
+    }
+
+    saveStore(store);
+    return {
+      success: true,
+      recordsCount: recordsCount,
+      message: `Successfully ingested and synchronized ${recordsCount} records into SCADA storage.`
+    };
   }
 
   return {
@@ -337,6 +622,7 @@ const AbhivantaStorage = (() => {
     getSettings,
     updateSettings,
     exportJSON,
-    importJSON
+    importJSON,
+    importCSVData
   };
 })();
